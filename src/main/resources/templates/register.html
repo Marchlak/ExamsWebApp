@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Rejestracja</title>
+
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+
+    <script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<section>
+    <div class="login-box">
+        <form th:action="@{/register}" th:method="post">
+            <h2 class="exam">Registration<span class="system">Form</span></h2>
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-user"></i></span>
+                <input type="text" id="username" name="username"/>
+                <label for="username">Username</label>
+            </div>
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-signature"></i></span>
+                <input type="text" id="name" name="name"/>
+                <label for="name">Name</label>
+            </div>
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-signature"></i></span>
+                <input type="text" id="surname" name="surname"/>
+                <label for="surname">Surname</label>
+            </div>
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-calendar"></i></span>
+                <input type="number" id="age" name="age"/>
+                <label for="age">Age</label>
+            </div>
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-lock"></i></span>
+                <input type="password" id="password" name="password"/>
+                <label for="password">Password</label>
+            </div>
+
+            <div class="input-box">
+                <span><i class="fa-sharp fa-solid fa-check"></i></span>
+                <input type="password" id="confirmPassword" name="confirmPassword" />
+                <label for="confirmPassword">Confirm Password</label>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>
