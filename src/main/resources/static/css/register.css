@@ -15,11 +15,26 @@ input:-webkit-autofill:active {
 }
 
 body {
-    background-color: #333;
     background-size: cover;
-    background-position: center;
     font-family: "Poppins", sans-serif;
     color: aliceblue;
+    background: linear-gradient(-45deg, #ce5491, #db532a, #2fa5d0, #7e3ebd, #F38F8F) center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 section {
@@ -32,8 +47,8 @@ section {
 
 .login-box {
     position: relative;
-    background: transparent;
-    backdrop-filter: blur(10px);
+    background-color: rgba(51, 51, 51, 0.27);
+    backdrop-filter: blur(100px);
     width: 500px;
     height: 700px;
     border-radius: 50px;
@@ -41,6 +56,7 @@ section {
     justify-content: center;
     align-items: center;
     border: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 10px 10px 10px rgba(38, 38, 38, 0.8);
 }
 
 h2 {
