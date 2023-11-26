@@ -21,4 +21,10 @@ public class Controller {
         return modelAndView;
     }
 
+    @GetMapping("/createQuestion")
+    public ModelAndView createQuestion() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("createQuestion");
+        return modelAndView;
+    }
 }
