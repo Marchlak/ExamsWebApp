@@ -27,4 +27,11 @@ public class Controller {
         modelAndView.setViewName("createQuestion");
         return modelAndView;
     }
+
+    @GetMapping("/showQuestion")
+    public ModelAndView showQuestion() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("questionsView");
+        return modelAndView;
+    }
 }
