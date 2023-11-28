@@ -8,25 +8,25 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet" />
 
-		<link rel="stylesheet" th:href="@{/css/createQuestion.css}" />
-		<link rel="stylesheet" href="../static/css/createQuestion.css" />
+		<link rel="stylesheet" th:href="@{/css/createOpenQuestion.css}" />
+		<link rel="stylesheet" href="../static/css/createOpenQuestion.css" />
 
 		<script src="https://kit.fontawesome.com/30b5c3e166.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<section>
 			<div class="question-box">
-				<form th:action="@{/createQuestion}" method="post" role="form">
-					<h2 class="exam">Create<span class="system"> Question</span></h2>
+				<form th:action="@{/createOpenQuestion}" method="post" th:object="${openquestion} "role="form">
+					<h2 class="exam">Create<span class="system"> Open Question</span></h2>
 					<div class="input-box">
 						<span><i class="fa-solid fa-heading"></i></span>
-						<input type="text" id="question" name="question" class="form-control" />
-						<label for="question">Question</label>
+						<input type="number" id="score" name="score" th:field="*{score}" class="form-control" />
+						<label for="score">Score</label>
 					</div>
 
 					<div class="input-box">
 						<span><i class="fa-solid fa-question"></i></span>
-						<textarea type="text" id="content" name="content" class="form-control"></textarea>
+						<textarea type="text" id="content" name="content" th:field="*{content}" class="form-control"></textarea>
 						<label class="content" for="content">Content</label>
 					</div>
 

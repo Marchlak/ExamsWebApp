@@ -3,10 +3,7 @@ package com.example.exams;
 import com.example.exams.Model.Data.Openquestion;
 import com.example.exams.Repositories.OpenquestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -30,21 +27,27 @@ public class Controller {
         return modelAndView;
     }
 
-    @GetMapping("/createQuestion")
+    @GetMapping("/createOpenQuestion")
     public ModelAndView createQuestion() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createQuestion");
+        modelAndView.addObject("openquestion", new Openquestion());
+        modelAndView.setViewName("createOpenQuestion");
         return modelAndView;
+    }
+    @PostMapping("/createOpenQuestion")
+    public void add(@ModelAttribute Openquestion openquestion)
+    {
+        openquestionRepository.add(openquestion);
     }
 
     @GetMapping("/questions")
         public List<Openquestion> getAll(){
         return openquestionRepository.getAll();
     }
-    @PostMapping("/questions/create")
+    /*@PostMapping("/createOpenQuestions")
     public int add(@RequestBody List<Openquestion> openquestions)
     {
         return openquestionRepository.add(openquestions);
-    }
+    }*/
 
 }

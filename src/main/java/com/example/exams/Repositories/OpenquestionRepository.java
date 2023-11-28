@@ -19,10 +19,8 @@ public class OpenquestionRepository {
         return query;
     }
 
-    public int add(List<Openquestion> openquestions) {
-        openquestions.forEach(openquestion -> jdbcTemplate.
-                update("INSERT INTO openquestion(content,score) VALUES(?,?)",
-                        openquestion.getContent(),openquestion.getScore()));
-        return 1;
+    public void add(Openquestion openquestion) {
+        jdbcTemplate.update("INSERT INTO openquestion(content,score) VALUES(?,?)",
+                        openquestion.getContent(),openquestion.getScore());
     }
 }
