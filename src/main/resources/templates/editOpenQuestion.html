@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Question</title>
+  <link rel="stylesheet" th:href="@{/css/editOpenQuestion.css}" />
+  <link rel="stylesheet" href="../static/css/editOpenQuestion.css" />
+</head>
+<body>
+<section>
+  <div class="edit-question-box">
+    <form th:action="@{/editQuestion}" th:method="post">
+      <h2 class="exam">Edit <span class="system">Question Form</span></h2>
+      <div class="input-box">
+        <textarea id="questionText" name="questionText" th:value="${question.questionText}" rows="4"></textarea>
+        <label for="questionText">Question Text</label>
+      </div>
+
+
+      <div class="category-input-box">
+        <label for="score">Score</label>
+        <select id="score" name="score">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+
+      <div class="category-input-box">
+        <label for="category">Category</label>
+        <select id="category" name="category" th:value="${question.category}">
+          <option value="math">Math</option>
+          <option value="science">Science</option>
+          <option value="history">History</option>
+        </select>
+      </div>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</section>
+</body>
+</html>
