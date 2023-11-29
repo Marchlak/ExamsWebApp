@@ -55,7 +55,7 @@ public class Controller {
     @RequestMapping(value = "question", method = RequestMethod.GET)
     public ModelAndView questions() {
         ModelAndView modelAndView = new ModelAndView("question/list");
-        modelAndView.addObject("questions", openQuestionRepository.findAll());
+        modelAndView.addObject("questions", openQuestionRepository.getAll());
         modelAndView.setViewName("questionsView");
         return modelAndView;
     }
