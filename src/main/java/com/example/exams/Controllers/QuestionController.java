@@ -21,4 +21,5 @@ public class QuestionController {
         questionService.deleteClosedQuestion(id);
         return ResponseEntity.ok().build();
     }
+
 }

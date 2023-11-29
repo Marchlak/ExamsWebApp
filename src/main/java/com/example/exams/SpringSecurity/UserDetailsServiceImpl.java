@@ -1,8 +1,8 @@
 package com.example.exams.SpringSecurity;
 
-import com.example.exams.Model.Data.Administrator;
-import com.example.exams.Model.Data.Student;
-import com.example.exams.Model.Data.Egzaminator;
+import com.example.exams.Model.Data.db.Administrator;
+import com.example.exams.Model.Data.db.Student;
+import com.example.exams.Model.Data.db.Egzaminator;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Repositories.Db.AdministratorsEntityRepository;
 import com.example.exams.Repositories.Db.ExaminersEntityRepository;

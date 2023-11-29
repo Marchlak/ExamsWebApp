@@ -1,4 +1,4 @@
-package com.example.exams.Model.Data;
+package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;

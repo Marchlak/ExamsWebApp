@@ -1,4 +1,4 @@
-package com.example.exams.Model.Data;
+package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class Subject {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "openquestion_questionid", nullable = false)
-    private Openquestion openquestionQuestionid;
+    private OpenquestionEntity openquestionQuestionid;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "closedquestion_questionid", nullable = false)
