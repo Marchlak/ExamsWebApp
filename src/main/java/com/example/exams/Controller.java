@@ -37,13 +37,6 @@ public class Controller {
         return modelAndView;
     }
 
-    @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
     @GetMapping("/createOpenQuestion")
     public ModelAndView createQuestion() {
         ModelAndView modelAndView = new ModelAndView();

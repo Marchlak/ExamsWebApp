@@ -24,8 +24,3 @@ public class OpenquestionRepository {
                         openquestion.getContent(),openquestion.getScore());
     }
 }
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface OpenquestionRepository extends JpaRepository<Openquestion, Integer> {
-}
