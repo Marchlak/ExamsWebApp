@@ -17,7 +17,7 @@ public class QuestionService {
 
     @Transactional
     public void deleteOpenQuestion(Integer id) {
-        openQuestionRepository.deleteById(id);
+
     }
 
     @Transactional
