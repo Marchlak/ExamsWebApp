@@ -1,25 +1,20 @@
-package com.example.exams.Model.Data;
+package com.example.exams.Model.Data.db;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "student")
-public class Student {
+@Table(name = "egzaminator")
+public class Egzaminator {
     @Id
-    @Column(name = "student_id", nullable = false)
+    @Column(name = "egzaminator_id", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_classid")
-    private Group groupClassid;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_examid")
-    private Exam examExamid;
 
     @Column(name = "accountid", nullable = false)
     private Integer accountid;

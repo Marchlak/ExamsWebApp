@@ -1,4 +1,4 @@
-package com.example.exams.Model.Data;
+package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "answeropen")
-public class Answeropen {
+@Table(name = "answerclosed")
+public class Answerclosed {
     @Id
     @Column(name = "answerid", nullable = false)
     private Integer id;
@@ -17,7 +17,7 @@ public class Answeropen {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "openquestion_questionid", nullable = false)
-    private Openquestion openquestionQuestionid;
+    @JoinColumn(name = "closedquestion_questionid", nullable = false)
+    private Closedquestion closedquestionQuestionid;
 
 }

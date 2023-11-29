@@ -1,29 +1,20 @@
 package com.example.exams.Model.Data;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.exams.Model.Data.db.Subject;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "openquestion")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Openquestion {
-    @Id
-    @Column(name = "questionid", nullable = false)
-    private Integer id;
-
-    @Column(name = "answeropenquestionid")
-    private Integer answeropenquestionid;
-
-    @Column(name = "content", length = 100)
+    private Integer questionid;
     private String content;
-
-    @Column(name = "score")
     private Integer score;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_subjectid", nullable = false)
-    private Subject subjectSubjectid;
-
+    private Integer subjectsubject_subjectid;
 }

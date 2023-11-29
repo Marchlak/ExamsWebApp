@@ -1,4 +1,4 @@
-package com.example.exams.Model.Data;
+package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class Studentopenanswer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "openquestion_questionid")
-    private Openquestion openquestionQuestionid;
+    private OpenquestionEntity openquestionQuestionid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_student_id")
