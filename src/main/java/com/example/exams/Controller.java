@@ -1,10 +1,13 @@
 package com.example.exams;
 
 import com.example.exams.Model.Data.ProperDataModels.Login;
+import com.example.exams.Repositories.OpenquestionRepository;
 import com.example.exams.Services.LoginsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,6 +16,10 @@ public class Controller {
 
     @Autowired
     LoginsService loginsService;
+
+    @Autowired
+    OpenquestionRepository openQuestionRepository;
+
 
     @GetMapping("/login")
     public ModelAndView login(Model model) {
@@ -36,9 +43,10 @@ public class Controller {
         return modelAndView;
     }
 
-    @GetMapping("/showQuestion")
-    public ModelAndView showQuestion() {
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "question", method = RequestMethod.GET)
+    public ModelAndView questions() {
+        ModelAndView modelAndView = new ModelAndView("question/list");
+        modelAndView.addObject("questions", openQuestionRepository.findAll());
         modelAndView.setViewName("questionsView");
         return modelAndView;
     }
