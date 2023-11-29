@@ -1,6 +1,6 @@
 package com.example.exams.Controllers;
 
-import com.example.exams.Model.Data.Openquestion;
+import com.example.exams.Model.Data.MN.Openquestion;
 import com.example.exams.Services.OpenQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@RestController
 public class OpenQuestionController {
     private final OpenQuestionService openQuestionService;
 
