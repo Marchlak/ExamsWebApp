@@ -20,7 +20,7 @@ public class OpenQuestionService {
         if(openQuestion != null){
             openQuestion.setContent(updatedOpenQuestion.getContent());
             openQuestion.setScore(updatedOpenQuestion.getScore());
-            openQuestion.setSubject_subjectid(updatedOpenQuestion.getSubject_subjectid());
+            openQuestion.setSubjectsubject_subjectid(updatedOpenQuestion.getSubjectsubject_subjectid());
             return openQuestionRepository.save(openQuestion);
         }
         return null;
