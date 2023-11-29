@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,17 +10,18 @@
 <body>
 <section>
   <div class="edit-question-box">
-    <form th:action="@{/editQuestion}" th:method="post">
+    <!--/*@thymesVar id="Openquestion" type="com.example.exams.Model.Data.Openquestion"*/-->
+    <form th:action="@{/updateOpenQuestion}" th:method="post" th:object="${Openquestion}" role="form">
       <h2 class="exam">Edit <span class="system">Question Form</span></h2>
       <div class="input-box">
-        <textarea id="questionText" name="questionText" th:value="${question.questionText}" rows="4"></textarea>
-        <label for="questionText">Question Text</label>
+        <textarea id="content" name="content" th:value="*{content}" rows="4"></textarea>
+        <label for="content">Question Text</label>
       </div>
-
+      <input type="hidden" id="questionid" name="questionid" th:value="*{questionid}">
 
       <div class="category-input-box">
         <label for="score">Score</label>
-        <select id="score" name="score">
+        <select id="score" name="score" th:value="*{score}" >
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -29,10 +31,10 @@
 
       <div class="category-input-box">
         <label for="category">Category</label>
-        <select id="category" name="category" th:value="${question.category}">
-          <option value="math">Math</option>
-          <option value="science">Science</option>
-          <option value="history">History</option>
+        <select id="category" name="category" th:value="*{subject_subjectid}">
+          <option value="null">null</option>
+          <option value="0">0</option>
+          <option value="1">1</option>
         </select>
       </div>
 
