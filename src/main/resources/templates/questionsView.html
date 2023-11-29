@@ -4,38 +4,23 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+		<link rel="stylesheet" th:href="@{/css/questionsView.css}" />
 		<title>Team Members</title>
-		<link rel="stylesheet" href="../static/css/questionsView.css" />
 	</head>
 	<body>
 		<div id="question-box">
-			<article class="question-box">
+			<article class="question-box" th:if="${questions.empty}">
 				<div class="question-box-content">
-					<h3><span>1.</span>What is the purpose of a neural network in machine learning?</h3>
-					<p>
-						A neural network in machine learning is designed to mimic the structure and function of the human brain,
-						enabling it to recognize patterns and make decisions based on input data.
-					</p>
+					<h3>
+						Brak pytań otwartych w bazie.
+					</h3>
 				</div>
 			</article>
 
-			<article class="question-box">
+			<article class="question-box" th:each="question: ${questions}">
 				<div class="question-box-content">
-					<h3><span>2.</span>What is blockchain?</h3>
-					<p>
-						Blockchain is a decentralized ledger technology used for secure and transparent record-keeping, often
-						associated with cryptocurrencies like Bitcoin.
-					</p>
-				</div>
-			</article>
-
-			<article class="question-box">
-				<div class="question-box-content">
-					<h3><span>3.</span>How does 5G technology differ from previous generations of mobile networks?</h3>
-					<p>
-						5G, or fifth-generation wireless technology, offers significantly faster data speeds, lower latency, and
-						increased connectivity compared to previous mobile network generations.
-					</p>
+					<h3 th:text="${question.id + ' ' + question.content}"></h3>
 				</div>
 			</article>
 		</div>
