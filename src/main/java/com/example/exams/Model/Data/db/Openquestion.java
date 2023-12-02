@@ -1,4 +1,4 @@
-package com.example.exams.Model.Data.MN;
+package com.example.exams.Model.Data.db;
 
 import com.example.exams.Model.Data.db.Subject;
 import jakarta.persistence.*;
@@ -13,6 +13,7 @@ import lombok.Setter;
 @Table(name = "openquestion")
 public class Openquestion {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "questionid", nullable = false)
     private Integer questionid;
 
@@ -22,7 +23,7 @@ public class Openquestion {
     @Column(name = "score")
     private Integer score;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_subjectid", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "subject_subjectid", nullable = true)
     private Subject subject_subjectid;
 }

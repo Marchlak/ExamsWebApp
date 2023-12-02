@@ -29,7 +29,7 @@ public class Studentopenanswer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "openquestion_questionid")
-    private OpenquestionEntity openquestionQuestionid;
+    private Openquestion openquestionQuestionid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_student_id")

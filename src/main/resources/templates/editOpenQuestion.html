@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,18 +10,21 @@
 <section>
   <div class="edit-question-box">
     <!--/*@thymesVar id="Openquestion" type="com.example.exams.Model.Data.Openquestion"*/-->
-    <form th:action="@{/updateOpenQuestion}" th:method="post" th:object="${Openquestion}" role="form">
+
+    <input type="hidden" id="csrfToken" value="${_csrf.token}"/>
+    <input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
+
+    <form th:action="@{/updateOpenQuestion/__${Openquestion.questionid}__}" th:method="post" role="form">
       <h2 class="exam">Edit <span class="system">Question Form</span></h2>
       <div class="input-box">
-        <textarea id="content" name="content" th:value="*{content}" rows="4"></textarea>
+        <textarea id="content" name="content" rows="4" th:text="${Openquestion.content}"> </textarea>
         <label for="content">Question Text</label>
       </div>
-      <input type="hidden" id="questionid" name="questionid" th:value="*{questionid}">
 
       <div class="category-input-box">
         <label for="score">Score</label>
-        <select id="score" name="score" th:value="*{score}" >
-          <option value="0">0</option>
+        <select id="score" name="score">
+          <option th:value="${Openquestion.score}" th:text="${Openquestion.score}">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -31,8 +33,8 @@
 
       <div class="category-input-box">
         <label for="category">Category</label>
-        <select id="category" name="category" th:value="*{subject_subjectid}">
-          <option value="null">null</option>
+        <select id="category" name="category">
+          <option th:value="${Openquestion.subject_subjectid}" th:text="${Openquestion.subject_subjectid}">0</option>
           <option value="0">0</option>
           <option value="1">1</option>
         </select>

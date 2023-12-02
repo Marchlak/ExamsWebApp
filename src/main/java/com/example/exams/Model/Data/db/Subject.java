@@ -18,7 +18,7 @@ public class Subject {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "openquestion_questionid", nullable = false)
-    private OpenquestionEntity openquestionQuestionid;
+    private Openquestion openquestionQuestionid;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "closedquestion_questionid", nullable = false)

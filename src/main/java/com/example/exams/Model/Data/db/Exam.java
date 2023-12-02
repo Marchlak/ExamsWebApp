@@ -34,7 +34,7 @@ public class Exam {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "openquestion_questionid")
-    private OpenquestionEntity openquestionQuestionid;
+    private Openquestion openquestionQuestionid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "egzaminator_egzaminator_id")

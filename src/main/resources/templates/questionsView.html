@@ -20,7 +20,7 @@
 
 			<article class="question-box" th:each="question: ${questions}">
 				<div class="question-box-content">
-					<h3 th:text="${question.id + ' ' + question.content}"></h3>
+					<h3 th:text="${question.content}"></h3>
 				</div>
 			</article>
 		</div>

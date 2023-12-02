@@ -1,10 +1,12 @@
 package com.example.exams.Services;
 
-import com.example.exams.Model.Data.MN.Openquestion;
+import com.example.exams.Model.Data.db.Openquestion;
 import com.example.exams.Repositories.Db.OpenQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,5 +30,21 @@ public class OpenQuestionService {
     public Openquestion GetOpenQuestion(int questionID){
         Optional<Openquestion> existingOpenQuestionOptional = openQuestionRepository.findById(questionID);
         return existingOpenQuestionOptional.orElse(null);
+    }
+    public Openquestion AddOpenQuestion(Openquestion newOpenQuestion){
+        return openQuestionRepository.save(newOpenQuestion);
+    }
+
+    public List<Openquestion> getAll() {
+        return openQuestionRepository.findAll();
+    }
+
+    @Transactional
+    public boolean deleteOpenQuestion(Integer questionID) {
+        if (openQuestionRepository.existsById(questionID)) {
+            openQuestionRepository.deleteById(questionID);
+            return true;
+        }
+        return false;
     }
 }

@@ -18,6 +18,6 @@ public class Answeropen {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "openquestion_questionid", nullable = false)
-    private OpenquestionEntity openquestionQuestionid;
+    private Openquestion openquestionQuestionid;
 
 }
