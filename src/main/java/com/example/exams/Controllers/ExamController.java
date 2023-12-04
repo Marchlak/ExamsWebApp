@@ -1,26 +1,35 @@
-package com.example.exams.Controllers;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.exams.Model.Data.db.Egzaminator;
+import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Services.ExamService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.ui.Model;
-@RestController
-@RequestMapping("/exams")
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
 public class ExamController {
 
     @Autowired
-    private ExamService examService;
+    ExamService examService;
 
-    @DeleteMapping("/{examId}")
-    public void deleteExam(@PathVariable Integer examId) {
-        examService.deleteExam(examId);
+    @GetMapping("/createExam/{egzaminator_egzaminator_id}")
+    public ModelAndView AddExam(@PathVariable Integer egzaminator_egzaminator_id){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("createExam");
+        modelAndView.addObject("egzaminator_egzaminator_id", egzaminator_egzaminator_id);
+        return modelAndView;
     }
-
-    @GetMapping("/showExams")
-    public String showExams(Model model) {
-        model.addAttribute("exams", examService.getAllExams());
-        return "showExams";
+    @PostMapping("/addExam/{egzaminator_egzaminator_id}")
+    public ResponseEntity<String> UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id){
+        Egzaminator egzaminator = new Egzaminator();
+        egzaminator.setId(egzaminator_egzaminator_id);
+        exam.setEgzaminatorEgzaminator(egzaminator);
+        Exam addedExam = examService.AddExam(exam);
+        return ResponseEntity.ok("Question updated successfully");
     }
 }
 

@@ -1,25 +1,23 @@
-package com.example.exams.Services;
-
-
 import com.example.exams.Model.Data.db.Exam;
+import com.example.exams.Repositories.Db.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
-import com.example.exams.Repositories.Db.ExamRepository;
-import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class ExamService {
-
+    private final ExamRepository examRepository;
     @Autowired
-    private ExamRepository examRepository;
-
-    public void deleteExam(Integer examId) {
-        Optional<Exam> exam = examRepository.findById(examId);
-        exam.ifPresent(examRepository::delete);
+    public ExamService(ExamRepository examRepository){
+        this.examRepository = examRepository;
     }
-    @Transactional
-    public List<Exam> getAllExams() {
-        return examRepository.findAll();
+    public Exam AddExam(Exam exam){
+        return examRepository.save(exam);
+    }
+    public Exam GetExam(int id){
+        Optional<Exam> exam = examRepository.findById(id);
+        return exam.orElse(null);
+>>>>>>> origin/master
     }
 }

@@ -11,7 +11,7 @@ body {
 	font-family: 'Poppins', sans-serif;
 }
 
-.create-exam-box {
+.edit-exam-box {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -28,7 +28,7 @@ body {
 	z-index: 100;
 }
 
-.create-exam-box h2 {
+.edit-exam-box h2 {
 	color: black;
 }
 
@@ -158,8 +158,8 @@ button {
 	background-color: #0be989;
 }
 
-.cancel-create-exam::before,
-.cancel-create-exam::after {
+.cancel-edit-exam::before,
+.cancel-edit-exam::after {
 	background-color: #e90b55;
 }
 

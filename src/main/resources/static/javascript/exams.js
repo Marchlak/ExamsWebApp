@@ -1,16 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
     let createExamButton = document.querySelector('.create-exam-submit')
-    let examBox = document.querySelector('.exam-box')
+    let editExamButton = document.querySelector('.edit-exam')
+    let createExamBox = document.querySelector('.create-exam-box')
+    let editExamBox = document.querySelector('.edit-exam-box')
+    let cancelCreateButton = document.querySelector('.cancel-create-exam')
+    let cancelEditButton = document.querySelector('.cancel-edit-exam')
     let overlay = document.getElementById('overlay')
-    let cancelButton = document.querySelector('.cancel')
 
     createExamButton.addEventListener('click', function () {
-        examBox.classList.toggle('hidden')
+        createExamBox.classList.toggle('hidden')
         overlay.classList.toggle('hidden')
     })
 
-    cancelButton.addEventListener('click', function () {
-        examBox.classList.add('hidden')
+    editExamButton.addEventListener('click', function () {
+        editExamBox.classList.toggle('hidden')
+        overlay.classList.toggle('hidden')
+    })
+
+    cancelCreateButton.addEventListener('click', function () {
+        createExamBox.classList.add('hidden')
+        overlay.classList.add('hidden')
+    })
+
+    cancelEditButton.addEventListener('click', function () {
+        editExamBox.classList.add('hidden')
         overlay.classList.add('hidden')
     })
 })

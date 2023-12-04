@@ -1,161 +1,187 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link
+<head>
+	<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 			integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer" />
-		<link rel="stylesheet" th:href="@{/css/showExams.css}" />
-		<link rel="stylesheet" th:href="@{/css/createExam.css}" />
-		<link rel="stylesheet" href="../static/css/showExams.css" />
-		<link rel="stylesheet" href="../static/css/createExam.css" />
-	</head>
-	<body>
-		<div class="container-nav">
-			<div id="nav">
-				<ul>
-					<li class="menu"><a>Questions</a></li>
-					<li class="menu"><a>Exams</a></li>
-					<li class="menu"><a>Results</a></li>
-					<li class="menu"><a>Contact us</a></li>
-					<li class="menu"><a>About App</a></li>
-					<div class="icon-container">
-						<i class="fa-regular fa-bell"></i>
-						<i class="fa-regular fa-user"></i>
-						<i class="fa-solid fa-chevron-down"></i>
-					</div>
-				</ul>
+	<link rel="stylesheet" th:href="@{/css/showExams.css}" />
+	<link rel="stylesheet" th:href="@{/css/createExam.css}" />
+	<link rel="stylesheet" th:href="@{/css/editExam.css}" />
+	<link rel="stylesheet" href="../static/css/showExams.css" />
+	<link rel="stylesheet" href="../static/css/createExam.css" />
+	<link rel="stylesheet" href="../static/css/editExam.css" />
+</head>
+<body>
+<div class="container-nav">
+	<div id="nav">
+		<ul>
+			<li class="menu"><a>Questions</a></li>
+			<li class="menu"><a>Exams</a></li>
+			<li class="menu"><a>Results</a></li>
+			<li class="menu"><a>Contact us</a></li>
+			<li class="menu"><a>About App</a></li>
+			<div class="icon-container">
+				<i class="fa-regular fa-bell"></i>
+				<i class="fa-regular fa-user"></i>
+				<i class="fa-solid fa-chevron-down"></i>
 			</div>
-			<div class="logo-container">
-				<div class="logo">Examify365</div>
+		</ul>
+	</div>
+	<div class="logo-container">
+		<div class="logo">Examify365</div>
+	</div>
+</div>
+
+<div class="container-list">
+	<p>Exam Listing</p>
+
+	<form class="search-form">
+		<input type="search" placeholder="Search..." />
+		<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+	</form>
+
+	<form class="filter-form">
+		<select id="sortOrder" name="sortOrder" aria-placeholder="Filter">
+			<option value="" selected disabled hidden>Filter</option>
+			<option>Option 1</option>
+			<option>Option 2</option>
+			<option>Option 3</option>
+			<option>Option 4</option>
+			<option>Option 5</option>
+		</select>
+		<i class="fa-solid fa-filter"></i>
+	</form>
+
+	<form class="add-exam-form">
+		<button type="button" class="create-exam-submit"><i class="fa-solid fa-plus"></i>Create Exam</button>
+	</form>
+
+	<table cellspacing="0" cellpadding="0">
+		<thead>
+		<tr>
+			<th class="exam-id"><span>Exam ID</span></th>
+			<th class="exam-description"><span>Description</span></th>
+			<th class="exam-start-date"><span>Start Date</span></th>
+			<th class="exam-end-date"><span>End Date</span></th>
+			<th class="exam-subject"><span>Subject</span></th>
+			<th class="exam-questions"><span>Questions</span></th>
+			<th class="exam-operations"><span>Operations</span></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>1</td>
+			<td>Exam Description</td>
+			<td>Start Date</td>
+			<td>End Date</td>
+			<td>Subject</td>
+			<td>Questions</td>
+			<td>
+				<button type="submit" class="edit-delete edit-exam"><i class="fa-solid fa-pen"></i>Edit</button>
+				<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="overlay hidden" id="overlay"></div>
+
+<div class="create-exam-box hidden">
+	<h2>Create a new Exam</h2>
+	<div class="contener">
+		<div class="buttonsImg">
+			<img th:src="@{/images/createExam.jpg}" alt="" srcset="" />
+			<div class="buttons">
+				<button class="cancel-create-exam">Cancel</button> <button class="createExam" type="submit">Create Exam</button>
 			</div>
 		</div>
 
-		<div class="container-list">
-			<p>Exam Listing</p>
+		<form th:action="@{/createExam}" th:object="${exam}" method="post" role="form">
+			<div class="input-box">
+				<label>Subject</label>
+				<input type="text" name="subject" class="form-control" />
+			</div>
 
-			<form class="search-form">
-				<input type="search" placeholder="Search..." />
-				<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-			</form>
+			<div class="input-box">
+				<label>Description</label
+				><input type="text"  name="description" class="form-control" />
+			</div>
 
-			<form class="filter-form">
-				<select id="sortOrder" name="sortOrder" aria-placeholder="Filter">
-					<option value="" selected disabled hidden>Filter</option>
-					<option>Option 1</option>
-					<option>Option 2</option>
-					<option>Option 3</option>
-					<option>Option 4</option>
-					<option>Option 5</option>
-				</select>
-				<i class="fa-solid fa-filter"></i>
-			</form>
-
-			<form class="add-exam-form">
-				<button type="button" class="create-exam-submit"><i class="fa-solid fa-plus"></i>Create Exam</button>
-			</form>
-
-			<table cellspacing="0" cellpadding="0">
-				<thead>
-					<tr>
-						<th class="exam-id"><span>Exam ID</span></th>
-						<th class="exam-description"><span>Description</span></th>
-						<th class="exam-start-date"><span>Start Date</span></th>
-						<th class="exam-end-date"><span>End Date</span></th>
-						<th class="exam-subject"><span>Subject</span></th>
-						<th class="exam-questions"><span>Questions</span></th>
-						<th class="exam-operations"><span>Operations</span></th>
-					</tr>
-				</thead>
-				<tbody>
-				<form th:object="${exams}" th:action="@{/exams}" method="post">
-				<tr th:each="exam : ${exams}">
-					<td th:text="${exam.id}"></td>
-					<td th:text="${exam.description}"></td>
-					<td th:text="${exam.startdate}"></td>
-					<td th:text="${exam.enddate}"></td>
-					<td th:text="${exam.subjectSubjectid.name}"></td>
-						<td>
-							<button type="submit" class="edit-delete"><i class="fa-solid fa-pen"></i>Edit</button>
-							<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="overlay hidden" id="overlay"></div>
-		<div class="exam-box hidden">
-			<h2>Create a new Exam</h2>
-			<div class="contener">
-				<div class="buttonsImg">
-					<img src="../static/images/createExam.jpg" alt="" srcset="" />
-					<div class="buttons">
-						<button class="cancel">Cancel</button> <button class="createExam" type="submit">Create Exam</button>
-					</div>
+			<div class="date-box">
+				<div class="start-date">
+					<label>Start Date</label>
+					<input type="date" class="date" name="data" />
+					<input type="time" class="time" name="czas" />
 				</div>
 
-				<form th:action="@{/createExam}" th:object="${exam}" method="post" role="form">
-					<div class="input-box">
-						<label for="subject">Subject</label>
-	<!--					<input type="text" id="subject" name="subject" class="form-control" th:field="*{subject}" /> -->
-						<input type="text" id="subject" name="subject" class="form-control" />
-					</div>
+				<div class="end-date">
+					<label>End Date</label>
+					<input type="date" class="date" name="data" />
+					<input type="time" class="time" name="czas" />
+				</div>
+			</div>
 
-					<div class="input-box">
-	<!--					<label for="description">Description</label
-						><input type="text" id="description" name="description" class="form-control" th:field="*{description}" /> !-->
-						<label for="description">Description</label
-						><input type="text" id="description" name="description" class="form-control" />
-					</div>
+			<div class="questions">
+				<label >Questions List</label>
 
-					<div class="date-box">
-						<div class="start-date">
-							<label for="data">Start Date</label>
-							<input type="date" id="data" name="data" />
-							<input type="time" id="czas" name="czas" />
-						</div>
+				<div class="questionList"><p class="info">You don't have any questions!</p></div>
 
-						<div class="end-date">
-							<label for="data">End Date</label>
-							<input type="date" id="data" name="data" />
-							<input type="time" id="czas" name="czas" />
-						</div>
-					</div>
-
-					<div class="questions">
-						<label for="subject">Questions List</label>
-
-						<div class="questionList"><p class="info">You don't have any questions!</p></div>
-
-						<button class="addQuestion">Add Question</button>
-					</div>
-				</form>
+				<button class="addQuestion">Add Question</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="edit-exam-box hidden">
+	<h2>Edit an Exam</h2>
+	<div class="contener">
+		<div class="buttonsImg">
+			<img th:src="@{/images/editExam.jpg}" alt="" srcset="" />
+			<div class="buttons">
+				<button class="cancel-edit-exam">Cancel</button> <button class="createExam" type="submit">Edit Exam</button>
 			</div>
 		</div>
 
-		<script src="../static/javascript/exams.js"></script>
+		<form th:action="@{/editExam}" th:object="${exam}" method="post" role="form">
+			<div class="input-box">
+				<label >Subject</label>
+				<input type="text" name="subject" class="form-control" />
+			</div>
 
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				let createExamButton = document.querySelector('.create-exam-submit')
-				let examBox = document.querySelector('.exam-box')
-				let overlay = document.getElementById('overlay')
-				let cancelButton = document.querySelector('.cancel')
+			<div class="input-box">
+				<label>Description</label
+				><input type="text" name="description" class="form-control" />
+			</div>
 
-				createExamButton.addEventListener('click', function () {
-					examBox.classList.toggle('hidden')
-					overlay.classList.toggle('hidden')
-				})
+			<div class="date-box">
+				<div class="start-date">
+					<label>Start Date</label>
+					<input type="date" class="date" name="data" />
+					<input type="time" class="time" name="czas" />
+				</div>
 
-				cancelButton.addEventListener('click', function () {
-					examBox.classList.add('hidden')
-					overlay.classList.add('hidden')
-				})
-			})
-		</script>
+				<div class="end-date">
+					<label>End Date</label>
+					<input type="date" class="date" name="data" />
+					<input type="time" class="time" name="czas" />
+				</div>
+			</div>
 
-	</body>
+			<div class="questions">
+				<label>Questions List to Edit</label>
+
+				<div class="questionList"><p class="info">-------</p></div>
+
+				<button class="addQuestion">Edit Questions</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" th:src="@{/javascript/exams.js}"></script>
+<script src="../static/javascript/exams.js"></script>
+</body>
 </html>
