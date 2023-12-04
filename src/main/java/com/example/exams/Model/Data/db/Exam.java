@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -21,8 +22,14 @@ public class Exam {
     @Column(name = "startdate")
     private LocalDate startdate;
 
+    @Column(name = "starttime")
+    private LocalTime starttime;
+
     @Column(name = "enddate")
     private LocalDate enddate;
+
+    @Column(name = "endtime")
+    private LocalTime endtime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subject_subjectid", nullable = false)
