@@ -21,7 +21,7 @@ public class ExamController {
     @GetMapping("/createExam/{egzaminator_egzaminator_id}")
     public ModelAndView AddExam(@PathVariable Integer egzaminator_egzaminator_id){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("addExam");
+        modelAndView.setViewName("createExam");
         modelAndView.addObject("egzaminator_egzaminator_id", egzaminator_egzaminator_id);
         return modelAndView;
     }
