@@ -26,4 +26,8 @@ public class Openquestion {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "subject_subjectid", nullable = true)
     private Subject subject_subjectid;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @JoinColumn(name = "exam_id", nullable = true)
+    private Exam exam_id;
 }

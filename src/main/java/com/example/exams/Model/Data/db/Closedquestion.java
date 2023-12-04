@@ -26,4 +26,9 @@ public class Closedquestion {
     @JoinColumn(name = "subject_subjectid", nullable = false)
     private Subject subjectSubjectid;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name = "exam_id", nullable = false)
+    private Exam exam_id;
+
+
 }

@@ -29,14 +29,6 @@ public class Exam {
     private Subject subjectSubjectid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "closedquestion_questionid")
-    private Closedquestion closedquestionQuestionid;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "openquestion_questionid")
-    private Openquestion openquestionQuestionid;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "egzaminator_egzaminator_id")
     private Egzaminator egzaminatorEgzaminator;
 
