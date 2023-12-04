@@ -1,0 +1,267 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family:  "Manrope", Helvetica;
+}
+.container-nav {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+.logo-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 9vh;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    font-weight: 700;
+    color: #060606;
+    font-size: 22px;
+}
+
+#nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    background-color: #f8f9fa;
+    box-shadow: 0px 2px 5px 0px rgba(23, 26, 31, 0.09), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
+    position: absolute;
+    margin:auto;
+    height: 9vh;
+    top: 0;
+}
+
+#nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 22px;
+}
+
+#nav ul li a {
+    text-decoration: none;
+    color: #424856;
+    display: block;
+    padding: 0.5vh 1vw;
+}
+
+.icon-container{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 9vh;
+    font-size: 22px;
+    top: 0;
+    right: 0;
+    color: black;
+}
+
+.fa-regular.fa-bell {
+    margin-right: 20px;
+}
+
+.fa-solid.fa-chevron-down{
+    font-size: 16px;
+    margin-left: 4px;
+}
+
+.menu:hover {
+    cursor: pointer;
+}
+
+#nav ul li a:hover{
+    color: #6D31ED;
+}
+
+
+p{
+    position: absolute;
+    top: 12vh;
+    left: 4vw;
+    color: #171a1f;
+    font-size: 32px;
+    letter-spacing: 0;
+}
+
+.search-form {
+    position: absolute;
+    top: 20vh;
+    left: 4vw;
+    display: flex;
+    width: 20vw;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    border: 1px solid #9095A1;
+    background: #FFF;
+}
+
+input[type="search"] {
+    background: transparent;
+    width: 18vw;
+    padding: 7px 8px;
+    font-size: 14px;
+    border: none;
+}
+
+input[type="search"]::placeholder {
+    color: #BDC1CA;
+}
+
+.search-submit {
+    border: none;
+    background: transparent;
+    opacity: 0.7;
+    color: #171A1F;
+}
+
+button[type="submit"]:hover {
+    opacity: 1;
+}
+
+
+button[type="submit"]:focus,
+input[type="search"]:focus {
+    border: 1px;
+    outline: none;
+}
+
+.filter-form{
+    position: absolute;
+    top: 20vh;
+    left: 25vw;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #9095A1;
+    background: #FFF;
+}
+
+select{
+    border: none;
+    background: transparent;
+    padding: 7px 8px;
+    font-size: 14px;
+    appearance: none;
+}
+
+select:focus{
+    outline: none;
+}
+
+.fa-solid.fa-filter{
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+.add-exam-form{
+    position: absolute;
+    top: 20vh;
+    right: 12.5vw;
+}
+
+.create-exam-submit{
+    border: none;
+    border-radius: 4px;
+    background: #382F4B;
+    display: inline-flex;
+    padding: 6px 20px;
+    align-items: center;
+    gap: 8px;
+    color: #FFF;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.fa-solid.fa-plus{
+    padding-right: 8px;
+    font-size: 14px;
+}
+
+
+table {
+    position: absolute;
+    top: 30vh;
+    left: 4vw;
+}
+
+table thead {
+    cursor: pointer;
+    background: #c9dff0;
+}
+
+table thead tr th {
+    font-weight: bold;
+    padding: 12px 10px;
+    border: 1px solid #F3F4F6;
+    background: #FAFAFB;
+}
+
+table thead tr th span {
+    text-align: center;
+}
+
+table tbody tr {
+    color: #555;
+}
+table tbody tr td {
+    font-size: 14px;
+    text-align: center;
+    padding: 6px 10px;
+    border: 1px solid #F3F4F6;
+
+    background: #FFF;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.edit-delete{
+    border: none;
+    border-radius: 4px;
+    background: #6D31ED;
+    display: inline-flex;
+    padding: 5px 18px 5px 14px;
+    align-items: center;
+    gap: 8px;
+    color: #FFF;
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.exam-id{
+    width: 5vw;
+}
+
+.exam-description{
+    width: 15vw;
+}
+
+.exam-start-date,
+.exam-end-date{
+    width: 5vw;
+}
+
+.exam-subject{
+    width: 8vw;
+}
+
+.exam-questions{
+    width: 25vw;
+}
+
+button:hover{
+    cursor: pointer;
+}

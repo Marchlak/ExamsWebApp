@@ -22,6 +22,13 @@ public class Controller {
         return modelAndView;
     }
 
+    @GetMapping("/exams")
+    public ModelAndView exams() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("showExams");
+        return modelAndView;
+    }
+
     @GetMapping("/register")
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView();
