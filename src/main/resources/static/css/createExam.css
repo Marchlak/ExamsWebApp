@@ -96,11 +96,11 @@ form input {
 	background-color: #efe4ff;
 }
 
-#data {
+.date {
 	width: 130px;
 }
 
-#czas {
+.time {
 	width: 90px;
 	margin-bottom: 10%;
 }
