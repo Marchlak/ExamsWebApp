@@ -100,25 +100,25 @@
 				<form th:action="@{/createExam}" th:object="${exam}" method="post" role="form">
 					<div class="input-box">
 						<label for="subject">Subject</label>
-						<input type="text" id="subject" name="subject" class="form-control" th:field="*{subject}" />
+						<input type="text" id="subject" name="subject" class="form-control" />
 					</div>
 
 					<div class="input-box">
 						<label for="description">Description</label
-						><input type="text" id="description" name="description" class="form-control" th:field="*{description}" />
+						><input type="text" id="description" name="description" class="form-control" />
 					</div>
 
 					<div class="date-box">
 						<div class="start-date">
-							<label for="data">Start Date</label>
-							<input type="date" id="data" name="data" />
-							<input type="time" id="czas" name="czas" />
+							<label>Start Date</label>
+							<input type="date" class="date" name="data" />
+							<input type="time" class="time" name="czas" />
 						</div>
 
 						<div class="end-date">
-							<label for="data">End Date</label>
-							<input type="date" id="data" name="data" />
-							<input type="time" id="czas" name="czas" />
+							<label>End Date</label>
+							<input type="date" class="date" name="data" />
+							<input type="time" class="time" name="czas" />
 						</div>
 					</div>
 
