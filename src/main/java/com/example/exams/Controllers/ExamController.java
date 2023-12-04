@@ -1,3 +1,5 @@
+package com.example;
+
 import com.example.exams.Model.Data.db.Egzaminator;
 import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Services.ExamService;

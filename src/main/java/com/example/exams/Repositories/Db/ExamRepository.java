@@ -1,11 +1,8 @@
-import com.example.exams.Model.Data.db.Exam;
+package com.example.exams.Repositories.Db;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.example.exams.Model.Data.db.Exam;
 
-import java.util.Optional;
-
-
-@Repository
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
+    // Tutaj możesz dodać dodatkowe metody, jeśli są potrzebne
 }
-

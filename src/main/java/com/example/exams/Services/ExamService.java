@@ -1,8 +1,11 @@
+package com.example.exams.Services;
+
 import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Repositories.Db.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,9 +18,12 @@ public class ExamService {
     public Exam AddExam(Exam exam){
         return examRepository.save(exam);
     }
+
+    public List<Exam> getAllExams() {
+        return examRepository.findAll();
+    }
     public Exam GetExam(int id){
         Optional<Exam> exam = examRepository.findById(id);
         return exam.orElse(null);
->>>>>>> origin/master
     }
 }

@@ -1,6 +1,5 @@
 package com.example.exams.Controllers;
 
-import com.example.exams.Services.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Services.LoginsService;
@@ -8,7 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.Model;
+import com.example.exams.Services.ExamService;
+
 @RestController
 public class Controller {
 
@@ -16,8 +16,12 @@ public class Controller {
     LoginsService loginsService;
 
     @Autowired
-    private ExamService examService;
+    ExamService examService;
 
+    public Controller(ExamService examService)
+    {
+        this.examService = examService;
+    }
 
     @GetMapping("/login")
     public ModelAndView login(Model model) {
