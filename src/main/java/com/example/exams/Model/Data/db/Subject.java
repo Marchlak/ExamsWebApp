@@ -16,12 +16,5 @@ public class Subject {
     @Column(name = "name", length = 20)
     private String name;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "openquestion_questionid", nullable = false)
-    private Openquestion openquestionQuestionid;
-
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "closedquestion_questionid", nullable = false)
-    private Closedquestion closedquestionQuestionid;
 
 }

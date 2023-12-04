@@ -70,13 +70,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Exam Description</td>
-						<td>Start Date</td>
-						<td>End Date</td>
-						<td>Subject</td>
-						<td>Questions</td>
+				<form th:object="${exams}" th:action="@{/exams}" method="post">
+				<tr th:each="exam : ${exams}">
+					<td th:text="${exam.id}"></td>
+					<td th:text="${exam.description}"></td>
+					<td th:text="${exam.startdate}"></td>
+					<td th:text="${exam.enddate}"></td>
+					<td th:text="${exam.subjectSubjectid.name}"></td>
 						<td>
 							<button type="submit" class="edit-delete"><i class="fa-solid fa-pen"></i>Edit</button>
 							<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
