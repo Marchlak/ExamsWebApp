@@ -1,11 +1,11 @@
 package com.example.exams.Model.Data.ProperDataModels;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class User {
-    private Integer accountid;
-
     private String firstname;
 
     private String lastname;

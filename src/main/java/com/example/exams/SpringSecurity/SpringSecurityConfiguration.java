@@ -1,14 +1,22 @@
 package com.example.exams.SpringSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -17,25 +25,25 @@ public class SpringSecurityConfiguration {
     @Autowired
     UserDetailsService customUserDetailsService;
 
-//    @Bean
-//    public AuthenticationManager authenticationManager() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(customUserDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        List<AuthenticationProvider> providers = List.of(authProvider);
-//        return new ProviderManager(providers);
-//    }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("1").password("{noop}1").roles("ADMIN")
-                .and()
-                .withUser("TestEgzaminator").password("{noop}testEgzaminator").roles("EXAMINER")
-                .and()
-                .withUser("TestStudent").password("{noop}testStudent").roles("STUDENT");
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(customUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        List<AuthenticationProvider> providers = List.of(authProvider);
+        return new ProviderManager(providers);
     }
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("1").password("{noop}1").roles("ADMIN")
+//                .and()
+//                .withUser("TestEgzaminator").password("{noop}testEgzaminator").roles("EXAMINER")
+//                .and()
+//                .withUser("TestStudent").password("{noop}testStudent").roles("STUDENT");
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -76,9 +84,9 @@ public class SpringSecurityConfiguration {
         return http.build();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
 }
