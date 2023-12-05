@@ -1,9 +1,6 @@
 package com.example.exams.Model.Data.db;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +10,9 @@ import lombok.Setter;
 @Table(name = "administrator")
 public class Administrator {
     @Id
-    @Column(name = "accountid", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "administrator_id", nullable = false)
+    private Integer administrator_id;
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
@@ -28,7 +26,9 @@ public class Administrator {
     @Column(name = "password", length = 20)
     private String password;
 
-    @Column(name = "email", length = 20)
+    @Column(name = "email", length = 40)
     private String email;
 
+    @Column(name = "verification_status", nullable = false)
+    private boolean verificationStatus;
 }

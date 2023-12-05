@@ -112,8 +112,8 @@ h2 {
 #content{
     min-width: 100%;
     max-width: 100%;
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 70px;
+    max-height: 70px;
     background-color: transparent;
     border: none;
     resize: none;
@@ -215,35 +215,33 @@ span {
 }
 
 .category-input-box select {
-    margin-top: 5px; /* Zmniejszenie odstępu od napisu "Category" */
+    margin-top: 5px;
     font-weight: bold;
     color: #db7093;
     background: transparent;
     border: none;
     position: relative;
     width: 100%;
-    margin: 15px 0 30px; /* Zmniejszenie odstępu od poprzedniego elementu i dodanie odstępu na dole */
+    margin: 15px 0 30px;
     outline: none;
     font-size: 1.2em;
     border-bottom: 3px solid aliceblue;
 
-    padding: 10px; /* Dodanie wewnętrznego odstępu dla lepszego wyglądu */
+    padding: 10px;
     text-align-last: center;
 }
 
 .category-input-box label {
     transition: 0.3s;
-    /*position: absolute;*/
     top: 50%;
     left: 5px;
-    /*transform: translateY(-50%);*/
     font-size: 1em;
     pointer-events: none;
 }
 
 
 .category-input-box select option {
-    text-align: center; /* Wyśrodkowanie tekstu opcji */
+    text-align: center;
 }
 
 .category-input-box select:focus ~ label,

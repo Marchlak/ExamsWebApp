@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/editExam.css}" />
+</head>
+<body>
+<div class="edit-exam-box">
+  <h2>Edit an Exam</h2>
+  <div class="contener">
+    <div class="buttonsImg">
+      <img th:src="@{/images/editExam.jpg}" alt="" srcset="" />
+      <div class="buttons">
+        <button class="cancel-edit-exam">Cancel</button> <button class="createExam" type="submit">Edit Exam</button>
+      </div>
+    </div>
+    <input type="hidden" name="examId" th:value="${examId}" />
+
+    <form th:action="@{/editExamDetails/{examId}(examId=${examId})}" th:object="${exam}" method="post" role="form">
+
+      <div class="input-box">
+        <label>Subject</label>
+        <select name="subject" class="form-control">
+          <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+        </select>
+      </div>
+      <div class="input-box">
+        <label>Description</label
+        ><input type="text" name="description" class="form-control" />
+      </div>
+
+      <div class="date-box">
+        <div class="start-date">
+          <label>Start Date</label>
+          <input type="date" class="data" name="startdate" />
+          <input type="time" class="czas" name="starttime" />
+        </div>
+
+        <div class="end-date">
+          <label>End Date</label>
+          <input type="date" class="data" name="enddate" />
+          <input type="time" class="czas" name="endtime" />
+        </div>
+      </div>
+
+      <div class="questions">
+        <label>Questions List to Edit</label>
+
+        <div class="questionList"><p class="info">-------</p></div>
+
+        <button class="addQuestion">Edit Questions</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+</body>
+</html>

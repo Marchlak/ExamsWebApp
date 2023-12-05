@@ -26,4 +26,7 @@ public class ExamService {
         Optional<Exam> exam = examRepository.findById(id);
         return exam.orElse(null);
     }
+    public void updateExam(Exam updatedExam) {
+        examRepository.save(updatedExam);
+    }
 }

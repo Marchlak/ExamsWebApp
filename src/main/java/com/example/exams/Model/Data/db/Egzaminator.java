@@ -11,8 +11,8 @@ import lombok.Setter;
 public class Egzaminator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "egzaminator_id", nullable = false)
-    private Integer id;
+    @Column(name = "examiner_id", nullable = false)
+    private Integer examiner_id;
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
@@ -26,7 +26,9 @@ public class Egzaminator {
     @Column(name = "password", length = 20)
     private String password;
 
-    @Column(name = "email", length = 20)
+    @Column(name = "email", length = 40)
     private String email;
 
+    @Column(name = "verification_status", nullable = false)
+    private boolean verificationStatus;
 }

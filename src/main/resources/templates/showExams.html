@@ -9,10 +9,8 @@
 			referrerpolicy="no-referrer" />
 	<link rel="stylesheet" th:href="@{/css/showExams.css}" />
 	<link rel="stylesheet" th:href="@{/css/createExam.css}" />
-	<link rel="stylesheet" th:href="@{/css/editExam.css}" />
 	<link rel="stylesheet" href="../static/css/showExams.css" />
 	<link rel="stylesheet" href="../static/css/createExam.css" />
-	<link rel="stylesheet" href="../static/css/editExam.css" />
 </head>
 <body>
 <div class="container-nav">
@@ -74,7 +72,7 @@
 
 		<tbody>
 		<tr>
-			<form th:object="${exams}" th:action="@{/exams}" method="post">
+			<form th:object="${exams}" th:action="@{/processForm}" method="post">
 		<tr th:each="exam : ${exams}">
 			<td th:text="${exam.id}"></td>
 			<td th:text="${exam.description}"></td>
@@ -83,8 +81,12 @@
 			<td th:text="${exam.subjectSubjectid.name}"></td>
 			<td></td>
 			<td>
-				<button type="submit" class="edit-delete edit-exam"><i class="fa-solid fa-pen"></i>Edit</button>
-				<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
+				<button type="submit" name="action" th:value="'edit:'+ ${exam.id}" class="edit-delete edit-exam">
+					<i class="fa-solid fa-pen"></i>Edit
+				</button>
+				<button type="submit" name="action" th:value="'delete:'+ ${exam.id}" class="edit-delete">
+					<i class="fa-solid fa-trash"></i>Delete
+				</button>
 			</td>
 		</tr>
 			</form>

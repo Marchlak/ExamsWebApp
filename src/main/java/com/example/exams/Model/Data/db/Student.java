@@ -10,8 +10,9 @@ import lombok.Setter;
 @Table(name = "student")
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id", nullable = false)
-    private Integer id;
+    private Integer student_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_classid")
@@ -20,9 +21,6 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_examid")
     private Exam examExamid;
-
-    @Column(name = "accountid", nullable = false)
-    private Integer accountid;
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
@@ -36,7 +34,7 @@ public class Student {
     @Column(name = "password", length = 20)
     private String password;
 
-    @Column(name = "email", length = 20)
+    @Column(name = "email", length = 40)
     private String email;
 
 }

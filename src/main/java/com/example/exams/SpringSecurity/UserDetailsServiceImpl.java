@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     AdministratorsEntityRepository administratorsEntityRepository;
 
@@ -58,9 +59,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserDetails userDetails = null;
 
-        if (administrator != null) {
+        if (administrator != null && administrator.isVerificationStatus()) {
             userDetails = buildUserDetails(administrator.getLogin(), administrator.getPassword(), Collections.singleton("ADMIN"));
-        } else if (examiner != null) {
+        } else if (examiner != null && examiner.isVerificationStatus()) {
             userDetails = buildUserDetails(examiner.getLogin(), examiner.getPassword(), Collections.singleton("EXAMINER"));
         } else if (student != null) {
             userDetails = buildUserDetails(student.getLogin(), student.getPassword(), Collections.singleton("STUDENT"));
@@ -72,7 +73,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         if (userDetails == null) {
-            throw new UsernameNotFoundException("User " + username + " not found!");
+            throw new UsernameNotFoundException("User " + username + " not found or not verified!");
         }
 
         return userDetails;
@@ -88,3 +89,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
     }
 }
+
