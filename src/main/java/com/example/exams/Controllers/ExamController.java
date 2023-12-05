@@ -7,6 +7,8 @@ import com.example.exams.Services.EgzaminatorService;
 import com.example.exams.Services.ExamService;
 import com.example.exams.Services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,7 @@ public class ExamController {
         examService.updateExam(exam);
         return "redirect:/exams";
     }
+
     @GetMapping("/editExam/{examId}")
     public ModelAndView editExam(@PathVariable Integer examId, Model model) {
         List<Subject> subjects = subjectService.getAllSubjects();
@@ -61,15 +64,40 @@ public class ExamController {
         model.addAttribute("examId", examId);
         return modelAndView;
     }
+
+    @GetMapping("/confirmExamDeletion/{examId}")
+    public ModelAndView deleteExam(@PathVariable Integer examId, Model model) {
+//        boolean deleted = examService.deleteExam(examId);
+//        if (deleted) {
+//            return ResponseEntity.ok("Exam deleted successfully");
+//        }
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found");
+        Exam exam = examService.GetExam(examId);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("deleteExam");
+        modelAndView.addObject("exam", exam);
+        model.addAttribute("examId", examId);
+//        examService.deleteExam(examId);
+        return modelAndView;
+    }
+
+    @PostMapping("/deleteExam/{examId}")
+    public ResponseEntity<String> deleteExam(@RequestParam Integer examId) {
+        boolean deleted = examService.deleteExam(examId);
+        if (deleted) {
+            return ResponseEntity.ok("Exam deleted successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found");
+    }
+
     @PostMapping("/processForm")
-    public String processForm( @RequestParam("action") String action) {
-        Integer examId = Integer.parseInt(action.substring(5));
+    public String processForm(@RequestParam("action") String action) {
+
+        Integer examId = Integer.parseInt(action.substring(action.indexOf(':')+1));
         if (action.startsWith("edit:")) {
             return "redirect:/editExam/" + examId;
-        }
-        else if (action.startsWith("delete:")) {
-            // Cos tu wstaw
-            return "redirect:/deleteExam";
+        } else if (action.startsWith("delete:")) {
+            return "redirect:/confirmExamDeletion/" + examId;
         }
         return "error";
     }
