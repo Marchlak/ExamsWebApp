@@ -46,6 +46,13 @@ public class Controller {
         return modelAndView;
     }
 
+    @GetMapping("/logged")
+    public ModelAndView logged(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("logged");
+        return modelAndView;
+    }
+
     @GetMapping("/exams")
     public ModelAndView exams() {
         ModelAndView modelAndView = new ModelAndView();
@@ -85,17 +92,17 @@ public class Controller {
         }
     }
 
-    @GetMapping("/createQuestion")
-    public ModelAndView createQuestion() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("createQuestion");
-        return modelAndView;
-    }
+//    @GetMapping("/createQuestion")
+//    public ModelAndView createQuestion() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("createQuestion");
+//        return modelAndView;
+//    }
 
-    @GetMapping("/showQuestion")
-    public ModelAndView showQuestion() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("questionsView");
-        return modelAndView;
-    }
+//    @GetMapping("/showQuestion")
+//    public ModelAndView showQuestion() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("questionsView");
+//        return modelAndView;
+//    }
 }
