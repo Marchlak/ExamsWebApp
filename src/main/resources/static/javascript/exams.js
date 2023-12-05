@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let cancelEditButton = document.querySelector('.cancel-edit-exam')
     let overlay = document.getElementById('overlay')
 
+    document.querySelector('.createExam').addEventListener('click', function() {
+        document.getElementById('formularz').submit();
+    });
+
     createExamButton.addEventListener('click', function () {
         createExamBox.classList.toggle('hidden')
         overlay.classList.toggle('hidden')
@@ -27,7 +31,4 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.classList.add('hidden')
     })
 
-    document.querySelector('.createExam').addEventListener('click', function() {
-        document.getElementById('formularz').submit();
-    });
 })
