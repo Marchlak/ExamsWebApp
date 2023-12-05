@@ -1,5 +1,6 @@
 package com.example.exams.Controllers;
 
+import com.example.exams.Services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Services.LoginsService;
@@ -18,6 +19,9 @@ public class Controller {
     @Autowired
     ExamService examService;
 
+    @Autowired
+    SubjectService subjectService;
+
     public Controller(ExamService examService)
     {
         this.examService = examService;
@@ -35,6 +39,7 @@ public class Controller {
     public ModelAndView exams() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exams", examService.getAllExams());
+        modelAndView.addObject("subjects", subjectService.GetAll());
         modelAndView.setViewName("showExams");
         return modelAndView;
     }

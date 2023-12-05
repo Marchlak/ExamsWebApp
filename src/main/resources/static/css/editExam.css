@@ -209,3 +209,13 @@ button:hover::after {
 .hidden {
 	display: none;
 }
+
+.selectCreate {
+	width: 100%;
+	padding: 10px;
+	margin: 5px;
+	box-sizing: border-box;
+	border: none;
+	border-radius: 5px;
+	background-color: #efe4ff;
+}

@@ -30,7 +30,7 @@ public class SpringSecurityConfiguration {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("TestAdmin").password("{noop}testAdmin").roles("ADMIN")
+                .withUser("1").password("{noop}1").roles("ADMIN")
                 .and()
                 .withUser("TestEgzaminator").password("{noop}testEgzaminator").roles("EXAMINER")
                 .and()

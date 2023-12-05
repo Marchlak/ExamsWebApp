@@ -26,4 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         editExamBox.classList.add('hidden')
         overlay.classList.add('hidden')
     })
+
+    document.querySelector('.createExam').addEventListener('click', function() {
+        document.getElementById('formularz').submit();
+    });
 })

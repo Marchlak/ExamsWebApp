@@ -1,9 +1,6 @@
 package com.example.exams.Model.Data.db;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +9,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "egzaminator")
 public class Egzaminator {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "egzaminator_id", nullable = false)
     private Integer id;
-
-    @Column(name = "accountid", nullable = false)
-    private Integer accountid;
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;

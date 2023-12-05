@@ -71,6 +71,7 @@
 			<th class="exam-operations"><span>Operations</span></th>
 		</tr>
 		</thead>
+
 		<tbody>
 		<tr>
 			<form th:object="${exams}" th:action="@{/exams}" method="post">
@@ -86,6 +87,7 @@
 				<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
 			</td>
 		</tr>
+			</form>
 		</tbody>
 	</table>
 </div>
@@ -95,35 +97,40 @@
 <div class="create-exam-box hidden">
 	<h2>Create a new Exam</h2>
 	<div class="contener">
-		<div class="buttonsImg">
-			<img th:src="@{/images/createExam.jpg}" alt="" srcset="" />
-			<div class="buttons">
-				<button class="cancel-create-exam">Cancel</button> <button class="createExam" type="submit">Create Exam</button>
+			<div class="buttonsImg">
+				<img th:src="@{/images/createExam.jpg}" alt="" srcset="" />
+				<div class="buttons">
+					<button class="cancel-create-exam">Cancel</button> <button class="createExam" type="submit">Create Exam</button>
+				</div>
 			</div>
-		</div>
 
-		<form th:action="@{/createExam}" th:object="${exam}" method="post" role="form">
+		<!--/*@thymesVar id="egzaminator_egzaminator_id" type="java.lang.Integer"*/-->
+		<form th:action="@{/addExam/1}" method="post" role="form" id="formularz">
 			<div class="input-box">
 				<label>Subject</label>
-				<input type="text" name="subject" class="form-control" />
+				<!--/*@thymesVar id="Subject" type="com.example.exams.Model.Data.db.Subject"*/-->
+				<!--/*@thymesVar id="subjects" type="java.util.List"*/-->
+				<select id="subjectid" name="subjectid" class="selectCreate">
+						<option th:each="Subject : ${subjects}" th:value="${Subject.id}" th:text="${Subject.name}"></option>
+				</select>
 			</div>
 
 			<div class="input-box">
-				<label>Description</label
-				><input type="text"  name="description" class="form-control" />
+				<label>Description</label>
+				<input type="text"  name="description" class="form-control" />
 			</div>
 
 			<div class="date-box">
 				<div class="start-date">
 					<label>Start Date</label>
-					<input type="date" class="date" name="data" />
-					<input type="time" class="time" name="czas" />
+					<input type="date" class="date" name="startdate" />
+					<input type="time" class="time" name="starttime" />
 				</div>
 
 				<div class="end-date">
 					<label>End Date</label>
-					<input type="date" class="date" name="data" />
-					<input type="time" class="time" name="czas" />
+					<input type="date" class="date" name="enddate" />
+					<input type="time" class="time" name="endtime" />
 				</div>
 			</div>
 
