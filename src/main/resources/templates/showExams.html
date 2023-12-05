@@ -18,8 +18,8 @@
 <div class="container-nav">
 	<div id="nav">
 		<ul>
-			<li class="menu"><a>Questions</a></li>
-			<li class="menu"><a>Exams</a></li>
+			<li class="menu"><a th:href="@{/question}">Questions</a></li>
+			<li class="menu"><a th:href="@{/exams}">Exams</a></li>
 			<li class="menu"><a>Results</a></li>
 			<li class="menu"><a>Contact us</a></li>
 			<li class="menu"><a>About App</a></li>
@@ -78,10 +78,10 @@
 		<tr th:each="exam : ${exams}">
 			<td th:text="${exam.id}"></td>
 			<td th:text="${exam.description}"></td>
-			<td th:text="${exam.startdate}"></td>
-			<td th:text="${exam.enddate}"></td>
+			<td th:text="${exam.startdate + ' ' + exam.starttime}"></td>
+			<td th:text="${exam.enddate + ' ' + exam.endtime}"></td>
 			<td th:text="${exam.subjectSubjectid.name}"></td>
-
+			<td></td>
 			<td>
 				<button type="submit" class="edit-delete edit-exam"><i class="fa-solid fa-pen"></i>Edit</button>
 				<button type="submit" class="edit-delete"><i class="fa-solid fa-trash"></i>Delete</button>
