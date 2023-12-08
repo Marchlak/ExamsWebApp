@@ -2,12 +2,17 @@ package com.example.exams.Controllers;
 
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Services.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -126,6 +131,22 @@ public class ExamController {
 
         modelAndView.addObject("listClosedQuestions", closedQuestionService.getAllByExamId(Integer.parseInt(examId)));
         modelAndView.addObject("closedAnswers", closedAnswers);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/saveResolvedExam")
+    public ModelAndView saveExam(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("showExams");
+
+        UserDetails user;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
+            user = (UserDetails) session.getAttribute("UsersEntity");
+        }
 
         return modelAndView;
     }
