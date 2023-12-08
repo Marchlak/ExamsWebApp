@@ -1,5 +1,6 @@
 package com.example.exams.Repositories.Db;
 
+import com.example.exams.Model.Data.db.Closedquestion;
 import com.example.exams.Model.Data.db.Openquestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OpenQuestionRepository extends JpaRepository<Openquestion, Integer> {
-    List<Openquestion> findByExamId(Integer examId);
+public interface ClosedQuestionRepository extends JpaRepository<Closedquestion, Integer> {
+    List<Closedquestion> findByExamId(Integer examId);
 }

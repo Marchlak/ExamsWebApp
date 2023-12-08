@@ -22,13 +22,11 @@ public class Closedquestion {
     @Column(name = "score")
     private Integer score;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_subjectid", nullable = false)
-    private Subject subjectSubjectid;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "subject_subjectid", nullable = true)
+    private Subject subject_subjectid;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "exam_id", nullable = false)
-    private Exam exam_id;
-
-
+    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @JoinColumn(name = "exam_id", nullable = true)
+    private Exam exam;
 }

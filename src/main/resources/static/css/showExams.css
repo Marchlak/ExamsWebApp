@@ -220,12 +220,27 @@ table tbody tr td {
     text-align: center;
     padding: 6px 10px;
     border: 1px solid #F3F4F6;
-
     background: #FFF;
+
+}
+
+.buttons_exam{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.solveExam{
+    width: 150px;
 }
 
 .bold{
     font-weight: bold;
+}
+
+.solveExam{
+    width: 160px;
 }
 
 .edit-delete{

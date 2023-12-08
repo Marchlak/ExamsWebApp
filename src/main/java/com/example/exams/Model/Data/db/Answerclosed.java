@@ -16,6 +16,9 @@ public class Answerclosed {
     @Column(name = "description", length = 100)
     private String description;
 
+    @Column(name = "isCorrect")
+    private boolean isCorrect;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "closedquestion_questionid", nullable = false)
     private Closedquestion closedquestionQuestionid;

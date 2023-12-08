@@ -1,11 +1,7 @@
 package com.example.exams.Controllers;
 
-import com.example.exams.Model.Data.db.Egzaminator;
-import com.example.exams.Model.Data.db.Exam;
-import com.example.exams.Model.Data.db.Subject;
-import com.example.exams.Services.EgzaminatorService;
-import com.example.exams.Services.ExamService;
-import com.example.exams.Services.SubjectService;
+import com.example.exams.Model.Data.db.*;
+import com.example.exams.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,8 +28,18 @@ public class ExamController {
     @Autowired
     EgzaminatorService egzaminatorService;
 
+    @Autowired
+    OpenQuestionService openQuestionService;
+
+    @Autowired
+    ClosedQuestionService closedQuestionService;
+
+    @Autowired
+    AnswerClosedService answerClosedService;
+
+
     @PostMapping("/addExam/{egzaminator_egzaminator_id}")
-    public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid){
+    public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid) {
 
         //Testy
         egzaminator_egzaminator_id = 1;
@@ -90,14 +100,46 @@ public class ExamController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found");
     }
 
+    @GetMapping("/solveExam/{examId}")
+    public ModelAndView getExamToSolve(@PathVariable String examId) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("solveExam");
+
+        Exam exam = examService.GetExam(Integer.parseInt(examId));
+        LocalDate startdate = exam.getStartdate();
+        LocalTime starttime = exam.getStarttime();
+
+        if (LocalTime.now().isAfter(starttime) && LocalDate.now().isAfter(startdate))
+            modelAndView.addObject("canSolve", true);
+        else
+            modelAndView.addObject("canSolve", false);
+
+        modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
+        modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+
+        List<Closedquestion> listClosedQuestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
+        List<List<Answerclosed>> closedAnswers = new ArrayList<>();
+
+
+        for (int i = 0; i < listClosedQuestions.size(); i++)
+            closedAnswers.add(answerClosedService.getAllByQuestionId(listClosedQuestions.get(i).getId()));
+
+        modelAndView.addObject("listClosedQuestions", closedQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        modelAndView.addObject("closedAnswers", closedAnswers);
+
+        return modelAndView;
+    }
+
     @PostMapping("/processForm")
     public String processForm(@RequestParam("action") String action) {
 
-        Integer examId = Integer.parseInt(action.substring(action.indexOf(':')+1));
+        Integer examId = Integer.parseInt(action.substring(action.indexOf(':') + 1));
         if (action.startsWith("edit:")) {
             return "redirect:/editExam/" + examId;
         } else if (action.startsWith("delete:")) {
             return "redirect:/confirmExamDeletion/" + examId;
+        } else if (action.startsWith("solveExam:")) {
+            return "redirect:/solveExam/" + examId;
         }
         return "error";
     }

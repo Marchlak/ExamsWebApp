@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solve Exam </title>
+</head>
+<body>
+
+<p th:text="'Description: ' + ${exam.getDescription()}"></p>
+
+
+<div th:if="${canSolve}">
+    <p th:text="'Exam starts at: ' + ${exam.getStarttime()}"></p>
+    <p th:text="'Exam ends at: ' + ${exam.getEndtime()}"></p>
+    <ul>
+        <li th:each="question : ${listOpenQuestions}">
+            <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
+            <p>Your answer:</p>
+            <textarea></textarea>
+        </li>
+
+        <li th:each="question, idx : ${listClosedQuestions}">
+            <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
+            <p>Choose answer:</p>
+            <div th:each="answer : ${closedAnswers[idx.index]}">
+                <input type="checkbox" th:text="${answer.getDescription()}"/>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+<div th:if="${!canSolve}">
+    <p>Sorry you can't solve this exam because exam doesn't start yet</p>
+    <p th:text="'Exam starts at: ' + ${exam.getStartdate()} +' ' +${exam.getStarttime()}"></p>
+</div>
+
+</body>
+</html>
