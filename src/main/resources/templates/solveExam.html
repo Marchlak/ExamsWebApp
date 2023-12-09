@@ -10,8 +10,8 @@
 <p th:text="'Description: ' + ${exam.getDescription()}"></p>
 
 <form th:if="${timeStarts} and not ${timeEnds}" action="/saveResolvedExam" method="post">
-    <p th:text="'Exam starts at: ' + ${exam.getStarttime()}"></p>
-    <p th:text="'Exam ends at: ' + ${exam.getEndtime()}"></p>
+    <p th:text="'Exam starts at: ' + ${exam.getStartTime()}"></p>
+    <p th:text="'Exam ends at: ' + ${exam.getEndTime()}"></p>
     <ul>
         <li th:each="question : ${listOpenQuestions}">
             <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>

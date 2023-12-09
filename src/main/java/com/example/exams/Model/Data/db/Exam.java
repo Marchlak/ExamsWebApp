@@ -10,34 +10,46 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "exam")
+//@Table(name = "exam")
 public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "examid", nullable = false)
+    @Column(name = "exam_id", nullable = false)
     private Integer id;
 
     @Column(name = "description", length = 100)
     private String description;
 
-    @Column(name = "startdate")
-    private LocalDate startdate;
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
-    @Column(name = "starttime")
-    private LocalTime starttime;
+    @Column(name = "start_time")
+    private LocalTime startTime;
 
-    @Column(name = "enddate")
-    private LocalDate enddate;
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
-    @Column(name = "endtime")
-    private LocalTime endtime;
+    @Column(name = "end_time")
+    private LocalTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_subjectid", nullable = false)
-    private Subject subjectSubjectid;
+    @JoinColumn(name = "exams_subject_id", nullable = false)
+    private Subject examsSubject;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "egzaminator_egzaminator_id")
-    private Egzaminator egzaminatorEgzaminator;
+    @JoinColumn(name = "conducting_examiner_id")
+    private Examiner conductingExaminer;
 
+    public Exam() {
+    }
+
+    public Exam(Integer id, String description, LocalDate startdate, LocalTime starttime, LocalDate enddate, LocalTime endtime, Subject subject) {
+        this.id = id;
+        this.description = description;
+        this.startDate = startdate;
+        this.startTime = starttime;
+        this.endDate = enddate;
+        this.endTime = endtime;
+        this.examsSubject = subject;
+    }
 }

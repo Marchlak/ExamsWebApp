@@ -228,12 +228,11 @@ table tbody tr td {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
 }
 
-.solveExam{
-    width: 150px;
-}
+/*.solveExam{*/
+/*    width: 150px;*/
+/*}*/
 
 .bold{
     font-weight: bold;
@@ -248,12 +247,11 @@ table tbody tr td {
     border-radius: 4px;
     background: #6D31ED;
     display: inline-flex;
-    padding: 5px 18px 5px 14px;
+    padding: 8px 8px 8px 8px;
     align-items: center;
     gap: 8px;
     color: #FFF;
     font-size: 16px;
-    line-height: 26px;
 }
 
 .exam-id{
@@ -274,7 +272,7 @@ table tbody tr td {
 }
 
 .exam-questions{
-    width: 25vw;
+    width: 10vw;
 }
 
 button:hover{

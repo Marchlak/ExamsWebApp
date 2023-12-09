@@ -20,11 +20,11 @@ public class Problem {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_student_id")
-    private Student studentStudent;
+    @JoinColumn(name = "problems_student_id")
+    private Student problemsStudent;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "egzaminator_egzaminator_id")
-    private Egzaminator egzaminatorEgzaminator;
+    @JoinColumn(name = "problems_examiner_id")
+    private Examiner problemsExaminer;
 
 }

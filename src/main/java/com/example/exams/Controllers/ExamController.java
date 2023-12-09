@@ -28,7 +28,6 @@ import com.example.exams.Model.Data.ProperDataModels.ExamResponseDTO;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -42,7 +41,7 @@ public class ExamController {
     SubjectService subjectService;
 
     @Autowired
-    EgzaminatorService egzaminatorService;
+    ExaminerService examinerService;
 
     @Autowired
     OpenQuestionService openQuestionService;
@@ -51,7 +50,7 @@ public class ExamController {
     ClosedQuestionService closedQuestionService;
 
     @Autowired
-    AnswerClosedService answerClosedService;
+    private AnswerClosedService answerClosedService;
 
     @Autowired
     private StudentclosedanswerRepository studentClosedAnswerRepository;
@@ -63,7 +62,7 @@ public class ExamController {
     private StudentsEntityRepository studentRepository;
 
     @Autowired
-    OpenQuestionRepository openQuestionRepository;
+    private OpenQuestionRepository openQuestionRepository;
 
     @Autowired
     private AnswerClosedRepository answerclosedRepository;
@@ -131,11 +130,11 @@ public class ExamController {
         //Testy
         egzaminator_egzaminator_id = 1;
 
-        Egzaminator egzaminator = egzaminatorService.Get(egzaminator_egzaminator_id);
-        exam.setEgzaminatorEgzaminator(egzaminator);
+        Examiner examiner = examinerService.Get(egzaminator_egzaminator_id);
+        exam.setConductingExaminer(examiner);
 
         Subject subject = subjectService.Get(subjectid);
-        exam.setSubjectSubjectid(subject);
+        exam.setExamsSubject(subject);
 
         Exam addedExam = examService.AddExam(exam);
         return "redirect:/exams";
@@ -145,7 +144,7 @@ public class ExamController {
     public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId) {
         Subject subject = subjectService.getSubjectById(subjectId.intValue());
         exam.setId(examId.intValue());
-        exam.setSubjectSubjectid(subject);
+        exam.setExamsSubject(subject);
         examService.updateExam(exam);
         return "redirect:/exams";
     }
@@ -157,6 +156,16 @@ public class ExamController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editExam");
         modelAndView.addObject("subjects", subjects);
+        modelAndView.addObject("exam", exam);
+        model.addAttribute("examId", examId);
+        return modelAndView;
+    }
+
+    @GetMapping("/showDoneExamUser/{examId}")
+    public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
+        Exam exam = examService.GetExam(examId);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("showDoneExamUsers");
         modelAndView.addObject("exam", exam);
         model.addAttribute("examId", examId);
         return modelAndView;
@@ -187,16 +196,29 @@ public class ExamController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found");
     }
 
+    @GetMapping("/showExamDetails/{examId}")
+    public ModelAndView getExamDetails(@PathVariable String examId) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("examDetails");
+
+        Exam exam = examService.GetExam(Integer.parseInt(examId));
+
+        modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
+        modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+
+        return modelAndView;
+    }
+
     @GetMapping("/solveExam/{examId}")
     public ModelAndView getExamToSolve(@PathVariable String examId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("solveExam");
 
         Exam exam = examService.GetExam(Integer.parseInt(examId));
-        LocalDate startDate = exam.getStartdate();
-        LocalTime startTime = exam.getStarttime();
-        LocalDate endDate = exam.getEnddate();
-        LocalTime endTime = exam.getEndtime();
+        LocalDate startDate = exam.getStartDate();
+        LocalTime startTime = exam.getStartTime();
+        LocalDate endDate = exam.getEndDate();
+        LocalTime endTime = exam.getEndTime();
 
         if (LocalDate.now().isAfter(startDate) || LocalDate.now().equals(startDate)) {
             if (LocalTime.now().isAfter(startTime) || LocalTime.now().equals(startTime))
@@ -235,7 +257,7 @@ public class ExamController {
 
         openAnswers.forEach((questionId, answer) -> {
             Studentopenanswer openAnswer = new Studentopenanswer();
-            Openquestion openquestion = openQuestionRepository.findById(Integer.parseInt(questionId)).orElse(null);
+            OpenQuestion openquestion = openQuestionRepository.findById(Integer.parseInt(questionId)).orElse(null);
             if (openquestion != null && student != null) {
                 openAnswer.setOpenquestionQuestionid(openquestion);
                 openAnswer.setDescription(answer);
@@ -306,12 +328,16 @@ public class ExamController {
     public String processForm(@RequestParam("action") String action) {
 
         Integer examId = Integer.parseInt(action.substring(action.indexOf(':') + 1));
-        if (action.startsWith("edit:")) {
+        if (action.startsWith("show:")) {
+            return "redirect:/showExamDetails/" + examId;
+        } else if (action.startsWith("edit:")) {
             return "redirect:/editExam/" + examId;
         } else if (action.startsWith("delete:")) {
             return "redirect:/confirmExamDeletion/" + examId;
         } else if (action.startsWith("solveExam:")) {
             return "redirect:/solveExam/" + examId;
+        }else if (action.startsWith("showDoneExamUser:")){
+            return "redirect:/showDoneExamUser/" + examId;
         }
         return "error";
     }

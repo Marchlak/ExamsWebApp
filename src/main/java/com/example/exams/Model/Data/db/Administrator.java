@@ -31,4 +31,16 @@ public class Administrator {
 
     @Column(name = "verification_status", nullable = false)
     private boolean verificationStatus;
+
+    public Administrator() {}
+
+    public Administrator(Integer administrator_id, String firstname, String lastname, String login, String password, String email, boolean verificationStatus) {
+        this.administrator_id = administrator_id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.verificationStatus = verificationStatus;
+    }
 }

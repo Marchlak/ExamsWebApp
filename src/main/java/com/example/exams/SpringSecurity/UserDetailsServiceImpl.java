@@ -2,10 +2,10 @@ package com.example.exams.SpringSecurity;
 
 import com.example.exams.Model.Data.db.Administrator;
 import com.example.exams.Model.Data.db.Student;
-import com.example.exams.Model.Data.db.Egzaminator;
+import com.example.exams.Model.Data.db.Examiner;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Repositories.Db.AdministratorsEntityRepository;
-import com.example.exams.Repositories.Db.ExaminersEntityRepository;
+import com.example.exams.Repositories.Db.ExaminerRepository;
 import com.example.exams.Repositories.Db.StudentsEntityRepository;
 import com.example.exams.Services.LoginsService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     AdministratorsEntityRepository administratorsEntityRepository;
 
     @Autowired
-    ExaminersEntityRepository examinersEntityRepository;
+    ExaminerRepository examinersRepository;
 
     @Autowired
     StudentsEntityRepository studentsEntityRepository;
@@ -41,11 +41,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Administrator administrator = administratorsEntityRepository.findAdministratorByLogin(username);
-        Egzaminator examiner = null;
+        Examiner examiner = null;
         Student student = null;
 
         if (administrator == null) {
-            examiner = examinersEntityRepository.findEgzaminatorByLogin(username);
+            examiner = examinersRepository.findExaminerByLogin(username);
             if (examiner == null) {
                 student = studentsEntityRepository.findStudentByLogin(username);
             }

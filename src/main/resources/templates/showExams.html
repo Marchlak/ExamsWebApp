@@ -75,11 +75,17 @@
 			<tr th:each="exam : ${exams}">
 				<td th:text="${exam.id}"></td>
 				<td th:text="${exam.description}"></td>
-				<td th:text="${exam.startdate + ' ' + exam.starttime}"></td>
-				<td th:text="${exam.enddate + ' ' + exam.endtime}"></td>
-				<td th:text="${exam.subjectSubjectid.name}"></td>
+				<td th:text="${exam.getStartDate + ' ' + exam.getStartTime}"></td>
+				<td th:text="${exam.getEndDate + ' ' + exam.getEndTime}"></td>
+				<td th:text="${exam.getExamsSubject.name}"></td>
 				<td></td>
 				<td class="buttons_exam">
+					<button type="submit" name="action" th:value="'show:'+ ${exam.id}" class="edit-delete">
+						<i class="fa-solid fa-pen"></i>Details
+					</button>
+					<button type="submit" name="action" th:value="'showDoneExamUser:'+ ${exam.id}" class="edit-delete">
+						<i class="fa-solid fa-pen"></i>Ocen
+					</button>
 					<button type="submit" name="action" th:value="'edit:'+ ${exam.id}" class="edit-delete edit-exam">
 						<i class="fa-solid fa-pen"></i>Edit
 					</button>

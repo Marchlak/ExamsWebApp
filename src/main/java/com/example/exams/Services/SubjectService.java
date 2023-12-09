@@ -1,6 +1,5 @@
 package com.example.exams.Services;
 
-import com.example.exams.Model.Data.db.Openquestion;
 import com.example.exams.Model.Data.db.Subject;
 import com.example.exams.Repositories.Db.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;

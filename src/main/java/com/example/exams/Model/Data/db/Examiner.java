@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "egzaminator")
-public class Egzaminator {
+//@Table(name = "egzaminator")
+public class Examiner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "examiner_id", nullable = false)
@@ -31,4 +31,16 @@ public class Egzaminator {
 
     @Column(name = "verification_status", nullable = false)
     private boolean verificationStatus;
+
+    public Examiner() {}
+
+    public Examiner(Integer examiner_id, String firstname, String lastname, String login, String password, String email, boolean verificationStatus) {
+        this.examiner_id = examiner_id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.verificationStatus = verificationStatus;
+    }
 }
