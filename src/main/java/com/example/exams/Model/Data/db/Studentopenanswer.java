@@ -28,7 +28,7 @@ public class Studentopenanswer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "openquestion_questionid")
-    private Openquestion openquestionQuestionid;
+    private OpenQuestion openquestionQuestionid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_student_id")

@@ -20,6 +20,6 @@ public class Relation23 {
     @MapsId("egzaminatorEgzaminatorId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "egzaminator_egzaminator_id", nullable = false)
-    private Egzaminator egzaminatorEgzaminator;
+    private Examiner egzaminatorEgzaminator;
 
 }

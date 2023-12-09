@@ -20,7 +20,7 @@ public class Student {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_examid")
-    private Exam examExamid;
+    private Exam examExamid; //tu nie powinno byc manyToMany? student zdaje kilka egzaminow chyba, nie? i w egzaminie bierze udzial wielu studentow
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;

@@ -3,7 +3,7 @@ package com.example.exams.Controllers;
 import com.example.exams.Services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.db.Administrator;
-import com.example.exams.Model.Data.db.Egzaminator;
+import com.example.exams.Model.Data.db.Examiner;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 import com.example.exams.Model.Data.db.Student;
@@ -80,7 +80,7 @@ public class Controller {
                 usersService.addAStudentToDB(newStudent);
                 return new ModelAndView("redirect:/login");
             case "Examiner":
-                Egzaminator newExaminer = usersService.mapToExaminerEntity(user);
+                Examiner newExaminer = usersService.mapToExaminerEntity(user);
                 usersService.addAExaminerToDB(newExaminer);
                 return new ModelAndView("redirect:/login");
             case "Administrator":

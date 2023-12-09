@@ -1,12 +1,11 @@
 package com.example.exams.Services;
 
-import com.example.exams.Model.Data.db.Openquestion;
+import com.example.exams.Model.Data.db.OpenQuestion;
 import com.example.exams.Repositories.Db.OpenQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,29 +17,32 @@ public class OpenQuestionService {
     public OpenQuestionService(OpenQuestionRepository openQuestionRepository){
         this.openQuestionRepository = openQuestionRepository;
     }
-    public Openquestion UpdateOpenQuestion(Openquestion updatedOpenQuestion){
-        Openquestion openQuestion = GetOpenQuestion(updatedOpenQuestion.getQuestionid());
+
+    public OpenQuestion UpdateOpenQuestion(OpenQuestion updatedOpenQuestion){
+        OpenQuestion openQuestion = GetOpenQuestion(updatedOpenQuestion.getOpenQuestionId());
         if(openQuestion != null){
             openQuestion.setContent(updatedOpenQuestion.getContent());
             openQuestion.setScore(updatedOpenQuestion.getScore());
-            openQuestion.setSubject_subjectid(updatedOpenQuestion.getSubject_subjectid());
+            openQuestion.setQuestionSubject(updatedOpenQuestion.getQuestionSubject());
             return openQuestionRepository.save(openQuestion);
         }
         return null;
     }
-    public Openquestion GetOpenQuestion(int questionID){
-        Optional<Openquestion> existingOpenQuestionOptional = openQuestionRepository.findById(questionID);
+
+    public OpenQuestion GetOpenQuestion(int questionID){
+        Optional<OpenQuestion> existingOpenQuestionOptional = openQuestionRepository.findById(questionID);
         return existingOpenQuestionOptional.orElse(null);
     }
-    public Openquestion AddOpenQuestion(Openquestion newOpenQuestion){
+
+    public OpenQuestion AddOpenQuestion(OpenQuestion newOpenQuestion){
         return openQuestionRepository.save(newOpenQuestion);
     }
 
-    public List<Openquestion> getAll() {
+    public List<OpenQuestion> getAll() {
         return openQuestionRepository.findAll();
     }
 
-    public List<Openquestion> getAllByExamId(int examId) {
+    public List<OpenQuestion> getAllByExamId(int examId) {
         return openQuestionRepository.findByExamId(examId);
     }
 

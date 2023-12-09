@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(name = "closedquestion")
 public class Closedquestion {
     @Id
-    @Column(name = "questionid", nullable = false)
+    @Column(name = "closed_question_id", nullable = false)
     private Integer id;
 
     @Column(name = "answerclosedquestionid")

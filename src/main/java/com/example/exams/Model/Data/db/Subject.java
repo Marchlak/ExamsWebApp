@@ -18,4 +18,10 @@ public class Subject {
     @Column(name = "name", length = 20)
     private String name;
 
+    public Subject() {}
+
+    public Subject(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
