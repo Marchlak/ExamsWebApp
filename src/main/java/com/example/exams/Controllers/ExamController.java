@@ -108,7 +108,7 @@ public class ExamController {
                         break;
                     }
                     //DO USUNIECIA
-                    if ("STUDENT".equals(authority.getAuthority())) {
+                    if ("ADMIN".equals(authority.getAuthority())) {
                         examService.AddExam(exam);
                         break;
                     }
