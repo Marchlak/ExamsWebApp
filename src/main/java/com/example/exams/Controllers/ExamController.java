@@ -104,12 +104,12 @@ public class ExamController {
                 boolean isExaminer = false;
                 for (GrantedAuthority authority : authorities) {
                     if ("EXAMINER".equals(authority.getAuthority())) {
-                        examService.AddExam(exam);
+//                        examService.AddExam(exam);
                         break;
                     }
                     //DO USUNIECIA
                     if ("ADMIN".equals(authority.getAuthority())) {
-                        examService.AddExam(exam);
+//                        examService.AddExam(exam);
                         break;
                     }
                 }
