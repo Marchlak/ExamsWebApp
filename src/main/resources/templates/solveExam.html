@@ -9,34 +9,42 @@
 
 <p th:text="'Description: ' + ${exam.getDescription()}"></p>
 
-<form action="/saveResolvedExam" method="post">
-        <p th:text="'Exam starts at: ' + ${exam.getStarttime()}"></p>
-        <p th:text="'Exam ends at: ' + ${exam.getEndtime()}"></p>
-        <ul>
-            <li th:each="question : ${listOpenQuestions}">
-                <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
-                <p>Your answer:</p>
-                <textarea th:name="'openAnswers[' + ${question.getQuestionid()} + ']'"></textarea>
-            </li>
+<form th:if="${timeStarts} and not ${timeEnds}" action="/saveResolvedExam" method="post">
+    <p th:text="'Exam starts at: ' + ${exam.getStarttime()}"></p>
+    <p th:text="'Exam ends at: ' + ${exam.getEndtime()}"></p>
+    <ul>
+        <li th:each="question : ${listOpenQuestions}">
+            <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
+            <p>Your answer:</p>
+            <textarea th:name="'openAnswers[' + ${question.getQuestionid()} + ']'"></textarea>
+        </li>
 
-            <li th:each="question, idx : ${listClosedQuestions}">
-                <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
-                <p>Choose answer:</p>
-                <div th:each="answer : ${closedAnswers[idx.index]}">
-                    <input type="checkbox" th:name="'closedAnswers[' + ${question.getId()} + '][]'"
-                           th:value="${answer.getId()}" th:text="${answer.description}"/>
-                </div>
-            </li>
-        </ul>
+        <li th:each="question, idx : ${listClosedQuestions}">
+            <div th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'"></div>
+            <p>Choose answer:</p>
+            <div th:each="answer : ${closedAnswers[idx.index]}">
+                <input type="checkbox" th:name="'closedAnswers[' + ${question.getId()} + '][]'"
+                       th:value="${answer.getId()}" th:text="${answer.description}"/>
+            </div>
+        </li>
+    </ul>
     </div>
-
-
-
 
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 
     <button type="submit">Save Exams</button>
 </form>
+
+
+<div th:if="${!timeStarts}">
+    <p>Sorry you can't solve this exam because exam doesn't start yet!</p>
+    <p th:text="'Exam starts at: ' + ${exam.getStartdate()} + ' ' +${exam.getStarttime()}"></p>
+</div>
+
+<div th:if="${timeEnds}">
+    <p>Sorry you can't solve this exam because it's already over!</p>
+    <p th:text="'Exam starts at: ' + ${exam.getEnddate()} +' ' +${exam.getEndtime()}"></p>
+</div>
 
 </body>
 </html>

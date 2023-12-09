@@ -133,13 +133,26 @@ public class ExamController {
         modelAndView.setViewName("solveExam");
 
         Exam exam = examService.GetExam(Integer.parseInt(examId));
-        LocalDate startdate = exam.getStartdate();
-        LocalTime starttime = exam.getStarttime();
+        LocalDate startDate = exam.getStartdate();
+        LocalTime startTime = exam.getStarttime();
+        LocalDate endDate = exam.getEnddate();
+        LocalTime endTime = exam.getEndtime();
 
-        if (LocalTime.now().isAfter(starttime) && LocalDate.now().isAfter(startdate))
-            modelAndView.addObject("canSolve", true);
-        else
-            modelAndView.addObject("canSolve", false);
+        if (LocalDate.now().isAfter(startDate) || LocalDate.now().equals(startDate)) {
+            if (LocalTime.now().isAfter(startTime) || LocalTime.now().equals(startTime))
+                modelAndView.addObject("timeStarts", true);
+            else
+                modelAndView.addObject("timeStarts", false);
+        } else
+            modelAndView.addObject("timeStarts", false);
+
+        if (LocalDate.now().isBefore(endDate) || LocalDate.now().equals(endDate)) {
+            if (LocalTime.now().isBefore(endTime) || LocalTime.now().equals(endTime))
+                modelAndView.addObject("timeEnds", false);
+            else
+                modelAndView.addObject("timeEnds", true);
+        } else
+            modelAndView.addObject("timeEnds", true);
 
         modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
         modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
@@ -175,7 +188,7 @@ public class ExamController {
 
     }
 
-    private boolean processClosedAnswers(Map<String, String[]> closedAnswers,UserDetails userDetails) {
+    private boolean processClosedAnswers(Map<String, String[]> closedAnswers, UserDetails userDetails) {
         Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
         if (student == null) {
             return false; // Nie ma studenta o ID 1
@@ -207,7 +220,7 @@ public class ExamController {
     }
 
     @PostMapping("/saveResolvedExam")
-    public String saveExam(@ModelAttribute ExamResponseDTO examResponse){
+    public String saveExam(@ModelAttribute ExamResponseDTO examResponse) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showExams");
         UserDetails user = null;
