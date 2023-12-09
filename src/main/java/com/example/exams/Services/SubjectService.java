@@ -33,4 +33,8 @@ public class SubjectService {
         Optional<Subject> existingSubjectOptional = subjectRepository.findById(id);
         return existingSubjectOptional.orElse(null);
     }
+    public Subject GetOne(int id){
+        Optional<Subject> existingSubject = subjectRepository.findById(id);
+        return existingSubject.orElse(null);
+    }
 }

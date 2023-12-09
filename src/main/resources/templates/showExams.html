@@ -110,41 +110,43 @@
 			</div>
 
 		<!--/*@thymesVar id="egzaminator_egzaminator_id" type="java.lang.Integer"*/-->
-		<form th:action="@{/addExam/1}" method="post" role="form" id="formularz">
+		<form th:action="@{/addExam/__${egzaminator_egzaminator_id}__}" method="post" role="form" id="formularz">
 			<div class="input-box">
 				<label>Subject</label>
 				<!--/*@thymesVar id="Subject" type="com.example.exams.Model.Data.db.Subject"*/-->
 				<!--/*@thymesVar id="subjects" type="java.util.List"*/-->
-				<select id="subjectid" name="subjectid" class="selectCreate">
+				<select id="subjectidcreate" name="subject_subject_id" class="selectCreate">
 						<option th:each="Subject : ${subjects}" th:value="${Subject.id}" th:text="${Subject.name}"></option>
 				</select>
 			</div>
 
 			<div class="input-box">
 				<label>Description</label>
-				<input type="text"  name="description" class="form-control" />
+				<input type="text"  name="description" class="form-control" id="descriptioncreate" />
 			</div>
 
 			<div class="date-box">
 				<div class="start-date">
 					<label>Start Date</label>
-					<input type="date" class="date" name="startdate" />
-					<input type="time" class="time" name="starttime" />
+					<input type="date" class="date" name="startdate" id="startdatecreate"/>
+					<input type="time" class="time" name="starttime" id="starttimecreate"/>
 				</div>
 
 				<div class="end-date">
 					<label>End Date</label>
-					<input type="date" class="date" name="enddate" />
-					<input type="time" class="time" name="endtime" />
+					<input type="date" class="date" name="enddate" id="enddatecreate"/>
+					<input type="time" class="time" name="endtime" id="endtimecreate"/>
 				</div>
 			</div>
 
 			<div class="questions">
 				<label >Questions List</label>
 
-				<div class="questionList"><p class="info">You don't have any questions!</p></div>
+				<div class="question-inputs">
 
-				<button class="addQuestion">Add Question</button>
+				</div>
+
+				<button class="addQuestion" type="button">Add Question</button>
 			</div>
 		</form>
 	</div>

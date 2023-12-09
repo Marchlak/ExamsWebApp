@@ -280,3 +280,8 @@ table tbody tr td {
 button:hover{
     cursor: pointer;
 }
+.question-inputs {
+    overflow-y: auto;
+    overflow-x: clip;
+    height: 200px;
+}

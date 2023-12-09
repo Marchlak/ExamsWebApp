@@ -1,14 +1,21 @@
 package com.example.exams.Controllers;
 
 
+import com.example.exams.Model.Data.ProperDataModels.ExamDTO;
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.*;
 import com.example.exams.Services.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +25,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.example.exams.Model.Data.ProperDataModels.ExamResponseDTO;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ExamController {
@@ -64,7 +71,60 @@ public class ExamController {
     @Autowired
     private ClosedQuestionRepository closedQuestionRepository;
 
+    @PostMapping("/addExamQuestions")
+    public String addExamQuestions(@RequestBody String body){
 
+        String string = body.toString();
+        try {
+            String[] pairs = string.split("&");
+            Map<String, String> map = new HashMap<>();
+            for (String pair : pairs) {
+                String[] keyValue = pair.split("=");
+                if (keyValue.length == 2) {
+                    map.put(keyValue[0], keyValue[1]);
+                }
+            }
+
+            String examDataString = map.get("examData");
+
+            try {
+                String decodedString = URLDecoder.decode(examDataString, "UTF-8");
+                ObjectMapper objectMapper = new ObjectMapper().registerModule(new ParameterNamesModule())
+                        .registerModule(new Jdk8Module())
+                        .registerModule(new JavaTimeModule());
+                ExamDTO exam = objectMapper.readValue(decodedString, ExamDTO.class);
+                exam.setEgzamiantor(1);
+
+                UserDetails user = null;
+                HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    user = (UserDetails) session.getAttribute("UsersEntity");
+                }
+                Collection<? extends GrantedAuthority> authorities= user.getAuthorities();
+                boolean isExaminer = false;
+                for (GrantedAuthority authority : authorities) {
+                    if ("EXAMINER".equals(authority.getAuthority())) {
+                        examService.AddExam(exam);
+                        break;
+                    }
+                    //DO USUNIECIA
+                    if ("STUDENT".equals(authority.getAuthority())) {
+                        examService.AddExam(exam);
+                        break;
+                    }
+                }
+                return "redirect:/exams";
+            } catch (UnsupportedEncodingException e) {
+                System.out.println("Błąd dekodowania URL: " + e.getMessage());
+            }
+
+            return "redirect:/exams";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/error-page";
+        }
+    }
     @PostMapping("/addExam/{egzaminator_egzaminator_id}")
     public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid) {
 
@@ -230,11 +290,13 @@ public class ExamController {
             modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
             user = (UserDetails) session.getAttribute("UsersEntity");
         }
+
         boolean openAnswersSaved = processOpenAnswers(examResponse.getOpenAnswers(), user);
         boolean closedAnswersSaved = processClosedAnswers(examResponse.getClosedAnswers(), user);
         if (!openAnswersSaved || !closedAnswersSaved) {
             modelAndView.addObject("error", "Nie udało się zapisać wszystkich odpowiedzi.");
         }
+
 
 
         return "redirect:/exams";
