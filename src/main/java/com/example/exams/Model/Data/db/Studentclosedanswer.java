@@ -12,14 +12,12 @@ import java.time.LocalDate;
 @Table(name = "studentclosedanswer")
 public class Studentclosedanswer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answerid_1", nullable = false)
     private Integer id;
 
     @Column(name = "correctness", nullable = false)
-    private Character correctness;
-
-    @Column(name = "closedquestionid", nullable = false)
-    private Integer closedquestionid;
+    private Boolean correctness;
 
     @Column(name = "Date", nullable = false)
     private LocalDate date;

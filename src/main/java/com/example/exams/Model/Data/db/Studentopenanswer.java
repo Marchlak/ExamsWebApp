@@ -12,14 +12,13 @@ import java.time.LocalDate;
 @Table(name = "studentopenanswer")
 public class Studentopenanswer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answerid", nullable = false)
     private Integer id;
 
     @Column(name = "score")
     private Integer score;
 
-    @Column(name = "openquestionid", nullable = false)
-    private Integer openquestionid;
 
     @Column(name = "Date", nullable = false)
     private LocalDate date;

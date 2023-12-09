@@ -1,6 +1,8 @@
 package com.example.exams.Controllers;
 
+
 import com.example.exams.Model.Data.db.*;
+import com.example.exams.Repositories.Db.*;
 import com.example.exams.Services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import com.example.exams.Model.Data.ProperDataModels.ExamResponseDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ExamController {
@@ -41,6 +45,24 @@ public class ExamController {
 
     @Autowired
     AnswerClosedService answerClosedService;
+
+    @Autowired
+    private StudentclosedanswerRepository studentClosedAnswerRepository;
+
+    @Autowired
+    private StudentopenanswerRepository studentOpenAnswerRepository;
+
+    @Autowired
+    private StudentsEntityRepository studentRepository;
+
+    @Autowired
+    OpenQuestionRepository openQuestionRepository;
+
+    @Autowired
+    private AnswerClosedRepository answerclosedRepository;
+
+    @Autowired
+    private ClosedQuestionRepository closedQuestionRepository;
 
 
     @PostMapping("/addExam/{egzaminator_egzaminator_id}")
@@ -135,20 +157,74 @@ public class ExamController {
         return modelAndView;
     }
 
+    private boolean processOpenAnswers(Map<String, String> openAnswers, UserDetails userDetails) {
+        Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
+
+        openAnswers.forEach((questionId, answer) -> {
+            Studentopenanswer openAnswer = new Studentopenanswer();
+            Openquestion openquestion = openQuestionRepository.findById(Integer.parseInt(questionId)).orElse(null);
+            if (openquestion != null && student != null) {
+                openAnswer.setOpenquestionQuestionid(openquestion);
+                openAnswer.setDescription(answer);
+                openAnswer.setStudentStudent(student);
+                openAnswer.setDate(LocalDate.now());
+                studentOpenAnswerRepository.save(openAnswer);
+            }
+        });
+        return true;
+
+    }
+
+    private boolean processClosedAnswers(Map<String, String[]> closedAnswers,UserDetails userDetails) {
+        Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
+        if (student == null) {
+            return false; // Nie ma studenta o ID 1
+        }
+
+        for (Map.Entry<String, String[]> entry : closedAnswers.entrySet()) {
+            Integer questionId = Integer.parseInt(entry.getKey());
+            Closedquestion closedQuestion = closedQuestionRepository.findById(questionId).orElse(null);
+            for (String answerId : entry.getValue()) {
+                Answerclosed answerclosed = answerclosedRepository.findById(Integer.parseInt(answerId)).orElse(null);
+                if (answerclosed == null) {
+                    return false;
+                }
+
+                Studentclosedanswer closedAnswer = new Studentclosedanswer();
+                closedAnswer.setAnswerclosedAnswerid(answerclosed);
+                closedAnswer.setClosedquestionQuestionid(closedQuestion);
+                closedAnswer.setStudentStudent(student);
+                closedAnswer.setDate(LocalDate.now());
+
+                boolean isCorrect = answerclosed.isCorrect();
+                closedAnswer.setCorrectness(isCorrect);
+                studentClosedAnswerRepository.save(closedAnswer);
+            }
+        }
+
+        return true;
+
+    }
+
     @PostMapping("/saveResolvedExam")
-    public ModelAndView saveExam(){
+    public String saveExam(@ModelAttribute ExamResponseDTO examResponse){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showExams");
-
-        UserDetails user;
+        UserDetails user = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         if (session != null) {
             modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
             user = (UserDetails) session.getAttribute("UsersEntity");
         }
+        boolean openAnswersSaved = processOpenAnswers(examResponse.getOpenAnswers(), user);
+        boolean closedAnswersSaved = processClosedAnswers(examResponse.getClosedAnswers(), user);
+        if (!openAnswersSaved || !closedAnswersSaved) {
+            modelAndView.addObject("error", "Nie udało się zapisać wszystkich odpowiedzi.");
+        }
 
-        return modelAndView;
+
+        return "redirect:/exams";
     }
 
     @PostMapping("/processForm")
@@ -165,4 +241,3 @@ public class ExamController {
         return "error";
     }
 }
-
