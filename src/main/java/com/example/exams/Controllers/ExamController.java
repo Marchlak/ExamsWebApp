@@ -101,6 +101,16 @@ public class ExamController {
         return modelAndView;
     }
 
+    @GetMapping("/showDoneExamUser/{examId}")
+    public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
+        Exam exam = examService.GetExam(examId);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("showDoneExamUsers");
+        modelAndView.addObject("exam", exam);
+        model.addAttribute("examId", examId);
+        return modelAndView;
+    }
+
     @GetMapping("/confirmExamDeletion/{examId}")
     public ModelAndView deleteExam(@PathVariable Integer examId, Model model) {
 //        boolean deleted = examService.deleteExam(examId);
@@ -264,6 +274,8 @@ public class ExamController {
             return "redirect:/confirmExamDeletion/" + examId;
         } else if (action.startsWith("solveExam:")) {
             return "redirect:/solveExam/" + examId;
+        }else if (action.startsWith("showDoneExamUser:")){
+            return "redirect:/showDoneExamUser/" + examId;
         }
         return "error";
     }
