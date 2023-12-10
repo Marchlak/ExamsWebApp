@@ -87,6 +87,9 @@ public class UsersService {
         return null;
     }
 
+    public Student getStudentByid(int id){
+        return studentsEntityRepository.findById(id).orElse(null);
+    }
     public Student getStudentByEmail(String studentEmail) {
         List<Student> students = studentsEntityRepository.findAll();
         for (Student student : students) {

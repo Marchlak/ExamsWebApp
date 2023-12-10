@@ -29,31 +29,31 @@
         <div class="logo">Examify365</div>
     </div>
 </div>
-
-<form action="/saveResolvedExam" method="post">
+<form action="/evaluateExam" method="get">
+    <input type="hidden" th:name="studentId" th:value="${student.student_id}" />
 
     <div class="user-details">
         <p>Rozwiazujacy</p>
-        <p class="first-last-name">First Name</p>
-        <p class="first-last-name">Last Name</p>
+        <p class="first-last-name">First Name: <span th:text="${student.firstname}"></span></p>
+        <p class="first-last-name">Last Name: <span th:text="${student.lastname}"></span></p>
     </div>
 
     <ul>
-        <li th:each="question : ${listOpenQuestions}">
+        <li th:each="question, idx : ${listOpenQuestions}">
             <div class="ques-points">
-                <p th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'">pytanie</p>
-                <p class="points">3p</p>
+                <p th:text="${question.getContent()}">pytanie</p>
+                <p class="points" th:text="${question.getScore() + 'p'}"></p>
             </div>
             <p class="your-answer">Student Answer</p>
             <div class="answer-and-points">
-                <textarea th:name="'openAnswers[' + ${question.getQuestionid()} + ']'"></textarea>
+                <textarea th:text="${listAnswerOpenQuestion?.get(#numbers.sequence(0, listOpenQuestions.size() - 1)[idx.index])?.description ?: ''}"></textarea>
                 <div class="points-field">
                     <p>Enter points for this answer</p>
-                    <input type="number" step="1" min="0">
+                    <input type="number" step="1" min="0" th:max="${question.getScore()}" name="scores" th:value="${listAnswerOpenQuestion?.get(#numbers.sequence(0, listOpenQuestions.size() - 1)[idx.index])?.score ?: 0}"/>
                 </div>
             </div>
         </li>
-
+    </ul>
 
         <!-- W przyszlosci jak beda zamkniete -->
         <!-- <li th:each="question, idx : ${listClosedQuestions}">

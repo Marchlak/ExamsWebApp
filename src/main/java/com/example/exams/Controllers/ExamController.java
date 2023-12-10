@@ -50,7 +50,8 @@ public class ExamController {
 
     @Autowired
     private AnswerClosedService answerClosedService;
-
+    @Autowired
+    private AnswerOpenService answerOpenService;
     @Autowired
     private StudentclosedanswerRepository studentClosedAnswerRepository;
 
@@ -68,13 +69,9 @@ public class ExamController {
 
     @Autowired
     private ClosedQuestionRepository closedQuestionRepository;
+    @Autowired
+    private UsersService usersService;
 
-    @GetMapping("/evaluateExam")
-    public ModelAndView evaluateExam(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("evaluateExam");
-        return modelAndView;
-    }
 
     @PostMapping("/addExamQuestions")
     public String addExamQuestions(@RequestBody String body){
@@ -167,15 +164,45 @@ public class ExamController {
         return modelAndView;
     }
 
+
+
     @GetMapping("/showDoneExamUser/{examId}")
     public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
-        Exam exam = examService.GetExam(examId);
+        Exam exam = examService.GetExam(examId.intValue());
+        List<Student> studentsclosedAnswers = answerClosedService.getAllDistinctStudentsForExam(examId.intValue());
+        List<Student> studentopenAnswers = answerOpenService.getAllDistinctStudentsForOpenQuestions(examId.intValue());
+        Set<Student> uniqueStudents = new HashSet<>(studentsclosedAnswers);
+        uniqueStudents.addAll(studentopenAnswers);
+        List<Student> combinedStudents = new ArrayList<>(uniqueStudents);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showDoneExamUsers");
         modelAndView.addObject("exam", exam);
+        modelAndView.addObject("Students", combinedStudents);
         model.addAttribute("examId", examId);
         return modelAndView;
     }
+
+    @PostMapping("/rate")
+    public ModelAndView rateStudent(@RequestParam Integer examId, @RequestParam Integer studentId, Model model){
+        Exam exam = examService.GetExam(examId);
+        Student student = usersService.getStudentByid(studentId);
+        List<Studentopenanswer> answerOpen = answerOpenService.getStudentOpenAnswerByStudent(student);
+        List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(exam.getId());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("evaluateExam");
+        modelAndView.addObject("student", student);
+        modelAndView.addObject("listOpenQuestions", openQuestions);
+        modelAndView.addObject("listAnswerOpenQuestion", answerOpen);
+        return modelAndView;
+    }
+
+    @GetMapping("/evaluateExam")
+    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam List<Integer> scores) {
+        Student student = usersService.getStudentByid(studentId.intValue());
+        answerOpenService.updateScores(student, scores);
+        return "redirect:/exams";
+    }
+
 
     @GetMapping("/confirmExamDeletion/{examId}")
     public ModelAndView deleteExam(@PathVariable Integer examId, Model model) {
