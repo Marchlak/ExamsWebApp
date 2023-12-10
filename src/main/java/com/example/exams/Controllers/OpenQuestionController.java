@@ -31,13 +31,10 @@ public class OpenQuestionController {
     }
 
     @PostMapping("/updateOpenQuestion/{openQuestionId}")
-    public ResponseEntity<String> UpdateOpenQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer openQuestionId){
+    public String UpdateOpenQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer openQuestionId){
         openQuestion.setOpenQuestionId(openQuestionId);
         OpenQuestion updatedOpenQuestionOptional = openQuestionService.UpdateOpenQuestion(openQuestion);
-        if(updatedOpenQuestionOptional != null){
-            return ResponseEntity.ok("Question updated successfully");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Question not found");
+        return "redirect:/showExamDetails/" + updatedOpenQuestionOptional.getExam().getId();
     }
 
     @GetMapping("/createOpenQuestion")
