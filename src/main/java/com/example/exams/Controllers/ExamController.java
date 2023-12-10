@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +68,13 @@ public class ExamController {
 
     @Autowired
     private ClosedQuestionRepository closedQuestionRepository;
+
+    @GetMapping("/evaluateExam")
+    public ModelAndView evaluateExam(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("evaluateExam");
+        return modelAndView;
+    }
 
     @PostMapping("/addExamQuestions")
     public String addExamQuestions(@RequestBody String body){
