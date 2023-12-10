@@ -290,6 +290,10 @@ public class ExamController {
     private boolean processOpenAnswers(Map<String, String> openAnswers, UserDetails userDetails) {
         Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
 
+        if (openAnswers == null || openAnswers.isEmpty()) {
+            return true;
+        }
+
         openAnswers.forEach((questionId, answer) -> {
             Studentopenanswer openAnswer = new Studentopenanswer();
             OpenQuestion openquestion = openQuestionRepository.findById(Integer.parseInt(questionId)).orElse(null);
@@ -310,6 +314,10 @@ public class ExamController {
         if (student == null) {
             return false; // Nie ma studenta o ID 1
         }
+        if (closedAnswers == null || closedAnswers.isEmpty()) {
+            return true;
+        }
+
 
         for (Map.Entry<String, String[]> entry : closedAnswers.entrySet()) {
             Integer questionId = Integer.parseInt(entry.getKey());
