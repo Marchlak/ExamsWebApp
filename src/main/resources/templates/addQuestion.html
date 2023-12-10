@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Add Question</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet" />
+
+		<link rel="stylesheet" th:href="@{/css/createQuestion.css}" />
+		<link rel="stylesheet" href="../static/css/createQuestion.css" />
+	</head>
+	<body>
+		<div class="question-box">
+			<p id="instruction">Choose which question you want to add!</p>
+			<button onclick="showForm('open')" class="option">Open Question</button>
+			<button onclick="showForm('closed')" class="option2">Closed Question</button>
+
+			<form class="open-form">
+				<div class="input-box">
+					<label for="content">Question Content</label>
+					<textarea type="text" name="content" class="form-control"></textarea>
+				</div>
+
+				<div class="input-box">
+					<label for="score">Score</label>
+					<input type="number" name="score" class="form-control" />
+				</div>
+
+				<button type="submit">Create</button>
+			</form>
+
+			<form class="closed-form">
+				<div class="input-box">
+					<label for="content">Question Content</label>
+					<textarea type="text" name="content" class="form-control"></textarea>
+				</div>
+
+				<div class="input-box">
+					<label for="score">Score</label>
+					<input type="number" name="score" />
+				</div>
+
+				<div id="answer-box" class="input-box">
+					<label for="closed-answer">Answer content:</label>
+					<input type="text" name="closed-answer" class="content"/>
+				</div>
+
+				<button type="button" onclick="showForm('addAnswer')" class="more">Add more answer</button>
+				<button type="submit">Create</button>
+			</form>
+		</div>
+
+		<script>
+			function showForm(type) {
+				document.getElementById('instruction').innerText = 'Please enter the required information'
+				document.querySelector('.option').style.display = 'none'
+				document.querySelector('.option2').style.display = 'none'
+
+				if (type === 'open') {
+					document.querySelector('.open-form').style.display = 'flex'
+					document.querySelector('.closed-form').style.display = 'none'
+				} else if (type === 'closed') {
+					document.querySelector('.closed-form').style.display = 'flex'
+					document.querySelector('.open-form').style.display = 'none'
+				} else if (type === 'addAnswer') {
+					let answerLabel = document.createElement('label')
+					let answerInput = document.createElement('input')
+                    answerInput.classList.add('content');
+					let answerContainer = document.getElementById('answer-box')
+					answerContainer.appendChild(answerLabel)
+					answerContainer.appendChild(answerInput)
+				}
+			}
+		</script>
+	</body>
+</html>
