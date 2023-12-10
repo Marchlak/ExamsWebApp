@@ -367,6 +367,14 @@ public class ExamController {
         return "redirect:/exams";
     }
 
+
+    @GetMapping("/addQuestion/{examId}")
+    public ModelAndView addQuestion(@PathVariable String examId) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addQuestion");
+        return modelAndView;
+    }
+
     @PostMapping("/processForm")
     public String processForm(@RequestParam("action") String action) {
 
@@ -381,6 +389,9 @@ public class ExamController {
             return "redirect:/solveExam/" + examId;
         }else if (action.startsWith("showDoneExamUser:")){
             return "redirect:/showDoneExamUser/" + examId;
+        }
+        else if (action.startsWith("addQuestion:")){
+            return "redirect:/addQuestion/" + examId;
         }
         return "error";
     }

@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;700&display=swap');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: url('./background.jpg');
+	background-size: cover;
+	background-attachment: fixed;
+	font-family: 'Poppins', sans-serif;
+}
+
+p {
+	font-size: 18px;
+	letter-spacing: 1px;
+}
+
+p,
+button {
+	margin: 20px;
+}
+
+.closed-form,
+.open-form,
+.answer-form {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
+
+.input-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+textarea {
+	width: 300px;
+	height: 100px;
+	margin: 10px;
+	border: none;
+	border-radius: 20px;
+	resize: none;
+	padding: 10px;
+}
+
+input {
+	width: 80px;
+	margin: 10px;
+	border: none;
+	border-radius: 20px;
+	resize: none;
+	padding: 10px;
+}
+
+.content {
+	width: 300px;
+	margin: 10px;
+	border: none;
+	border-radius: 20px;
+	resize: none;
+	padding: 10px;
+}
+
+.question-box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(51, 51, 51, 0.27);
+	backdrop-filter: blur(100px);
+	border-radius: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border: 3px solid rgba(255, 255, 255, 0.5);
+	box-shadow: 10px 10px 10px rgba(38, 38, 38, 0.8);
+}
+
+button {
+	width: 60%;
+	height: 40px;
+	position: relative;
+	background: none;
+	border: 1px solid aliceblue;
+	border-radius: 20px;
+	color: aliceblue;
+	font-size: 1em;
+	text-transform: uppercase;
+	cursor: pointer;
+	overflow: hidden;
+	margin: 10px;
+}
+
+button::before,
+button::after {
+	width: 100%;
+	height: 100%;
+	background-color: #cd547d;
+	border-radius: 20px;
+	display: block;
+	position: absolute;
+	content: '';
+	transition: 0.6s;
+	z-index: -1;
+}
+
+.more::before,
+.more::after {
+	background-color: #4badad;
+}
+
+
+.option::before,
+.option::after {
+	background-color: #5263a0;
+}
+
+.option2::before,
+.option2::after {
+	background-color: #59a052;
+}
+
+button::before {
+	top: -100%;
+	left: -100%;
+}
+
+button::after {
+	bottom: -100%;
+	right: -100%;
+}
+
+button:hover::before {
+	top: 0;
+	left: 0;
+}
+
+button:hover::after {
+	bottom: 0;
+	right: 0;
+}
+
+span {
+	font-weight: bold;
+	transition: 0.3s;
+}
