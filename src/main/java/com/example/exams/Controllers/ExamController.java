@@ -12,6 +12,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -144,7 +145,11 @@ public class ExamController {
     }
 
     @PostMapping("/editExamDetails/{examId}")
-    public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId) {
+    public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam("startdate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam("starttime") @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam("enddate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam("endtime") @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+        exam.setStartDate(startDate);
+        exam.setStartTime(startTime);
+        exam.setEndDate(endDate);
+        exam.setEndTime(endTime);
         Subject subject = subjectService.getSubjectById(subjectId.intValue());
         exam.setId(examId.intValue());
         exam.setExamsSubject(subject);

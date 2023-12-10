@@ -33,7 +33,6 @@
       <div class="date-box">
         <div class="start-date">
           <label>Start Date</label>
-<!--          <span th:text="${#temporals.format(exam.endTime, 'HH:mm')}"></span>-->
           <input type="date" class="data" name="startdate" th:value="${#temporals.format(exam.startDate, 'yyyy-MM-dd')}"/>
           <input type="time" class="czas" name="starttime" th:value="${#temporals.format(exam.startTime, 'HH:mm')}" />
         </div>
