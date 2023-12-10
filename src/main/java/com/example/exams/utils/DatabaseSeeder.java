@@ -44,7 +44,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         examinerRepository.save(new Examiner(2, "Dorota", "Cuda", "wedliny", "cuda2115", "cudawedliny@pb.edu.pl", true));
         examinerRepository.save(new Examiner(3, "Marta", "Korsarz", "pbenjoyer", "szastprast", "smoczyca@pb.edu.pl", false));
 
-        examRepository.save(new Exam(1, "Projektowanie części w SOLIDWORKS", LocalDate.now(), LocalTime.now(), LocalDate.now(), LocalTime.now().plusMinutes(2), subjectRepository.findById(1).get()));
+        examRepository.save(new Exam(1, "Projektowanie części w SOLIDWORKS", LocalDate.now(), LocalTime.now(), LocalDate.now(), LocalTime.now().plusHours(1), subjectRepository.findById(1).get()));
         examRepository.save(new Exam(2, "Retusz zdjęć rektor PB w Photoshop", LocalDate.now().minusDays(2), LocalTime.now(), LocalDate.now(), LocalTime.now().plusHours(1), subjectRepository.findById(1).get()));
         examRepository.save(new Exam(3, "Jak zrobić sprawozdanie w MS Paint", LocalDate.now().minusDays(2), LocalTime.now(), LocalDate.now(), LocalTime.now().plusHours(1), subjectRepository.findById(3).get()));
 

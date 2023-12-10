@@ -22,25 +22,26 @@
       <div class="input-box">
         <label>Subject</label>
         <select name="subject" class="form-control">
-          <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+          <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}" th:selected="${subject.id == exam.examsSubject?.id}"></option>
         </select>
       </div>
       <div class="input-box">
         <label>Description</label
-        ><input type="text" name="description" class="form-control" />
+        ><input type="text" name="description" class="form-control" th:value="${exam.description}" />
       </div>
 
       <div class="date-box">
         <div class="start-date">
           <label>Start Date</label>
-          <input type="date" class="data" name="startdate" />
-          <input type="time" class="czas" name="starttime" />
+<!--          <span th:text="${#temporals.format(exam.endTime, 'HH:mm')}"></span>-->
+          <input type="date" class="data" name="startdate" th:value="${#temporals.format(exam.startDate, 'yyyy-MM-dd')}"/>
+          <input type="time" class="czas" name="starttime" th:value="${#temporals.format(exam.startTime, 'HH:mm')}" />
         </div>
 
         <div class="end-date">
           <label>End Date</label>
-          <input type="date" class="data" name="enddate" />
-          <input type="time" class="czas" name="endtime" />
+          <input type="date" class="data" name="enddate" th:value="${#temporals.format(exam.endDate, 'yyyy-MM-dd')}"/>
+          <input type="time" class="czas" name="endtime" th:value="${#temporals.format(exam.endTime, 'HH:mm')}" />
         </div>
       </div>
 

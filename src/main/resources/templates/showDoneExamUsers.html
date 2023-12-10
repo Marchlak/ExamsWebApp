@@ -37,20 +37,21 @@
         <p>Exam starts at: <span th:text="${#temporals.format(exam.startTime, 'HH:mm')}"></span></p>
         <p>Exam ends at: <span th:text="${#temporals.format(exam.endTime, 'HH:mm')}"></span></p>
     </div>
-    <form method="post" th:action="@{/rate}" th:object="${exam}">
         <div class="participants">
             <h2>List of Participants</h2>
             <ul th:each="student : ${Students}">
                 <li>
+                    <p>Student ID: <span th:text="${student.student_id}"></span></p>
                     <p>First Name: <span th:text="${student.firstname}"></span></p>
                     <p>Last Name: <span th:text="${student.lastname}"></span></p>
-                    <input type="hidden" th:name="studentId" th:value="${student.student_id}" />
-                    <input type="hidden" th:name="examId" th:value="${exam.id}" />
-                    <button type="submit">Rate</button>
+                    <form method="post" th:action="@{/rate}">
+                        <input type="hidden" th:name="studentId" th:value="${student.student_id}" />
+                        <input type="hidden" th:name="examId" th:value="${exam.id}" />
+                        <button type="submit">Rate</button>
+                    </form>
                 </li>
             </ul>
         </div>
-    </form>
 </div>
 
 

@@ -8,8 +8,7 @@ import com.example.exams.Repositories.Db.StudentopenanswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +26,14 @@ public class AnswerOpenService {
                 .map(Studentopenanswer::getStudentStudent)
                 .collect(Collectors.toSet());
 
-        return List.copyOf(uniqueStudents);
+        return sortByStudentId(List.copyOf(uniqueStudents));
     }
+    public List<Student> sortByStudentId(List<Student> students) {
+        List<Student> mutableList = new ArrayList<>(students);
+        mutableList.sort(Comparator.comparing(Student::getStudent_id));
+        return mutableList;
+    }
+
     public List<Studentopenanswer> getStudentOpenAnswerByStudent(Student student){
         return studentopenanswerRepository.findAllByStudentStudent(student);
     }

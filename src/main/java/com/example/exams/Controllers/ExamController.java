@@ -169,15 +169,12 @@ public class ExamController {
     @GetMapping("/showDoneExamUser/{examId}")
     public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
         Exam exam = examService.GetExam(examId.intValue());
-        List<Student> studentsclosedAnswers = answerClosedService.getAllDistinctStudentsForExam(examId.intValue());
         List<Student> studentopenAnswers = answerOpenService.getAllDistinctStudentsForOpenQuestions(examId.intValue());
-        Set<Student> uniqueStudents = new HashSet<>(studentsclosedAnswers);
-        uniqueStudents.addAll(studentopenAnswers);
-        List<Student> combinedStudents = new ArrayList<>(uniqueStudents);
+        System.out.println(studentopenAnswers.size());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showDoneExamUsers");
         modelAndView.addObject("exam", exam);
-        modelAndView.addObject("Students", combinedStudents);
+        modelAndView.addObject("Students", studentopenAnswers);
         model.addAttribute("examId", examId);
         return modelAndView;
     }
