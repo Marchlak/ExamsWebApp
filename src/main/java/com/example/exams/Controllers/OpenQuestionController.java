@@ -5,10 +5,11 @@ import com.example.exams.Services.OpenQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class OpenQuestionController {
 //    private final OpenQuestionService openQuestionService;
 //
@@ -73,15 +74,18 @@ public class OpenQuestionController {
 
     @PostMapping("/processOpenQuestionForm")
     public String processOpenQuestionForm(@RequestParam("action") String action) {
-
-        Integer openQuestionId = Integer.parseInt(action.substring(action.indexOf(':') + 1));
-        if (action.startsWith("edit:")) {
+        String[] parts = action.split(":");
+        String command = parts[0];
+        Integer openQuestionId = Integer.parseInt(parts[1]);
+        if ("edit".equals(command)) {
             return "redirect:/editOpenQuestion/" + openQuestionId;
-        } else if (action.startsWith("delete:")) {
-//            return "redirect:/confirmOpenQuestionDeletion/" + openQuestionId;
-            return "error";
+        } else if ("delete".equals(command) && parts.length == 3) {
+            Integer examId = Integer.parseInt(parts[2]);
+            openQuestionService.deleteOpenQuestion(openQuestionId);
+            return "redirect:/showExamDetails/" + examId;
         }
         return "error";
+
     }
 
 }
