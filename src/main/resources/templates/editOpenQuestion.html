@@ -3,45 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <title>Edit Question</title>
-  <link rel="stylesheet" th:href="@{/css/editOpenQuestion.css}" />
-  <link rel="stylesheet" href="../static/css/editOpenQuestion.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" th:href="@{/css/createQuestion.css}" />
+  <link rel="stylesheet" href="../static/css/createQuestion.css" />
 </head>
 <body>
-<section>
-  <div class="edit-question-box">
+<input type="hidden" id="csrfToken" value="${_csrf.token}"/>
+<input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
+<form th:action="@{/updateOpenQuestion/__${openQuestion.getOpenQuestionId}__}" th:method="post" role="form">
+  <div class="question-box">
+    <div class="input-box">
+      <label for="content">Question Content</label>
+      <textarea id="content" name="content" th:text="${openQuestion.content}"> </textarea>
+    </div>
 
-    <input type="hidden" id="csrfToken" value="${_csrf.token}"/>
-    <input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
+    <div class="input-box">
+      <label for="score">Score</label>
+      <input type="number" name="score" th:value="${openQuestion.score}" />
+    </div>
 
-    <form th:action="@{/updateOpenQuestion/__${openQuestion.getOpenQuestionId}__}" th:method="post" role="form">
-      <h2 class="exam">Edit <span class="system">Question Form</span></h2>
-      <div class="input-box">
-        <textarea id="content" name="content" th:text="${openQuestion.content}"> </textarea>
-        <label for="content">Question Text</label>
-      </div>
-
-      <div class="category-input-box">
-        <label for="score">Score</label>
-        <select id="score" name="score">
-          <option th:value="${openQuestion.score}" th:text="${openQuestion.score}">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-      </div>
-
-      <div class="category-input-box">
-        <label for="category">Category</label>
-        <select id="category" name="category">
-          <option th:value="${openQuestion.getQuestionSubject}" th:text="${openQuestion.getQuestionSubject}">0</option>
-          <option value="0">0</option>
-          <option value="1">1</option>
-        </select>
-      </div>
-
-      <button type="submit">Save Changes</button>
-    </form>
+    <button type="submit">Save</button>
   </div>
-</section>
+</form>
 </body>
 </html>
