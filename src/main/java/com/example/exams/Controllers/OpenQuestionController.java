@@ -2,6 +2,7 @@ package com.example.exams.Controllers;
 
 import com.example.exams.Model.Data.db.OpenQuestion;
 import com.example.exams.Services.OpenQuestionService;
+import com.example.exams.Services.StudentOpenAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class OpenQuestionController {
 
     @Autowired
     OpenQuestionService openQuestionService;
+
+    @Autowired
+    StudentOpenAnswerService studentOpenAnswerService;
 
     @GetMapping("/editOpenQuestion/{openQuestionId}")
     public ModelAndView EditOpenQuestion(@PathVariable Integer openQuestionId){
@@ -78,6 +82,7 @@ public class OpenQuestionController {
             return "redirect:/editOpenQuestion/" + openQuestionId;
         } else if ("delete".equals(command) && parts.length == 3) {
             Integer examId = Integer.parseInt(parts[2]);
+            studentOpenAnswerService.deleteAllAnswersByQuestionId(openQuestionId);
             openQuestionService.deleteOpenQuestion(openQuestionId);
             return "redirect:/showExamDetails/" + examId;
         }
