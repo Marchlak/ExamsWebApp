@@ -128,8 +128,23 @@ button {
 	text-transform: uppercase;
 	cursor: pointer;
 	overflow: hidden;
-	margin: 30px;
+	margin: 10px;
 	padding: 10px;
+}
+
+.button-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.button-container button {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+/* Optional: Center the buttons vertically within the container */
+.button-container button {
+	align-self: center;
 }
 
 .cancel-exam-details::before,
@@ -180,7 +195,7 @@ button:hover::after {
 	display: block;
 }
 
-a{
+a {
 	transition: .3s;
 }
 
@@ -191,6 +206,6 @@ a{
 	top: 20px;
 }
 
-a:hover{
+a:hover {
 	color: red;
 }
