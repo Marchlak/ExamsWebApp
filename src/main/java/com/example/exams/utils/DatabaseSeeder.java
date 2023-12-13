@@ -16,15 +16,19 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final ExaminerRepository examinerRepository;
     private final ExamRepository examRepository;
     private final OpenQuestionRepository openQuestionRepository;
+    private final ClosedQuestionRepository closedQuestionRepository;
+    private final AnswerClosedRepository answerClosedRepository;
     private final StudentsEntityRepository studentsEntityRepository;
 
 
-    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, StudentsEntityRepository studentsEntityRepository) {
+    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository) {
         this.administratorRepository = administratorRepository;
         this.examinerRepository = examinersRepository;
         this.examRepository = examRepository;
         this.subjectRepository = subjectRepository;
         this.openQuestionRepository = openQuestionRepository;
+        this.closedQuestionRepository = closedQuestionRepository;
+        this.answerClosedRepository = answerClosedRepository;
         this.studentsEntityRepository = studentsEntityRepository;
     }
 
@@ -51,6 +55,27 @@ public class DatabaseSeeder implements CommandLineRunner {
         openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
+
+        closedQuestionRepository.save(new Closedquestion(1, 1, "ile to jest 10*10", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(2, 2, "ile to jest 11*11", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(3, 3, "ile to jest 12*12", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
+
+        answerClosedRepository.save(new Answerclosed(1, "to jest moze 101?", false, closedQuestionRepository.findById(1).get()));
+        answerClosedRepository.save(new Answerclosed(2, "to jest moze 102?", false, closedQuestionRepository.findById(1).get()));
+        answerClosedRepository.save(new Answerclosed(3, "to jest moze 2003?", false, closedQuestionRepository.findById(1).get()));
+        answerClosedRepository.save(new Answerclosed(4, "to jest moze 100?", true, closedQuestionRepository.findById(1).get()));
+
+
+        answerClosedRepository.save(new Answerclosed(5, "to jest moze 101?", false, closedQuestionRepository.findById(2).get()));
+        answerClosedRepository.save(new Answerclosed(6, "to jest moze 121?", true, closedQuestionRepository.findById(2).get()));
+        answerClosedRepository.save(new Answerclosed(7, "to jest moze 2003?", false, closedQuestionRepository.findById(2).get()));
+        answerClosedRepository.save(new Answerclosed(8, "to jest moze 100?", false, closedQuestionRepository.findById(2).get()));
+
+
+        answerClosedRepository.save(new Answerclosed(9, "to jest moze 101?", false, closedQuestionRepository.findById(3).get()));
+        answerClosedRepository.save(new Answerclosed(10, "to jest moze 102?", false, closedQuestionRepository.findById(3).get()));
+        answerClosedRepository.save(new Answerclosed(11, "to jest moze 144?", true, closedQuestionRepository.findById(3).get()));
+        answerClosedRepository.save(new Answerclosed(12, "to jest moze 100?", false, closedQuestionRepository.findById(3).get()));
 
     }
 }

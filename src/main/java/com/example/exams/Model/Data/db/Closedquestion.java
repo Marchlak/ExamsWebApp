@@ -2,11 +2,13 @@ package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 @Table(name = "closedquestion")
 public class Closedquestion {
     @Id
@@ -29,4 +31,13 @@ public class Closedquestion {
     @ManyToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name = "exam_id", nullable = true)
     private Exam exam;
+
+    public Closedquestion(Integer closed_question_id, Integer answerclosedquestionid, String content, Integer score, Subject questionSubject, Exam exam) {
+        this.id = closed_question_id;
+        this.answerclosedquestionid = answerclosedquestionid;
+        this.content = content;
+        this.score = score;
+        this.subject_subjectid = questionSubject;
+        this.exam = exam;
+    }
 }

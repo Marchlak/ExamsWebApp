@@ -37,5 +37,4 @@ public class OpenQuestion {
         this.questionSubject = questionSubject;
         this.exam = exam;
     }
-
 }
