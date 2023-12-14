@@ -52,9 +52,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         examRepository.save(new Exam(2, "Retusz zdjęć rektor PB w Photoshop", LocalDate.now().minusDays(2), LocalTime.now().withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withNano(0), subjectRepository.findById(1).get()));
         examRepository.save(new Exam(3, "Jak zrobić sprawozdanie w MS Paint", LocalDate.now().minusDays(2), LocalTime.now().withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withNano(0), subjectRepository.findById(3).get()));
 
-        openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
-        openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
-        openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
+        openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, examRepository.getReferenceById(1)));
+        openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
+        openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, examRepository.getReferenceById(1)));
 
         closedQuestionRepository.save(new Closedquestion(1, 1, "ile to jest 10*10", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
         closedQuestionRepository.save(new Closedquestion(2, 2, "ile to jest 11*11", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));

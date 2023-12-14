@@ -108,12 +108,12 @@ public class ExamController {
                 boolean isExaminer = false;
                 for (GrantedAuthority authority : authorities) {
                     if ("EXAMINER".equals(authority.getAuthority())) {
-//                        examService.AddExam(exam);
+                        examService.AddExam(exam);
                         break;
                     }
                     //DO USUNIECIA
                     if ("ADMIN".equals(authority.getAuthority())) {
-//                        examService.AddExam(exam);
+                       examService.AddExam(exam);
                         break;
                     }
                 }
@@ -369,10 +369,18 @@ public class ExamController {
 
 
     @GetMapping("/addQuestion/{examId}")
-    public ModelAndView addQuestion(@PathVariable String examId) {
+    public ModelAndView addQuestion(@PathVariable Integer examId) {
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("openQuestion", new OpenQuestion());
         modelAndView.setViewName("addQuestion");
         return modelAndView;
+    }
+    @PostMapping("/addQuestion/{examId}")
+    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer examId){
+        Exam exam = examService.GetExam(examId);
+        openQuestion.setExam(exam);
+        openQuestionService.AddOpenQuestion(openQuestion);
+        return "redirect:/exams";
     }
 
     @PostMapping("/processForm")
