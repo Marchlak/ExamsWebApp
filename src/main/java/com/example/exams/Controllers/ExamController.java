@@ -72,6 +72,8 @@ public class ExamController {
     private ClosedQuestionRepository closedQuestionRepository;
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private LogsService logsService;
 
 
     @PostMapping("/addExamQuestions")
@@ -108,12 +110,16 @@ public class ExamController {
                 boolean isExaminer = false;
                 for (GrantedAuthority authority : authorities) {
                     if ("EXAMINER".equals(authority.getAuthority())) {
-//                        examService.AddExam(exam);
+                        Examiner examiner = usersService.getExaminerByLoginAndPassword(user.getUsername());
+                        logsService.addLog(new Log("Egzaminator: "+examiner.getFirstname()+" "+examiner.getLastname()+" dodał nowy egzamin o id: "+examService.getNextExamId()+" oraz opisie: "+exam.getDescription()));
+                        examService.AddExam(exam);
                         break;
                     }
                     //DO USUNIECIA
                     if ("ADMIN".equals(authority.getAuthority())) {
-//                        examService.AddExam(exam);
+                        Administrator administrator = usersService.getAdministratorByLogin(user.getUsername());
+                        logsService.addLog(new Log("Administrator: "+administrator.getFirstname()+" "+administrator.getLastname()+" dodał nowy egzamin o id: "+examService.getNextExamId()+" oraz opisie: "+exam.getDescription()));
+                        examService.AddExam(exam);
                         break;
                     }
                 }
@@ -145,7 +151,7 @@ public class ExamController {
     }
 
     @PostMapping("/editExamDetails/{examId}")
-    public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam("startdate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam("starttime") @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam("enddate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam("endtime") @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+    public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam(value = "startdate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam(value = "starttime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam(value = "enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam(value = "endtime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
         exam.setStartDate(startDate);
         exam.setStartTime(startTime);
         exam.setEndDate(endDate);
@@ -153,7 +159,12 @@ public class ExamController {
         Subject subject = subjectService.getSubjectById(subjectId.intValue());
         exam.setId(examId.intValue());
         exam.setExamsSubject(subject);
-        examService.updateExam(exam);
+        String s = examService.getExamChange(examService.GetExam(examId.intValue()),exam);
+
+        if(s != null ){
+            logsService.updateExam(exam,s);
+            examService.updateExam(exam);
+        }
         return "redirect:/exams";
     }
 
@@ -224,6 +235,7 @@ public class ExamController {
 
     @PostMapping("/deleteExam/{examId}")
     public ResponseEntity<String> deleteExam(@RequestParam Integer examId) {
+        logsService.deleteExam(examId.intValue());
         boolean deleted = examService.deleteExam(examId);
         if (deleted) {
             return ResponseEntity.ok("Exam deleted successfully");
