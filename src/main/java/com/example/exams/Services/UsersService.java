@@ -67,24 +67,12 @@ public class UsersService {
         return student;
     }
 
-    public Administrator getAdministratorByEmail(String administratorEmail) {
-        List<Administrator> administrators = administratorsEntityRepository.findAll();
-        for (Administrator administrator : administrators) {
-            if (administrator.getEmail().equals(administratorEmail)) {
-                return administrator;
-            }
-        }
-        return null;
+    public Administrator getAdministratorByLogin(String login){
+        return administratorsEntityRepository.findAdministratorByLogin(login);
     }
 
-    public Examiner getExaminerByEmail(String examinerEmail) {
-        List<Examiner> examiners = examinersRepository.findAll();
-        for (Examiner examiner : examiners) {
-            if (examiner.getEmail().equals(examinerEmail)) {
-                return examiner;
-            }
-        }
-        return null;
+    public Examiner getExaminerByLoginAndPassword(String login){
+        return examinersRepository.findByLogin(login);
     }
 
     public Student getStudentByid(int id){
