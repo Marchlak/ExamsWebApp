@@ -203,11 +203,13 @@ public class ExamController {
         List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(examId);
         List<Closedquestion> closedquestions = closedQuestionService.getAllByExamId(examId);
         HashMap<Student, List<Studentopenanswer>> map = new HashMap<>();
+
         for (int i = 0; i < studentopenAnswers.size(); i++){
             map.put(studentopenAnswers.get(i), answerOpenService.getStudentOpenAnswerByStudent(studentopenAnswers.get(i)));
         }
         HashMap<Integer, Integer> mapPoints = new HashMap<>();
         HashMap<Integer, LocalDate> mapDate = new HashMap<>();
+        HashMap<Integer, LocalTime> mapTime = new HashMap<>();
         int pointsSt;
         for (Map.Entry<Student, List<Studentopenanswer>> entry : map.entrySet()) {
             Student student = entry.getKey();
@@ -215,8 +217,10 @@ public class ExamController {
 
             pointsSt = calculateTotalPoints(studentOpenAnswers);
             LocalDate date = entry.getValue().get(0).getDate();
+            LocalTime time = entry.getValue().get(0).getTime();
             mapPoints.put(student.getStudent_id(), pointsSt);
             mapDate.put(student.getStudent_id(), date);
+            mapTime.put(student.getStudent_id(), time);
         }
         int points = 0;
         for (int i = 0; i < openQuestions.size(); i++){
@@ -232,6 +236,7 @@ public class ExamController {
         modelAndView.addObject("Students", studentopenAnswers);
         modelAndView.addObject("mapPoints",  mapPoints);
         modelAndView.addObject("mapDate",  mapDate);
+        modelAndView.addObject("mapTime",  mapTime);
         model.addAttribute("examId", examId);
         model.addAttribute("points", points);
         return modelAndView;
@@ -364,6 +369,7 @@ public class ExamController {
                 openAnswer.setDescription(answer);
                 openAnswer.setStudentStudent(student);
                 openAnswer.setDate(LocalDate.now());
+                openAnswer.setTime(LocalTime.now());
                 studentOpenAnswerRepository.save(openAnswer);
             }
         });
@@ -395,6 +401,7 @@ public class ExamController {
                 closedAnswer.setClosedquestionQuestionid(closedQuestion);
                 closedAnswer.setStudentStudent(student);
                 closedAnswer.setDate(LocalDate.now());
+                closedAnswer.setTime(LocalTime.now());
 
                 boolean isCorrect = answerclosed.isCorrect();
                 closedAnswer.setCorrectness(isCorrect);
