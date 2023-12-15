@@ -19,9 +19,10 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final ClosedQuestionRepository closedQuestionRepository;
     private final AnswerClosedRepository answerClosedRepository;
     private final StudentsEntityRepository studentsEntityRepository;
+    private final ProblemRepository problemRepository;
 
 
-    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository) {
+    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository) {
         this.administratorRepository = administratorRepository;
         this.examinerRepository = examinersRepository;
         this.examRepository = examRepository;
@@ -30,6 +31,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.closedQuestionRepository = closedQuestionRepository;
         this.answerClosedRepository = answerClosedRepository;
         this.studentsEntityRepository = studentsEntityRepository;
+        this.problemRepository = problemRepository;
     }
 
 
@@ -76,6 +78,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         answerClosedRepository.save(new Answerclosed(10, "to jest moze 102?", false, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(11, "to jest moze 144?", true, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(12, "to jest moze 100?", false, closedQuestionRepository.findById(3).get()));
+
 
     }
 }

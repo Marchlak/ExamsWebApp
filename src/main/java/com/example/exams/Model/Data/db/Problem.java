@@ -9,11 +9,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "problem")
 public class Problem {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "problemid", nullable = false)
     private Integer id;
 
-    @Column(name = "photo")
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
 
     @Column(name = "description", length = 100)
@@ -27,4 +28,9 @@ public class Problem {
     @JoinColumn(name = "problems_examiner_id")
     private Examiner problemsExaminer;
 
+    @Column(name = "category", length = 20)
+    private String category;
+
+    @Column(name = "username", length = 20)
+    private String username;
 }
