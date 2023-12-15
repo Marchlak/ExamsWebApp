@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -22,6 +23,9 @@ public class Studentopenanswer {
 
     @Column(name = "Date", nullable = false)
     private LocalDate date;
+
+    @Column(name = "Time", nullable = false)
+    private LocalTime time;
 
     @Column(name = "description", length = 100)
     private String description;
