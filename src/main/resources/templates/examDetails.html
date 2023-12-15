@@ -58,7 +58,9 @@
 							<p th:text="${closedQuestion.content}"></p>
 
 							<ul th:if="${closedQuestionAnswersMap[closedQuestion.id] != null}">
-								<li th:each="answer : ${closedQuestionAnswersMap[closedQuestion.id]}" th:text="${answer.description}"></li>
+								<li th:each="answer : ${closedQuestionAnswersMap[closedQuestion.id]}" th:text="${answer.description}"
+									th:class="${answer.correct ? 'correct-answer' : 'incorrect-answer'}"></li>
+							</ul>
 							</ul>
 							<form method="post" th:action="@{/processClosedQuestionForm}" th:object="${closedQuestion}">
 								<div class="button-container">

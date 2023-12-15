@@ -209,3 +209,6 @@ a {
 a:hover {
 	color: red;
 }
+.correct-answer {
+	color: green;
+}
