@@ -1,22 +1,22 @@
 package com.example.exams.Controllers;
 
-import com.example.exams.Services.SubjectService;
+import com.example.exams.Model.Data.db.Log;
+import com.example.exams.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.db.Administrator;
 import com.example.exams.Model.Data.db.Examiner;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 import com.example.exams.Model.Data.db.Student;
-import com.example.exams.Services.LoginsService;
 
-import com.example.exams.Services.UsersService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import com.example.exams.Services.ExamService;
+
+import java.util.List;
 
 @RestController
 public class Controller {
@@ -32,6 +32,8 @@ public class Controller {
 
     @Autowired
     UsersService usersService;
+    @Autowired
+    LogsService logsService;
 
     public Controller(ExamService examService)
     {
@@ -59,6 +61,13 @@ public class Controller {
         modelAndView.addObject("exams", examService.getAllExams());
         modelAndView.addObject("subjects", subjectService.GetAll());
         modelAndView.setViewName("showExams");
+        return modelAndView;
+    }
+    @GetMapping("/logs")
+    public ModelAndView showLogs() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("logs", logsService.getLogs());
+        modelAndView.setViewName("showLogs");
         return modelAndView;
     }
 
