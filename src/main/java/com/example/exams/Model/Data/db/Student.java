@@ -22,10 +22,6 @@ public class Student {
     @JoinColumn(name = "group_classid")
     private Group groupClassid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_examid")
-    private Exam examExamid; //tu nie powinno byc manyToMany? student zdaje kilka egzaminow chyba, nie? i w egzaminie bierze udzial wielu studentow
-
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
 

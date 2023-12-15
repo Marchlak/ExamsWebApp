@@ -34,6 +34,7 @@
 </div>
 
 <form th:if="${timeStarts} and not ${timeEnds}" action="/saveResolvedExam" method="post">
+    <input type="hidden" name="examId" th:value="${exam.id}" />
 
     <ul>
         <li th:each="question : ${listOpenQuestions}">

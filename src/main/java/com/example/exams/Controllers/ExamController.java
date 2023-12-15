@@ -51,6 +51,9 @@ public class ExamController {
     ClosedQuestionService closedQuestionService;
 
     @Autowired
+    LogstudentexamService logstudentexamService;
+
+    @Autowired
     private AnswerClosedService answerClosedService;
     @Autowired
     private AnswerOpenService answerOpenService;
@@ -377,10 +380,25 @@ public class ExamController {
 
     }
 
-    private boolean processClosedAnswers(Map<String, String[]> closedAnswers, UserDetails userDetails) {
+    private void resultsClosedAnswers(Integer score, int id){
+        int result = 0;
+    List<Answerclosed> Answers = answerClosedService.getAllByQuestionId(id);
+        for (Answerclosed answer : Answers) {
+            if(answer.isCorrect())
+            {
+                result = result + 1;
+            }
+        }
+        if(result == score)
+        {
+            logstudentexamService.addPointsToLogstudentexam(id,score);
+        }
+    }
+
+    private boolean processClosedAnswers(Map<String, String[]> closedAnswers, UserDetails userDetails, Integer currentlogsstudentexam) {
         Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
         if (student == null) {
-            return false; // Nie ma studenta o ID 1
+            return false;
         }
         if (closedAnswers == null || closedAnswers.isEmpty()) {
             return true;
@@ -390,6 +408,7 @@ public class ExamController {
         for (Map.Entry<String, String[]> entry : closedAnswers.entrySet()) {
             Integer questionId = Integer.parseInt(entry.getKey());
             Closedquestion closedQuestion = closedQuestionRepository.findById(questionId).orElse(null);
+            Integer questionresult = 0;
             for (String answerId : entry.getValue()) {
                 Answerclosed answerclosed = answerclosedRepository.findById(Integer.parseInt(answerId)).orElse(null);
                 if (answerclosed == null) {
@@ -401,15 +420,20 @@ public class ExamController {
                 closedAnswer.setClosedquestionQuestionid(closedQuestion);
                 closedAnswer.setStudentStudent(student);
                 closedAnswer.setDate(LocalDate.now());
-
                 boolean isCorrect = answerclosed.isCorrect();
+                if(isCorrect) {
+                    questionresult += 1;
+                }
+                else {
+                    questionresult -=1;
+                }
                 closedAnswer.setCorrectness(isCorrect);
                 studentClosedAnswerRepository.save(closedAnswer);
             }
+            resultsClosedAnswers(questionresult,currentlogsstudentexam);
         }
 
         return true;
-
     }
 
     @PostMapping("/saveResolvedExam")
@@ -423,14 +447,14 @@ public class ExamController {
             modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
             user = (UserDetails) session.getAttribute("UsersEntity");
         }
-
+        Student student = studentRepository.findStudentByLogin(user.getUsername());
+        Exam currentExam = examService.GetExam(examResponse.getExamId());
+        Integer logstudentexamid = logstudentexamService.createAndSaveLogstudentexam(currentExam, student);
         boolean openAnswersSaved = processOpenAnswers(examResponse.getOpenAnswers(), user);
-        boolean closedAnswersSaved = processClosedAnswers(examResponse.getClosedAnswers(), user);
+        boolean closedAnswersSaved = processClosedAnswers(examResponse.getClosedAnswers(), user, logstudentexamid);
         if (!openAnswersSaved || !closedAnswersSaved) {
             modelAndView.addObject("error", "Nie udało się zapisać wszystkich odpowiedzi.");
         }
-
-
 
         return "redirect:/exams";
     }

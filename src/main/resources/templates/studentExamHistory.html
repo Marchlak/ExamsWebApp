@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Historia egzaminów</title>
+</head>
+<body>
+<h2>Historia egzaminów</h2>
+<table>
+    <tr>
+        <th>Data</th>
+        <th>Opis egzaminu</th>
+        <th>Wynik</th>
+    </tr>
+    <tr th:each="exam : ${examHistory}">
+        <td th:text="${exam.date}"></td>
+        <td th:text="${exam.description}"></td>
+        <td th:text="${exam.scoreresult}"></td>
+    </tr>
+</table>
+</body>
+</html>

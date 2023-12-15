@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Table(name = "logstudentexam")
 public class Logstudentexam {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "logstudentexamid", nullable = false)
     private Integer id;
 
@@ -21,12 +22,24 @@ public class Logstudentexam {
     @Column(name = "Date")
     private LocalDate date;
 
+    @Column(name = "score_result")
+    private Integer scoreresult;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_examid")
     private Exam examExamid;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_student_id")
+    @JoinColumn(name = "student_studentid")
     private Student studentStudent;
+
+    public void addPoints(int points) {
+        if (this.scoreresult == null) {
+            this.scoreresult = 0;
+        }
+        this.scoreresult += points;
+    }
+
+
 
 }

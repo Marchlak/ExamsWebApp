@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -32,6 +35,9 @@ public class Closedquestion {
     @ManyToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name = "exam_id", nullable = true)
     private Exam exam;
+
+  //  @OneToMany(mappedBy = "closedquestionQuestionid", cascade = CascadeType.ALL, orphanRemoval = true)
+ //   private List<Answerclosed> answers = new ArrayList<>();
 
     public Closedquestion(Integer closed_question_id, Integer answerclosedquestionid, String content, Integer score, Exam exam) {
         this.id = closed_question_id;

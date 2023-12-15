@@ -71,6 +71,13 @@ public class Controller {
         return modelAndView;
     }
 
+    @PostMapping("/results")
+    public ModelAndView results() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("studentExamHistory");
+        return modelAndView;
+    }
+
     @GetMapping("/register")
     public ModelAndView register(Model model) {
         ModelAndView modelAndView = new ModelAndView();

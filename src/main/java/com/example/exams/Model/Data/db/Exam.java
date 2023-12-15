@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,6 +41,12 @@ public class Exam {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "conducting_examiner_id")
     private Examiner conductingExaminer;
+
+ //   @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+ //   private List<OpenQuestion> openQuestions = new ArrayList<>();
+
+ //   @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+ //   private List<Closedquestion> closedQuestions = new ArrayList<>();
 
     public Exam() {
     }

@@ -62,9 +62,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         examRepository.save(new Exam(2, "Całki", LocalDate.now().minusDays(2), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0), subjectRepository.findById(1).get()));
         examRepository.save(new Exam(3, "Jak zrobić sprawozdanie w MS Paint", LocalDate.now().minusDays(2), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0), subjectRepository.findById(3).get()));
 
-        studentsEntityRepository.save(new Student(1, groupRepository.getReferenceById(1), examRepository.getReferenceById(1), "Pawel", "Kulka", "kuleczka", "123", "kule@pb.edu.pl" ));
-        studentsEntityRepository.save(new Student(2, groupRepository.getReferenceById(2), examRepository.getReferenceById(1), "Michal", "Zalewski", "1", "123", "zalewski@pb.edu.pl" ));
-        studentsEntityRepository.save(new Student(3, groupRepository.getReferenceById(3), examRepository.getReferenceById(2), "Tomasz", "Adamek", "a", "123", "adamczyk@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(1, groupRepository.getReferenceById(1), "Pawel", "Kulka", "kuleczka", "123", "kule@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(2, groupRepository.getReferenceById(2), "Michal", "Zalewski", "1", "123", "zalewski@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(3, groupRepository.getReferenceById(3), "Tomasz", "Adamek", "a", "123", "adamczyk@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(3, groupRepository.getReferenceById(3), "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@pb.edu.pl" ));
 
         openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
