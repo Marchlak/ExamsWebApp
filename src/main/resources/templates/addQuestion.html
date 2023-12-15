@@ -16,15 +16,15 @@
 			<button onclick="showForm('open')" class="option">Open Question</button>
 			<button onclick="showForm('closed')" class="option2">Closed Question</button>
 
-			<form class="open-form">
+			<form th:action="@{/addQuestion/__${examId}__}" th:method="post"th:object="${openQuestion}"class="open-form">
 				<div class="input-box">
 					<label for="content">Question Content</label>
-					<textarea type="text" name="content" class="form-control"></textarea>
+					<textarea type="text" id="content" name="content" th:field="*{content}" class="form-control"></textarea>
 				</div>
 
 				<div class="input-box">
 					<label for="score">Score</label>
-					<input type="number" name="score" class="form-control" />
+					<input type="number" id="score" name="score" th:field="*{score}" class="form-control" />
 				</div>
 
 				<button type="submit">Create</button>
@@ -42,7 +42,7 @@
 				</div>
 
 				<div id="answer-box" class="input-box">
-					<label for="closed-answer">Answer content:</label>
+					<label>Answer content:</label>
 					<input type="text" name="closed-answer" class="content"/>
 				</div>
 

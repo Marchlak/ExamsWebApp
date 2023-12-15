@@ -1,6 +1,7 @@
 package com.example.exams.Controllers;
 
 import com.example.exams.Model.Data.db.OpenQuestion;
+import com.example.exams.Services.LogsService;
 import com.example.exams.Services.OpenQuestionService;
 import com.example.exams.Services.StudentOpenAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class OpenQuestionController {
 
     @Autowired
     StudentOpenAnswerService studentOpenAnswerService;
+    @Autowired
+    LogsService logsService;
 
     @GetMapping("/editOpenQuestion/{openQuestionId}")
     public ModelAndView EditOpenQuestion(@PathVariable Integer openQuestionId){
@@ -36,6 +39,7 @@ public class OpenQuestionController {
 
     @PostMapping("/updateOpenQuestion/{openQuestionId}")
     public String UpdateOpenQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer openQuestionId){
+        logsService.updateOpenQuestion(openQuestion,openQuestionId);
         openQuestion.setOpenQuestionId(openQuestionId);
         OpenQuestion updatedOpenQuestionOptional = openQuestionService.UpdateOpenQuestion(openQuestion);
         return "redirect:/showExamDetails/" + updatedOpenQuestionOptional.getExam().getId();
@@ -83,6 +87,7 @@ public class OpenQuestionController {
         } else if ("delete".equals(command) && parts.length == 3) {
             Integer examId = Integer.parseInt(parts[2]);
             studentOpenAnswerService.deleteAllAnswersByQuestionId(openQuestionId);
+            logsService.deleteOpenQuestion(openQuestionId.intValue());
             openQuestionService.deleteOpenQuestion(openQuestionId);
             return "redirect:/showExamDetails/" + examId;
         }

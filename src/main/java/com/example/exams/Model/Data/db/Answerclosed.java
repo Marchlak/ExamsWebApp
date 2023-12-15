@@ -25,7 +25,7 @@ public class Answerclosed {
     @JoinColumn(name = "closedquestion_questionid", nullable = false)
     private Closedquestion closedquestionQuestionid;
 
-    public Answerclosed(Integer answerId, String description, Boolean correct, Closedquestion question) {
+    public Answerclosed(Integer answerId, String description, boolean correct, Closedquestion question) {
         this.id = answerId;
         this.description = description;
         this.isCorrect = correct;

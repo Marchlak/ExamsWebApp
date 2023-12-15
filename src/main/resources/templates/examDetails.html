@@ -52,6 +52,22 @@
 							</form>
 						</td>
 					</tr>
+					<tr th:each="closedQuestion : ${listClosedQuestions}">
+						<td>
+							<h4 th:text="${'Title of question ' + closedQuestion.getId()}"></h4>
+							<p th:text="${closedQuestion.content}"></p>
+
+							<ul th:if="${closedQuestionAnswersMap[closedQuestion.id] != null}">
+								<li th:each="answer : ${closedQuestionAnswersMap[closedQuestion.id]}" th:text="${answer.description}"></li>
+							</ul>
+							<form method="post" th:action="@{/processClosedQuestionForm}" th:object="${closedQuestion}">
+								<div class="button-container">
+									<button class="edit-delete" type="submit" name="action" th:value="'edit:'+ ${closedQuestion.getId()}"><i class="fa-solid fa-pen"></i>Edit</button>
+									<button class="edit-delete" type="submit" name="action" th:value="'delete:'+ ${closedQuestion.getId() + ':' + closedQuestion.getExam()}"><i class="fa-solid fa-trash"></i>Delete</button>
+								</div>
+							</form>
+						</td>
+					</tr>
 				</div>
 			</div>
 		</div>
