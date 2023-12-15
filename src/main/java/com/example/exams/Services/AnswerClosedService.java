@@ -37,5 +37,8 @@ public class AnswerClosedService {
 
         return List.copyOf(uniqueStudents);
     }
+    public Answerclosed addAnswerClosed(Answerclosed newAnswerClosed){
+        return answerClosedRepository.save(newAnswerClosed);
+    }
 
 }

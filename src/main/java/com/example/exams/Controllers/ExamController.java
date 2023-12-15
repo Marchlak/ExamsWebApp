@@ -463,15 +463,22 @@ public class ExamController {
     @GetMapping("/addQuestion/{examId}")
     public ModelAndView addQuestion(@PathVariable Integer examId) {
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("closedQuestion", new Closedquestion());
+        modelAndView.addObject("answerClosedList", new Answerclosed());
         modelAndView.addObject("openQuestion", new OpenQuestion());
         modelAndView.setViewName("addQuestion");
         return modelAndView;
     }
     @PostMapping("/addQuestion/{examId}")
-    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer examId){
+    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @ModelAttribute Closedquestion closedquestion,@ModelAttribute Answerclosed answerclosed, @RequestParam(value = "type", required = false) String type,@PathVariable Integer examId){
         Exam exam = examService.GetExam(examId);
-        openQuestion.setExam(exam);
-        openQuestionService.AddOpenQuestion(openQuestion);
+        if ("closed".equals(type)) {
+            closedquestion.setExam(exam);
+            closedQuestionService.addClosedQuestion(closedquestion);
+        } else {
+            openQuestion.setExam(exam);
+            openQuestionService.AddOpenQuestion(openQuestion);
+        }
         return "redirect:/exams";
     }
 

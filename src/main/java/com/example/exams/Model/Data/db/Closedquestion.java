@@ -19,8 +19,8 @@ public class Closedquestion {
     @Column(name = "closed_question_id", nullable = false)
     private Integer id;
 
-    @Column(name = "answerclosedquestionid")
-    private Integer answerclosedquestionid;
+    /*@Column(name = "answerclosedquestionid")
+    private Integer answerclosedquestionid;*/
 
     @Column(name = "content", length = 100)
     private String content;
@@ -39,9 +39,9 @@ public class Closedquestion {
   //  @OneToMany(mappedBy = "closedquestionQuestionid", cascade = CascadeType.ALL, orphanRemoval = true)
  //   private List<Answerclosed> answers = new ArrayList<>();
 
-    public Closedquestion(Integer closed_question_id, Integer answerclosedquestionid, String content, Integer score, Exam exam) {
+    public Closedquestion(Integer closed_question_id, String content, Integer score, Exam exam) {
         this.id = closed_question_id;
-        this.answerclosedquestionid = answerclosedquestionid;
+        //this.answerclosedquestionid = answerclosedquestionid;
         this.content = content;
         this.score = score;
         this.exam = exam;
