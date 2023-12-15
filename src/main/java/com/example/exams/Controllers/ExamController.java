@@ -250,11 +250,19 @@ public class ExamController {
 
         Exam exam = examService.GetExam(Integer.parseInt(examId));
 
-        modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
-        modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        List<Closedquestion> closedquestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
+        Map<Integer, List<Answerclosed>> closedQuestionAnswersMap = new HashMap<>();
+        for (Closedquestion closedQuestion : closedquestions) {
+            List<Answerclosed> answers = answerClosedService.getAllByQuestionId(closedQuestion.getId());
+            closedQuestionAnswersMap.put(closedQuestion.getId(), answers);
+        }
+            modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
+            modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+            modelAndView.addObject("listClosedQuestions", closedquestions);
+            modelAndView.addObject("closedQuestionAnswersMap", closedQuestionAnswersMap);
 
-        return modelAndView;
-    }
+            return modelAndView;
+        }
 
     @GetMapping("/solveExam/{examId}")
     public ModelAndView getExamToSolve(@PathVariable String examId) {
