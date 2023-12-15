@@ -12,6 +12,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -180,18 +181,64 @@ public class ExamController {
         return modelAndView;
     }
 
+    public int calculateTotalPoints(List<Studentopenanswer> studentOpenAnswers) {
+        int totalPoints = 0;
+
+        for (Studentopenanswer openAnswer : studentOpenAnswers) {
+            if (openAnswer.getScore() == null){
+                totalPoints += 0;
+            }else {
+                totalPoints += openAnswer.getScore();
+            }
+        }
+
+        return totalPoints;
+    }
 
 
     @GetMapping("/showDoneExamUser/{examId}")
     public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
         Exam exam = examService.GetExam(examId.intValue());
         List<Student> studentopenAnswers = answerOpenService.getAllDistinctStudentsForOpenQuestions(examId.intValue());
-        System.out.println(studentopenAnswers.size());
+        List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(examId);
+        List<Closedquestion> closedquestions = closedQuestionService.getAllByExamId(examId);
+        HashMap<Student, List<Studentopenanswer>> map = new HashMap<>();
+
+        for (int i = 0; i < studentopenAnswers.size(); i++){
+            map.put(studentopenAnswers.get(i), answerOpenService.getStudentOpenAnswerByStudent(studentopenAnswers.get(i)));
+        }
+        HashMap<Integer, LocalTime> mapTime = new HashMap<>();
+        HashMap<Integer, Integer> mapPoints = new HashMap<>();
+        HashMap<Integer, LocalDate> mapDate = new HashMap<>();
+        int pointsSt;
+        for (Map.Entry<Student, List<Studentopenanswer>> entry : map.entrySet()) {
+            Student student = entry.getKey();
+            List<Studentopenanswer> studentOpenAnswers = entry.getValue();
+
+            pointsSt = calculateTotalPoints(studentOpenAnswers);
+            LocalDate date = entry.getValue().get(0).getDate();
+            LocalTime time = entry.getValue().get(0).getTime();
+            mapPoints.put(student.getStudent_id(), pointsSt);
+            mapTime.put(student.getStudent_id(), time);
+            mapDate.put(student.getStudent_id(), date);
+        }
+        int points = 0;
+        for (int i = 0; i < openQuestions.size(); i++){
+            points += openQuestions.get(i).getScore();
+        }
+       for (int i = 0; i < closedquestions.size(); i++){
+           points += closedquestions.get(i).getScore();
+       }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showDoneExamUsers");
         modelAndView.addObject("exam", exam);
         modelAndView.addObject("Students", studentopenAnswers);
+        modelAndView.addObject("mapPoints",  mapPoints);
+        modelAndView.addObject("mapDate",  mapDate);
+        modelAndView.addObject("mapTime",  mapTime);
         model.addAttribute("examId", examId);
+        model.addAttribute("points", points);
         return modelAndView;
     }
 
@@ -250,11 +297,19 @@ public class ExamController {
 
         Exam exam = examService.GetExam(Integer.parseInt(examId));
 
-        modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
-        modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        List<Closedquestion> closedquestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
+        Map<Integer, List<Answerclosed>> closedQuestionAnswersMap = new HashMap<>();
+        for (Closedquestion closedQuestion : closedquestions) {
+            List<Answerclosed> answers = answerClosedService.getAllByQuestionId(closedQuestion.getId());
+            closedQuestionAnswersMap.put(closedQuestion.getId(), answers);
+        }
+            modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
+            modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+            modelAndView.addObject("listClosedQuestions", closedquestions);
+            modelAndView.addObject("closedQuestionAnswersMap", closedQuestionAnswersMap);
 
-        return modelAndView;
-    }
+            return modelAndView;
+        }
 
     @GetMapping("/solveExam/{examId}")
     public ModelAndView getExamToSolve(@PathVariable String examId) {
@@ -314,6 +369,7 @@ public class ExamController {
                 openAnswer.setDescription(answer);
                 openAnswer.setStudentStudent(student);
                 openAnswer.setDate(LocalDate.now());
+                openAnswer.setTime(LocalTime.now());
                 studentOpenAnswerRepository.save(openAnswer);
             }
         });
@@ -381,10 +437,18 @@ public class ExamController {
 
 
     @GetMapping("/addQuestion/{examId}")
-    public ModelAndView addQuestion(@PathVariable String examId) {
+    public ModelAndView addQuestion(@PathVariable Integer examId) {
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("openQuestion", new OpenQuestion());
         modelAndView.setViewName("addQuestion");
         return modelAndView;
+    }
+    @PostMapping("/addQuestion/{examId}")
+    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @PathVariable Integer examId){
+        Exam exam = examService.GetExam(examId);
+        openQuestion.setExam(exam);
+        openQuestionService.AddOpenQuestion(openQuestion);
+        return "redirect:/exams";
     }
 
     @PostMapping("/processForm")

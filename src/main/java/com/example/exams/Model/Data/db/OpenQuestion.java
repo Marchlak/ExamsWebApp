@@ -22,19 +22,18 @@ public class OpenQuestion {
     @Column(name = "score")
     private Integer score;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    /*@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "subject_subjectid", nullable = true)
-    private Subject questionSubject;
+    private Subject questionSubject;*/
 
     @ManyToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name = "exam_id", nullable = true)
     private Exam exam;
 
-    public OpenQuestion(Integer openQuestionId, String content, Integer score, Subject questionSubject, Exam exam) {
+    public OpenQuestion(Integer openQuestionId, String content, Integer score, Exam exam) {
         this.openQuestionId = openQuestionId;
         this.content = content;
         this.score = score;
-        this.questionSubject = questionSubject;
         this.exam = exam;
     }
 }

@@ -19,9 +19,10 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final ClosedQuestionRepository closedQuestionRepository;
     private final AnswerClosedRepository answerClosedRepository;
     private final StudentsEntityRepository studentsEntityRepository;
+    private final ProblemRepository problemRepository;
+    private final GroupRepository groupRepository;
 
-
-    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository) {
+    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository, GroupRepository groupRepository) {
         this.administratorRepository = administratorRepository;
         this.examinerRepository = examinersRepository;
         this.examRepository = examRepository;
@@ -30,13 +31,15 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.closedQuestionRepository = closedQuestionRepository;
         this.answerClosedRepository = answerClosedRepository;
         this.studentsEntityRepository = studentsEntityRepository;
+        this.problemRepository = problemRepository;
+        this.groupRepository = groupRepository;
     }
 
 
     @Override
     public void run(String... args) {
         administratorRepository.save(new Administrator(1, "Szast", "Prast", "wipb", "pebegate", "wi@pb.edu.pl", true));
-        administratorRepository.save(new Administrator(2, "Dziekanat", "WI PB", "dziekanatwi", "dziekanatwi", "dziekanatwi@pb.edu.pl", true));
+        administratorRepository.save(new Administrator(2, "Wojciech", "WI PB", "wojtek", "1", "wojtek@pb.edu.pl", true));
 
         subjectRepository.save(new Subject(1, "Matematyka"));
         subjectRepository.save(new Subject(2, "Angielski"));
@@ -45,20 +48,31 @@ public class DatabaseSeeder implements CommandLineRunner {
         subjectRepository.save(new Subject(5, "Niemiecki"));
 
         examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "a", "a", "s.golibrodai@pb.edu.pl", true));
-        examinerRepository.save(new Examiner(2, "Dorota", "Cuda", "wedliny", "cuda2115", "cudawedliny@pb.edu.pl", true));
-        examinerRepository.save(new Examiner(3, "Marta", "Korsarz", "pbenjoyer", "szastprast", "smoczyca@pb.edu.pl", false));
+        examinerRepository.save(new Examiner(2, "Dorota", "Warka", "wedliny", "cuda2115", "wedliny@pb.edu.pl", true));
+        examinerRepository.save(new Examiner(3, "Julita", "Komarewska", "enjoyer", "szastprast", "smok@pb.edu.pl", false));
+
+        groupRepository.save(new Group(1, "pb01"));
+        groupRepository.save(new Group(2, "pb02"));
+        groupRepository.save(new Group(3, "pb03"));
+
+
+
 
         examRepository.save(new Exam(1, "Projektowanie części w SOLIDWORKS", LocalDate.now(), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0).withNano(0), subjectRepository.findById(1).get()));
-        examRepository.save(new Exam(2, "Retusz zdjęć rektor PB w Photoshop", LocalDate.now().minusDays(2), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0), subjectRepository.findById(1).get()));
+        examRepository.save(new Exam(2, "Całki", LocalDate.now().minusDays(2), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0), subjectRepository.findById(1).get()));
         examRepository.save(new Exam(3, "Jak zrobić sprawozdanie w MS Paint", LocalDate.now().minusDays(2), LocalTime.now().withSecond(0).withNano(0), LocalDate.now(), LocalTime.now().plusHours(1).withSecond(0).withNano(0), subjectRepository.findById(3).get()));
 
-        openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
-        openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
-        openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, subjectRepository.getReferenceById(1), examRepository.getReferenceById(1)));
+        studentsEntityRepository.save(new Student(1, groupRepository.getReferenceById(1), examRepository.getReferenceById(1), "Pawel", "Kulka", "kuleczka", "123", "kule@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(2, groupRepository.getReferenceById(2), examRepository.getReferenceById(1), "Michal", "Zalewski", "1", "123", "zalewski@pb.edu.pl" ));
+        studentsEntityRepository.save(new Student(3, groupRepository.getReferenceById(3), examRepository.getReferenceById(2), "Tomasz", "Adamek", "a", "123", "adamczyk@pb.edu.pl" ));
 
-        closedQuestionRepository.save(new Closedquestion(1, 1, "ile to jest 10*10", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(2, 2, "ile to jest 11*11", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(3, 3, "ile to jest 12*12", 1, subjectRepository.findById(1).get(), examRepository.getReferenceById(1) ));
+        openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, examRepository.getReferenceById(1)));
+        openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
+        openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, examRepository.getReferenceById(1)));
+
+        closedQuestionRepository.save(new Closedquestion(1, 1, "ile to jest 10*10", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(2, 2, "ile to jest 11*11", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(3, 3, "ile to jest 12*12", 1, examRepository.getReferenceById(1) ));
 
         answerClosedRepository.save(new Answerclosed(1, "to jest moze 101?", false, closedQuestionRepository.findById(1).get()));
         answerClosedRepository.save(new Answerclosed(2, "to jest moze 102?", false, closedQuestionRepository.findById(1).get()));
@@ -77,5 +91,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         answerClosedRepository.save(new Answerclosed(11, "to jest moze 144?", true, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(12, "to jest moze 100?", false, closedQuestionRepository.findById(3).get()));
 
+
     }
 }
+
