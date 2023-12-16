@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -21,6 +22,9 @@ public class Logstudentexam {
 
     @Column(name = "Date")
     private LocalDate date;
+
+    @Column(name = "Time")
+    private LocalTime time;
 
     @Column(name = "score_result")
     private Integer scoreresult;

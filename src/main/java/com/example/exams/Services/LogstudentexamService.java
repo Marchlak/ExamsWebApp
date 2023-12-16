@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -24,6 +25,30 @@ public class LogstudentexamService {
         return logstudentexamRepository.findByStudentStudentId(id);
     }
 
+    public List<Logstudentexam> getStudentsLogstudentExamById(Exam exam) {
+        return logstudentexamRepository.findLogstudentexamsByExamExamid(exam);
+    }
+
+    public void setEvaluateDate(Student student, Exam exam){
+        Logstudentexam logstudentexam = logstudentexamRepository.findLogstudentexamByStudentStudentAndExamExamid(student, exam);
+        logstudentexam.setDate(LocalDate.now());
+        logstudentexam.setTime(LocalTime.now());
+    }
+
+    public void addOpenPoints(Student student, Exam exam, Integer openPoints){
+        Logstudentexam logstudentexam = logstudentexamRepository.findLogstudentexamByStudentStudentAndExamExamid(student, exam);
+        int score;
+
+        if (logstudentexam.getScoreresult() == null){
+            score = 0;
+        }else{
+            score = logstudentexam.getScoreresult();
+        }
+        int finalResult = score + openPoints;
+        logstudentexam.setScoreresult(finalResult);
+        logstudentexamRepository.save(logstudentexam);
+    }
+
 
     public void addPointsToLogstudentexam(int logstudentexamId, int points) {
         Logstudentexam logstudentexam = logstudentexamRepository.findById(logstudentexamId)
@@ -36,6 +61,7 @@ public class LogstudentexamService {
     public Integer createAndSaveLogstudentexam(Exam examExamid, Student studentStudent) {
         Logstudentexam newLogstudentexam = new Logstudentexam();
         newLogstudentexam.setDate(LocalDate.now());
+        newLogstudentexam.setTime(LocalTime.now());
         newLogstudentexam.setExamExamid(examExamid);
         newLogstudentexam.setStudentStudent(studentStudent);
         logstudentexamRepository.save(newLogstudentexam);

@@ -184,44 +184,41 @@ public class ExamController {
         return modelAndView;
     }
 
-    public int calculateTotalPoints(List<Studentopenanswer> studentOpenAnswers) {
-        int totalPoints = 0;
-
-        for (Studentopenanswer openAnswer : studentOpenAnswers) {
-            if (openAnswer.getScore() == null){
-                totalPoints += 0;
-            }else {
-                totalPoints += openAnswer.getScore();
-            }
-        }
-
-        return totalPoints;
-    }
+//    public int calculateTotalPoints(List<Studentopenanswer> studentOpenAnswers) {
+//        int totalPoints = 0;
+//
+//        for (Studentopenanswer openAnswer : studentOpenAnswers) {
+//            if (openAnswer.getScore() == null){
+//                totalPoints += 0;
+//            }else {
+//                totalPoints += openAnswer.getScore();
+//            }
+//        }
+//
+//        return totalPoints;
+//    }
 
 
     @GetMapping("/showDoneExamUser/{examId}")
     public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
         Exam exam = examService.GetExam(examId.intValue());
         List<Student> studentopenAnswers = answerOpenService.getAllDistinctStudentsForOpenQuestions(examId.intValue());
+        List<Logstudentexam> list = logstudentexamService.getStudentsLogstudentExamById(exam);
         List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(examId);
         List<Closedquestion> closedquestions = closedQuestionService.getAllByExamId(examId);
+
         HashMap<Student, List<Studentopenanswer>> map = new HashMap<>();
 
         for (int i = 0; i < studentopenAnswers.size(); i++){
             map.put(studentopenAnswers.get(i), answerOpenService.getStudentOpenAnswerByStudent(studentopenAnswers.get(i)));
         }
         HashMap<Integer, LocalTime> mapTime = new HashMap<>();
-        HashMap<Integer, Integer> mapPoints = new HashMap<>();
         HashMap<Integer, LocalDate> mapDate = new HashMap<>();
-        int pointsSt;
         for (Map.Entry<Student, List<Studentopenanswer>> entry : map.entrySet()) {
             Student student = entry.getKey();
-            List<Studentopenanswer> studentOpenAnswers = entry.getValue();
 
-            pointsSt = calculateTotalPoints(studentOpenAnswers);
             LocalDate date = entry.getValue().get(0).getDate();
             LocalTime time = entry.getValue().get(0).getTime();
-            mapPoints.put(student.getStudent_id(), pointsSt);
             mapTime.put(student.getStudent_id(), time);
             mapDate.put(student.getStudent_id(), date);
         }
@@ -237,9 +234,9 @@ public class ExamController {
         modelAndView.setViewName("showDoneExamUsers");
         modelAndView.addObject("exam", exam);
         modelAndView.addObject("Students", studentopenAnswers);
-        modelAndView.addObject("mapPoints",  mapPoints);
         modelAndView.addObject("mapDate",  mapDate);
         modelAndView.addObject("mapTime",  mapTime);
+        modelAndView.addObject("list", list);
         model.addAttribute("examId", examId);
         model.addAttribute("points", points);
         return modelAndView;
@@ -254,15 +251,19 @@ public class ExamController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("evaluateExam");
         modelAndView.addObject("student", student);
+        modelAndView.addObject("exam", exam);
         modelAndView.addObject("listOpenQuestions", openQuestions);
         modelAndView.addObject("listAnswerOpenQuestion", answerOpen);
         return modelAndView;
     }
 
     @GetMapping("/evaluateExam")
-    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam List<Integer> scores) {
+    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam("examId") Integer examId , @RequestParam List<Integer> scores) {
         Student student = usersService.getStudentByid(studentId.intValue());
-        answerOpenService.updateScores(student, scores);
+        Exam exam = examService.GetExam(examId.intValue());
+        logstudentexamService.setEvaluateDate(student, exam);
+        int points = answerOpenService.updateScores(student, scores);
+        logstudentexamService.addOpenPoints(student, exam, points);
         return "redirect:/exams";
     }
 

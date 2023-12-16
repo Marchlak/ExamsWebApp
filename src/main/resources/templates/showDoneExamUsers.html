@@ -44,7 +44,11 @@
                     <p>Student ID: <span th:text="${student.student_id}"></span></p>
                     <p>First Name: <span th:text="${student.firstname}"></span></p>
                     <p>Last Name: <span th:text="${student.lastname}"></span></p>
-                    <p>Points: <span th:text="${mapPoints.get(student.getStudent_id()) + '/' + points}" ></span></p>
+                    <p>Points:
+                        <span th:each="logstudentexam : ${list}"
+                              th:if="${logstudentexam.studentStudent.student_id == student.student_id}"
+                              th:text="${logstudentexam.getScoreresult()  + '/' + points}"></span>
+                    </p>
                     <p>Date: <span th:text="${mapDate.get(student.getStudent_id())}" ></span></p>
                     <p>Time: <span th:text="${#temporals.format(mapTime.get(student.getStudent_id()), 'HH:mm:ss')}" ></span></p>
 
