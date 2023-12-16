@@ -46,4 +46,9 @@ public class AnswerClosedService {
         return answerClosedRepository.findById(id).orElse(null);
     }
 
+    @Transactional
+    public void deleteAnswersByQuestionId(Integer questionId) {
+        answerClosedRepository.deleteByClosedquestionQuestionid_Id(questionId);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.example.exams.Services;
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.LogRepository;
 import com.example.exams.Repositories.Db.ServicestatisticRepository;
+import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,10 +82,9 @@ public class LogsService {
         String s="";
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
-        UserDetails user = null;
+        CustomUserDetails user = null;
         if (session != null) {
-
-            user = (UserDetails) session.getAttribute("UsersEntity");
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
         Examiner examiner = usersService.getExaminerByLoginAndPassword(user.getUsername());
         Administrator administrator = usersService.getAdministratorByLogin(user.getUsername());

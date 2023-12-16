@@ -4,7 +4,9 @@ import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Model.Data.db.Logstudentexam;
 import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.LogstudentexamRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -64,6 +66,14 @@ public class LogstudentexamService {
         newLogstudentexam.setStudentStudent(studentStudent);
         logstudentexamRepository.save(newLogstudentexam);
         return newLogstudentexam.getId();
+    }
+    @Transactional
+    public void deleteAllLogsForExam(Exam exam) {
+        logstudentexamRepository.deleteByExamExamid(exam);
+    }
+
+    public boolean existsByExamIdAndStudentId(Integer examId, Integer studentId) {
+        return logstudentexamRepository.existsByExamExamid_IdAndStudentStudent_Id(examId, studentId);
     }
 }
 

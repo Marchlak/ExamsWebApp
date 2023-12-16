@@ -14,4 +14,8 @@ public class StudentClosedAnswerService {
     public void saveStudentClosedAnswer(Studentclosedanswer closedAnswer) {
         studentClosedAnswerRepository.save(closedAnswer);
     }
+
+    public void deleteStudentClosedAnswersByQuestionId(int questionId) {
+        studentClosedAnswerRepository.deleteByQuestionId(questionId);
+    }
 }

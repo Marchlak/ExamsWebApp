@@ -12,10 +12,12 @@ import java.util.Optional;
 @Service
 public class OpenQuestionService {
     private final OpenQuestionRepository openQuestionRepository;
+    private final StudentOpenAnswerService studentOpenAnswerService;
 
     @Autowired
-    public OpenQuestionService(OpenQuestionRepository openQuestionRepository){
+    public OpenQuestionService(OpenQuestionRepository openQuestionRepository, StudentOpenAnswerService studentOpenAnswerService){
         this.openQuestionRepository = openQuestionRepository;
+        this.studentOpenAnswerService = studentOpenAnswerService;
     }
 
     public OpenQuestion UpdateOpenQuestion(OpenQuestion updatedOpenQuestion){
@@ -59,5 +61,14 @@ public class OpenQuestionService {
             return true;
         }
         return false;
+    }
+
+    @Transactional
+    public void deleteAllOpenQuestionsByExamId(int examId) {
+        List<OpenQuestion> questions = openQuestionRepository.findByExamId(examId);
+        for (OpenQuestion question : questions) {
+            studentOpenAnswerService.deleteAllAnswersByQuestionId(question.getOpenQuestionId());
+            openQuestionRepository.deleteById(question.getOpenQuestionId());
+        }
     }
 }

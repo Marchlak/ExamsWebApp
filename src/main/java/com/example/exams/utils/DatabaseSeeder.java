@@ -66,6 +66,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         Student student4 = new Student(4, "d", "d", "d", "d", "d@student.pb.edu.pl");
         Student student5 = new Student(5, "e", "e", "e", "e", "e@student.pb.edu.pl");
         Student student6 = new Student(6, "f", "f", "f", "f", "f@student.pb.edu.pl");
+        Student student7 = new Student(7, "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@student.pb.edu.pl");
 
         students1.add(student1);
         students1.add(student2);
@@ -81,6 +82,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentsRepository.save(student4);
         studentsRepository.save(student5);
         studentsRepository.save(student6);
+        studentsRepository.save(student7);
 
         groupRepository.save(new Group(1, "AAA", students1));
         groupRepository.save(new Group(2, "BBB", students2));
@@ -104,7 +106,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 //        studentsRepository.save(new Student(7, groupRepository.getReferenceById(1), "Pawel", "Kulka", "kuleczka", "123", "kule@pb.edu.pl" ));
 //        studentsRepository.save(new Student(8, groupRepository.getReferenceById(2), "Michal", "Zalewski", "1", "123", "zalewski@pb.edu.pl" ));
 //        studentsRepository.save(new Student(9, groupRepository.getReferenceById(3), "Tomasz", "Adamek", "a", "123", "adamczyk@pb.edu.pl" ));
-//        studentsRepository.save(new Student(10, groupRepository.getReferenceById(3), "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@pb.edu.pl" ));
+ //       studentsRepository.save(new Student(10, groupRepository.getReferenceById(3), "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@pb.edu.pl" ));
 
         openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));

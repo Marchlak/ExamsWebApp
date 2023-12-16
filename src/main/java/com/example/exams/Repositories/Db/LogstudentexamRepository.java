@@ -18,4 +18,8 @@ public interface LogstudentexamRepository extends JpaRepository<Logstudentexam, 
 
     List<Logstudentexam> findLogstudentexamsByExamExamid(Exam examExamid);
 
+    void deleteByExamExamid(Exam exam);
+    @Query("SELECT COUNT(l) > 0 FROM Logstudentexam l WHERE l.examExamid.id = :examId AND l.studentStudent.studentId = :studentId")
+    boolean existsByExamExamid_IdAndStudentStudent_Id(Integer examId, Integer studentId);
+
 }

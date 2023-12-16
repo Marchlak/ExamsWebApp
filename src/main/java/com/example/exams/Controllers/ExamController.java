@@ -285,7 +285,11 @@ public class ExamController {
     @PostMapping("/deleteExam/{examId}")
     public ResponseEntity<String> deleteExam(@RequestParam Integer examId) {
         logsService.deleteExam(examId.intValue());
+        openQuestionService.deleteAllOpenQuestionsByExamId(examId.intValue());
+        closedQuestionService.deleteAllClosedQuestionsByExamId(examId.intValue());
+        logstudentexamService.deleteAllLogsForExam(examService.GetExam(examId.intValue()));
         boolean deleted = examService.deleteExam(examId);
+
         if (deleted) {
             return ResponseEntity.ok("Exam deleted successfully");
         }
@@ -323,6 +327,27 @@ public class ExamController {
         LocalTime startTime = exam.getStartTime();
         LocalDate endDate = exam.getEndDate();
         LocalTime endTime = exam.getEndTime();
+
+        CustomUserDetails user = null;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
+        }
+
+        if (user == null) {
+            modelAndView.setViewName("errorPage");
+            modelAndView.addObject("message", "You must be logged in to access this page.");
+            return modelAndView;
+        }
+
+        Student student = studentsService.getStudentByLogin(user.getUsername());
+        if (logstudentexamService.existsByExamIdAndStudentId(Integer.parseInt(examId), student.getStudentId())) {
+            modelAndView.setViewName("errorPage");
+            modelAndView.addObject("message", "You have already taken this exam.");
+            return modelAndView;
+        }
+
 
         if (LocalDate.now().isAfter(startDate) || LocalDate.now().equals(startDate)) {
             if (LocalTime.now().isAfter(startTime) || LocalTime.now().equals(startTime))
