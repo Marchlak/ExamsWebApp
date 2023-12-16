@@ -5,6 +5,7 @@ import com.example.exams.Model.Data.ProperDataModels.ExamDTO;
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.*;
 import com.example.exams.Services.*;
+import com.example.exams.SpringSecurity.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -57,6 +58,7 @@ public class ExamController {
     private AnswerClosedService answerClosedService;
     @Autowired
     private AnswerOpenService answerOpenService;
+
     @Autowired
     private StudentclosedanswerRepository studentClosedAnswerRepository;
 
@@ -457,13 +459,14 @@ public class ExamController {
     public String saveExam(@ModelAttribute ExamResponseDTO examResponse) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("showExams");
-        UserDetails user = null;
+        CustomUserDetails user = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         if (session != null) {
-            modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
-            user = (UserDetails) session.getAttribute("UsersEntity");
+            modelAndView.addObject("UsersEntity", session.getAttribute("UserDetails"));
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
+
         if (session.getAttribute("solved_" + examResponse.getExamId()) == null) {
             Servicestatistic servicestatistic = logsService.getServiceStatistic();
             int examCount = servicestatistic.getExamscount() + 1;

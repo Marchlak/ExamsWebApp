@@ -3,6 +3,7 @@ package com.example.exams.Controllers;
 import com.example.exams.Model.Data.db.Logstudentexam;
 import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.StudentsEntityRepository;
+import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class ExamResultsController {
     @GetMapping("/results")
     public String studentExamHistory(Model model, HttpServletRequest request) {
         //System.out.println("odpalił się kontroler");
-        UserDetails user = null;
+        CustomUserDetails user = null;
         HttpSession session = request.getSession(false);
         if (session != null) {
-            user = (UserDetails) session.getAttribute("UsersEntity");
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
 
         if (user == null) {
