@@ -26,13 +26,16 @@ public class LogsService {
     OpenQuestionService openQuestionService;
     @Autowired
     ServicestatisticRepository servicestatisticRepository;
+    @Autowired
+    ClosedQuestionService closedQuestionService;
 
-    public LogsService(LogRepository logRepository, UsersService usersService,ExamService examService, OpenQuestionService openQuestionService,ServicestatisticRepository servicestatisticRepository){
+    public LogsService(LogRepository logRepository, UsersService usersService,ExamService examService, OpenQuestionService openQuestionService,ServicestatisticRepository servicestatisticRepository,ClosedQuestionService closedQuestionService){
         this.logRepository = logRepository;
         this.usersService = usersService;
         this.examService = examService;
         this.openQuestionService = openQuestionService;
         this.servicestatisticRepository = servicestatisticRepository;
+        this.closedQuestionService = closedQuestionService;
     }
     public List<Log> getLogs(){
         return logRepository.findAll();
@@ -62,7 +65,13 @@ public class LogsService {
         if(length != s.length()) addLog(new Log(s));
     }
     public void deleteOpenQuestion(int openQuestionId){
-        String s= "Otwarte pytanie o id: "+openQuestionId+" zostało usunięte przez "+whoIsLogged();
+        OpenQuestion openQuestion = openQuestionService.GetOpenQuestion(openQuestionId);
+        String s= "Otwarte pytanie o id: "+openQuestionId+" i tresci: "+openQuestion.getContent()+" zostało usunięte przez "+whoIsLogged();
+        addLog(new Log(s));
+    }
+    public void deleteClosedQuestion(int closedQuestionId){
+        Closedquestion closedquestion = closedQuestionService.getClosedQuestionById(closedQuestionId);
+        String s= "Zamkniete pytanie o id: "+closedQuestionId+" i tresci: "+closedquestion.getContent()+" zostało usunięte przez "+whoIsLogged();
         addLog(new Log(s));
     }
 

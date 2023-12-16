@@ -2,6 +2,7 @@ package com.example.exams.Controllers;
 
 import com.example.exams.Services.AnswerClosedService;
 import com.example.exams.Services.ClosedQuestionService;
+import com.example.exams.Services.LogsService;
 import com.example.exams.Services.StudentClosedAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ StudentClosedAnswerService studentClosedAnswerService;
 @Autowired
 AnswerClosedService answerClosedService;
 
+    @Autowired
+    LogsService logsService;
+
 
     @PostMapping("/processClosedQuestionForm")
     public String processOpenQuestionForm(@RequestParam("action") String action) {
@@ -29,6 +33,7 @@ AnswerClosedService answerClosedService;
             return "redirect:/editOpenQuestion/" + closeQuestionId;
         } else if ("delete".equals(command) && parts.length == 3) {
             Integer examId = Integer.parseInt(parts[2]);
+            logsService.deleteClosedQuestion(closeQuestionId);
             studentClosedAnswerService.deleteStudentClosedAnswersByQuestionId(closeQuestionId);
             answerClosedService.deleteAnswersByQuestionId(closeQuestionId);
             closedQuestionService.deleteClosedQuestion(closeQuestionId);
