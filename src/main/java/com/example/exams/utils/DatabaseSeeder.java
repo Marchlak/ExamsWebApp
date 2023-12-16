@@ -53,8 +53,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         subjectRepository.save(new Subject(4, "Historia"));
         subjectRepository.save(new Subject(5, "Niemiecki"));
 
-        examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "a", "a", "s.golibrodai@pb.edu.pl", true));
-        examinerRepository.save(new Examiner(2, "Dorota", "Warka", "wedliny", "cuda2115", "wedliny@pb.edu.pl", true));
+        examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "z", "z", "s.golibrodai@pb.edu.pl", true));
+        examinerRepository.save(new Examiner(2, "Dorota", "Warka", "y", "y", "wedliny@pb.edu.pl", true));
         examinerRepository.save(new Examiner(3, "Julita", "Komarewska", "enjoyer", "szastprast", "smok@pb.edu.pl", false));
 
         List<Student> students1 = new ArrayList<>();
@@ -89,7 +89,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         groupRepository.save(new Group(4, "pb02", new ArrayList<>()));
         groupRepository.save(new Group(5, "pb03", new ArrayList<>()));
 
-        examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "golibrodka", "pebe1234", "s.golibrodai@pb.edu.pl", true));
+        examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "z", "z", "s.golibrodai@pb.edu.pl", true));
         examinerRepository.save(new Examiner(2, "Dorota", "Cuda", "wedliny", "cuda2115", "cudawedliny@pb.edu.pl", true));
         examinerRepository.save(new Examiner(3, "Marta", "Korsarz", "pbenjoyer", "szastprast", "smoczyca@pb.edu.pl", false));
 

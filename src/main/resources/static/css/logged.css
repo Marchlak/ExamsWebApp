@@ -139,7 +139,7 @@ p{
     color: #323743;
 }
 
-button{
+.learn-more{
     position: absolute;
     top: 55vh;
     left: 50%;
@@ -156,6 +156,20 @@ button{
     line-height: 26px;
 }
 
-button:hover{
+.learn-more :hover{
     cursor: pointer;
+}
+
+.logout{
+    border: 1px solid #6D31ED;
+    border-radius: 4px;
+    background: #6D31ED;
+    display: inline-flex;
+    padding: 5px 18px 5px 14px;
+    align-items: center;
+    gap: 8px;
+    color: #FFF;
+    font-size: 16px;
+    line-height: 26px;
+    margin-left: 1vw;
 }
