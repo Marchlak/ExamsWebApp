@@ -3,6 +3,7 @@ package com.example.exams.Controllers;
 import com.example.exams.Model.Data.ProperDataModels.ShowProblem;
 import com.example.exams.Model.Data.db.Problem;
 import com.example.exams.Services.ProblemService;
+import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ProblemController {
         return modelAndView;
     }
     @PostMapping("/addProblem")
-    public ModelAndView addProblem(@RequestParam("category") String category,
+    public String addProblem(@RequestParam("category") String category,
                                    @RequestParam("description") String description,
                                    @RequestParam("image") MultipartFile imageFile) throws IOException {
 
@@ -54,19 +55,17 @@ public class ProblemController {
         byte[] image = imageFile.getBytes();
         problem.setPhoto(image);
 
-        UserDetails user = null;
+        CustomUserDetails user = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         if (session != null) {
-            user = (UserDetails) session.getAttribute("UsersEntity");
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
         String userName = user.getUsername();
         problem.setUsername(userName);
 
         problemService.AddOne(problem);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("problemReporting");
-        return modelAndView;
+        return "redirect:/exams";
     }
     @GetMapping("/showProblems")
     public ModelAndView showProblems(){

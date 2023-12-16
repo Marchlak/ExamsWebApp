@@ -54,6 +54,12 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/register")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/addStudents/**")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/logs")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/showExamDetails/*")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/addQuestion/*")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/showDoneExamUser/*")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/editExam/*")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/confirmExamDeletion/*")).hasAnyRole("ADMIN", "EXAMINER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

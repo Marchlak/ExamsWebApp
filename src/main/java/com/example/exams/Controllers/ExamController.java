@@ -284,17 +284,13 @@ public class ExamController {
     }
 
     @PostMapping("/deleteExam/{examId}")
-    public ResponseEntity<String> deleteExam(@RequestParam Integer examId) {
+    public String deleteExam(@RequestParam Integer examId) {
         logsService.deleteExam(examId.intValue());
         openQuestionService.deleteAllOpenQuestionsByExamId(examId.intValue());
         closedQuestionService.deleteAllClosedQuestionsByExamId(examId.intValue());
         logstudentexamService.deleteAllLogsForExam(examService.GetExam(examId.intValue()));
         boolean deleted = examService.deleteExam(examId);
-
-        if (deleted) {
-            return ResponseEntity.ok("Exam deleted successfully");
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found");
+        return "redirect:/exams";
     }
 
     @GetMapping("/showExamDetails/{examId}")
