@@ -60,16 +60,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserDetails userDetails = null;
 
         if (administrator != null && administrator.isVerificationStatus()) {
-            userDetails = buildUserDetails(administrator.getLogin(), administrator.getPassword(), Collections.singleton("ADMIN"));
+            userDetails = buildUserDetails(administrator.getAdministrator_id(), administrator.getLogin(), administrator.getPassword(), Collections.singleton("ADMIN"));
         } else if (examiner != null && examiner.isVerificationStatus()) {
-            userDetails = buildUserDetails(examiner.getLogin(), examiner.getPassword(), Collections.singleton("EXAMINER"));
+            userDetails = buildUserDetails(examiner.getExaminer_id(), examiner.getLogin(), examiner.getPassword(), Collections.singleton("EXAMINER"));
         } else if (student != null) {
-            userDetails = buildUserDetails(student.getLogin(), student.getPassword(), Collections.singleton("STUDENT"));
+            userDetails = buildUserDetails(student.getStudentId(), student.getLogin(), student.getPassword(), Collections.singleton("STUDENT"));
         }
 
         HttpSession session = request.getSession(false);
         if (session != null && !session.isNew() && userDetails != null) {
-            session.setAttribute("UsersEntity", userDetails);
+            session.setAttribute("UserDetails", userDetails);
         }
 
         if (userDetails == null) {
@@ -79,14 +79,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDetails;
     }
 
-    private UserDetails buildUserDetails(String username, String password, Set<String> roles) {
-        return new org.springframework.security.core.userdetails.User(
-                username,
-                password,
-                roles.stream()
-                        .map(role -> new SimpleGrantedAuthority(role))
-                        .collect(Collectors.toSet())
-        );
+    private UserDetails buildUserDetails(Integer userId, String username, String password, Set<String> roles) {
+        return new CustomUserDetails(userId, username, password, roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList()));
+
     }
+
 }
 

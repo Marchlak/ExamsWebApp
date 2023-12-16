@@ -3,24 +3,26 @@ package com.example.exams.Model.Data.db;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id", nullable = false)
-    private Integer student_id;
+    private Integer studentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_classid")
-    private Group groupClassid;
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    private List<Group> groups;
+
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    private List<Exam> exams;
 
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
@@ -37,4 +39,14 @@ public class Student {
     @Column(name = "email", length = 40)
     private String email;
 
+    public Student() {}
+
+    public Student(Integer studentId, String firstname, String lastname, String login, String password, String email) {
+        this.studentId = studentId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
 }

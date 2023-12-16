@@ -13,10 +13,8 @@ import java.util.List;
 
 @Service
 public class LogstudentexamService {
-
     private final LogstudentexamRepository logstudentexamRepository;
 
-    @Autowired
     public LogstudentexamService(LogstudentexamRepository logstudentexamRepository) {
         this.logstudentexamRepository = logstudentexamRepository;
     }

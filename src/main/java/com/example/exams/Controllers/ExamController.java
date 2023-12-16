@@ -12,7 +12,6 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,7 @@ import java.net.URLDecoder;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExamController {
@@ -74,11 +74,17 @@ public class ExamController {
 
     @Autowired
     private ClosedQuestionRepository closedQuestionRepository;
+
     @Autowired
     private UsersService usersService;
     @Autowired
     private LogsService logsService;
 
+    @Autowired
+    private GroupsService groupsService;
+
+    @Autowired
+    private StudentsService studentsService;
 
     @PostMapping("/addExamQuestions")
     public String addExamQuestions(@RequestBody String body){
@@ -119,7 +125,6 @@ public class ExamController {
                         examService.AddExam(exam);
                         break;
                     }
-                    //DO USUNIECIA
                     if ("ADMIN".equals(authority.getAuthority())) {
                         Administrator administrator = usersService.getAdministratorByLogin(user.getUsername());
                         logsService.addLog(new Log("Administrator: "+administrator.getFirstname()+" "+administrator.getLastname()+" dodał nowy egzamin o id: "+examService.getNextExamId()+" oraz opisie: "+exam.getDescription()));
@@ -219,8 +224,8 @@ public class ExamController {
 
             LocalDate date = entry.getValue().get(0).getDate();
             LocalTime time = entry.getValue().get(0).getTime();
-            mapTime.put(student.getStudent_id(), time);
-            mapDate.put(student.getStudent_id(), date);
+            mapTime.put(student.getStudentId(), time);
+            mapDate.put(student.getStudentId(), date);
         }
         int points = 0;
         for (int i = 0; i < openQuestions.size(); i++){
@@ -502,6 +507,71 @@ public class ExamController {
         return "redirect:/exams";
     }
 
+    @GetMapping("/addStudents/{examId}")
+    public ModelAndView addStudents(@PathVariable Integer examId) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        Exam exam = this.examService.GetExam(examId);
+
+        List<Student> addedStudents = exam.getStudents();
+        List<Group> groups = groupsService.getAllGroups();
+        List<Student> allStudents = studentsService.getAllStudents();
+
+        List<Student> availableStudents = allStudents.stream()
+                .filter(student -> !addedStudents.contains(student))
+                .collect(Collectors.toList());
+
+        modelAndView.addObject("groups", groups);
+        modelAndView.addObject("students", availableStudents);
+        modelAndView.addObject("addedStudents", addedStudents);
+
+        modelAndView.setViewName("addStudents");
+        return modelAndView;
+    }
+
+    @PostMapping("/addSingleStudent")
+    public String addSingleStudent(@RequestParam("examId") String examId, @RequestParam("studentId") Integer studentId) {
+        try {
+            int parsedExamId = Integer.parseInt(examId);
+            System.out.println("addSingleStudent - examId: " + parsedExamId + ", studentId: " + studentId);
+            Exam exam = this.examService.GetExam(parsedExamId);
+            Student student = this.studentsService.getStudentById(studentId);
+
+            if (!exam.getStudents().contains(student)) {
+                exam.getStudents().add(student);
+                this.examService.updateExam(exam);
+            }
+
+            return "redirect:/addStudents/" + parsedExamId;
+        } catch (NumberFormatException e) {
+            System.err.println("Błąd parsowania examId: " + examId);
+            return "redirect:/exams";
+        }
+    }
+
+    @PostMapping("/addStudentsFromGroup")
+    public String addStudentsFromGroup(@RequestParam("examId") String examId, @RequestParam("groupId") Integer groupId) {
+        try {
+            int parsedExamId = Integer.parseInt(examId);
+            System.out.println("addStudentsFromGroup - examId: " + parsedExamId + ", groupId: " + groupId);
+            Exam exam = this.examService.GetExam(parsedExamId);
+            Group group = this.groupsService.getGroupByGroupId(groupId);
+
+            List<Student> studentsToAdd = group.getStudents().stream()
+                    .filter(student -> !exam.getStudents().contains(student))
+                    .toList();
+
+            exam.getStudents().addAll(studentsToAdd);
+            this.examService.updateExam(exam);
+            return "redirect:/addStudents/" + parsedExamId;
+        } catch (NumberFormatException e) {
+            System.err.println("Błąd parsowania examId: " + examId);
+            return "redirect:/exams";
+        }
+    }
+
+
+
     @PostMapping("/processForm")
     public String processForm(@RequestParam("action") String action) {
 
@@ -519,6 +589,9 @@ public class ExamController {
         }
         else if (action.startsWith("addQuestion:")){
             return "redirect:/addQuestion/" + examId;
+        }
+        else if (action.startsWith("addStudents:")){
+            return "redirect:/addStudents/" + examId;
         }
         return "error";
     }

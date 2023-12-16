@@ -3,6 +3,7 @@ package com.example.exams.Controllers;
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Services.*;
 import jakarta.servlet.http.HttpServletRequest;
+import com.example.exams.Services.SubjectService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.ProperDataModels.Login;
@@ -84,7 +85,8 @@ public class Controller {
     @GetMapping("/exams")
     public ModelAndView exams() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exams", examService.getAllExams());
+        //modelAndView.addObject("exams", examService.getAllExams());
+        modelAndView.addObject("exams", examService.getUserExams());
         modelAndView.addObject("subjects", subjectService.GetAll());
         modelAndView.setViewName("showExams");
         return modelAndView;

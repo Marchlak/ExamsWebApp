@@ -6,13 +6,12 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-//@Table(name = "exam")
+@Table(name = "exam")
 public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -42,16 +41,18 @@ public class Exam {
     @JoinColumn(name = "conducting_examiner_id")
     private Examiner conductingExaminer;
 
- //   @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
- //   private List<OpenQuestion> openQuestions = new ArrayList<>();
-
- //   @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
- //   private List<Closedquestion> closedQuestions = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_exam",
+            joinColumns = @JoinColumn(name = "exam_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students;
 
     public Exam() {
     }
 
-    public Exam(Integer id, String description, LocalDate startdate, LocalTime starttime, LocalDate enddate, LocalTime endtime, Subject subject) {
+    public Exam(Integer id, String description, LocalDate startdate, LocalTime starttime, LocalDate enddate, LocalTime endtime, Subject subject, List<Student> students) {
         this.id = id;
         this.description = description;
         this.startDate = startdate;
@@ -59,5 +60,6 @@ public class Exam {
         this.endDate = enddate;
         this.endTime = endtime;
         this.examsSubject = subject;
+        this.students = students;
     }
 }

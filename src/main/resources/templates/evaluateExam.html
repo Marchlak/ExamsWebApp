@@ -32,6 +32,7 @@
 <form action="/evaluateExam" method="get">
     <input type="hidden" th:name="studentId" th:value="${student.student_id}" />
     <input type="hidden" th:name="examId" th:value="${exam.id}">
+    <input type="hidden" th:name="studentId" th:value="${student.getStudentId}" />
 
     <div class="user-details">
         <p>Rozwiazujacy</p>

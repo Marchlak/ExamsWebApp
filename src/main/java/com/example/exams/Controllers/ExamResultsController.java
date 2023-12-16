@@ -48,7 +48,7 @@ public class ExamResultsController {
             return "errorPage"; // Redirect to an error page or login page
         }
 
-        int studentId = student.getStudent_id();
+        int studentId = student.getStudentId();
         List<Logstudentexam> examHistory = logstudentexamService.getStudentExamHistory(studentId);
         model.addAttribute("examHistory", examHistory);
         return "studentExamHistory"; // Make sure this matches the name of your Thymeleaf template

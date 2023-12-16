@@ -4,7 +4,11 @@ import com.example.exams.Model.Data.ProperDataModels.ExamDTO;
 import com.example.exams.Model.Data.ProperDataModels.OpenQuestionDTO;
 import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Model.Data.db.OpenQuestion;
+import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.ExamRepository;
+import com.example.exams.Repositories.Db.StudentsEntityRepository;
+import com.example.exams.SpringSecurity.CustomUserDetails;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,16 +19,20 @@ import java.util.Optional;
 @Service
 public class ExamService {
     private final ExamRepository examRepository;
+    private final StudentsEntityRepository studentsRepository;
     private final SubjectService subjectService;
     private final ExaminerService egzaminatorService;
     private final OpenQuestionService openQuestionService;
+    private final HttpSession httpSession;
 
     @Autowired
-    public ExamService(ExamRepository examRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService) {
+    public ExamService(ExamRepository examRepository, StudentsEntityRepository studentsRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService, HttpSession httpSession) {
         this.examRepository = examRepository;
+        this.studentsRepository = studentsRepository;
         this.subjectService = subjectService;
         this.egzaminatorService = examinerService;
         this.openQuestionService = openQuestionService;
+        this.httpSession = httpSession;
     }
 
     public Exam AddExam(Exam exam) {
@@ -71,6 +79,7 @@ public class ExamService {
         }
         return addedExam;
     }
+
     public int getNextExamId(){
         return getAllExams().size()+1;
     }
@@ -138,8 +147,14 @@ public class ExamService {
         else return s;
 
     }
+    public List<Exam> getUserExams() {
+        CustomUserDetails loggedUser =  (CustomUserDetails) httpSession.getAttribute("UserDetails");
+        Student student = studentsRepository.findById(loggedUser.getUserId()).orElse(null);
 
-
-
-
+        if (student != null) {
+            return student.getExams();
+        } else {
+            return null;
+        }
+    }
 }

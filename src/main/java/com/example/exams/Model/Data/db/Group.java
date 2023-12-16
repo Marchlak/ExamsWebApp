@@ -4,15 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "`group`")
 public class Group {
@@ -23,4 +22,18 @@ public class Group {
     @Column(name = "code", length = 10)
     private String code;
 
+    @ManyToMany
+    @JoinTable(
+            name = "student_group",
+            joinColumns = @JoinColumn(name = "group_classid"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students;
+
+    public Group(){}
+    public Group(Integer group_id, String code, List<Student> students) {
+        this.id = group_id;
+        this.code = code;
+        this.students = students;
+    }
 }

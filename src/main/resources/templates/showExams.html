@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 	<link
 			rel="stylesheet"
@@ -83,6 +83,10 @@
 				<td class="buttons_exam">
 					<button type="submit" name="action" th:value="'show:'+ ${exam.id}" class="edit-delete">
 						<i class="fa-solid fa-pen"></i>Details
+					</button>
+
+					<button sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER')" type="submit" name="action" th:value="'addStudents:' + ${exam.id}" class="edit-delete">
+						<i class="fa-solid fa-plus"></i> Students
 					</button>
 
 					<button type="submit" name="action" th:value="'addQuestion:'+ ${exam.id}" class="edit-delete">

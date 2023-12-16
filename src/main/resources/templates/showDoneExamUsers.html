@@ -41,7 +41,7 @@
             <h2>List of Participants</h2>
             <ul th:each="student : ${Students}">
                 <li>
-                    <p>Student ID: <span th:text="${student.student_id}"></span></p>
+                    <p>Student ID: <span th:text="${student.getStudentId}"></span></p>
                     <p>First Name: <span th:text="${student.firstname}"></span></p>
                     <p>Last Name: <span th:text="${student.lastname}"></span></p>
                     <p>Points:
@@ -53,7 +53,7 @@
                     <p>Time: <span th:text="${#temporals.format(mapTime.get(student.getStudent_id()), 'HH:mm:ss')}" ></span></p>
 
                     <form method="post" th:action="@{/rate}">
-                        <input type="hidden" th:name="studentId" th:value="${student.student_id}" />
+                        <input type="hidden" th:name="studentId" th:value="${student.getStudentId}" />
                         <input type="hidden" th:name="examId" th:value="${exam.id}" />
                         <button type="submit">Rate</button>
                     </form>

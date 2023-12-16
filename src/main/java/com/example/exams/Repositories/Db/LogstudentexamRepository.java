@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface LogstudentexamRepository extends JpaRepository<Logstudentexam, Integer> {
-    @Query("SELECT l FROM Logstudentexam l WHERE l.studentStudent.student_id = :studentId")
+    @Query("SELECT l FROM Logstudentexam l WHERE l.studentStudent.studentId = :studentId")
     List<Logstudentexam> findByStudentStudentId(Integer studentId);
 
     Logstudentexam findLogstudentexamByStudentStudentAndExamExamid(Student studentStudent, Exam examExamid);

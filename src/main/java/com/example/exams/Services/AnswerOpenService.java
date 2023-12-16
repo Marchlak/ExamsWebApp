@@ -1,7 +1,5 @@
 package com.example.exams.Services;
 
-import com.example.exams.Model.Data.db.Exam;
-import com.example.exams.Model.Data.db.Logstudentexam;
 import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Model.Data.db.Studentopenanswer;
 import com.example.exams.Repositories.Db.LogstudentexamRepository;
@@ -34,7 +32,7 @@ public class AnswerOpenService {
     }
     public List<Student> sortByStudentId(List<Student> students) {
         List<Student> mutableList = new ArrayList<>(students);
-        mutableList.sort(Comparator.comparing(Student::getStudent_id));
+        mutableList.sort(Comparator.comparing(Student::getStudentId));
         return mutableList;
     }
 

@@ -53,6 +53,7 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/images/**")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/register")).permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/addStudents/**")).hasAnyRole("ADMIN", "EXAMINER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
