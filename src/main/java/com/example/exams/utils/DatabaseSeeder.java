@@ -71,9 +71,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, examRepository.getReferenceById(1)));
 
-        closedQuestionRepository.save(new Closedquestion(1, 1, "ile to jest 10*10", 1, examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(2, 2, "ile to jest 11*11", 1, examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(3, 3, "ile to jest 12*12", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(1, "ile to jest 10*10", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(2, "ile to jest 11*11", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(3, "ile to jest 12*12", 1, examRepository.getReferenceById(1) ));
 
         answerClosedRepository.save(new Answerclosed(1, "to jest moze 101?", false, closedQuestionRepository.findById(1).get()));
         answerClosedRepository.save(new Answerclosed(2, "to jest moze 102?", true, closedQuestionRepository.findById(1).get()));

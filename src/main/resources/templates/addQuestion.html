@@ -16,7 +16,7 @@
 			<button onclick="showForm('open')" class="option">Open Question</button>
 			<button onclick="showForm('closed')" class="option2">Closed Question</button>
 
-			<form th:action="@{/addQuestion/__${examId}__}" th:method="post"th:object="${openQuestion}"class="open-form">
+			<form th:action="@{/addQuestion/__${examId}__}" th:method="post"th:object="${openQuestion}" class="open-form">
 				<div class="input-box">
 					<label for="content">Question Content</label>
 					<textarea type="text" id="content" name="content" th:field="*{content}" class="form-control"></textarea>
@@ -26,26 +26,26 @@
 					<label for="score">Score</label>
 					<input type="number" id="score" name="score" th:field="*{score}" class="form-control" />
 				</div>
-
 				<button type="submit">Create</button>
 			</form>
 
-			<form class="closed-form">
+			<form th:action="@{/addQuestion/__${examId}__}" th:method="post" th:object="${closedQuestion}" th:class="closed-form">
 				<div class="input-box">
 					<label for="content">Question Content</label>
-					<textarea type="text" name="content" class="form-control"></textarea>
+					<textarea type="text" name="content" th:field="*{content}" class="form-control"></textarea>
 				</div>
 
 				<div class="input-box">
 					<label for="score">Score</label>
-					<input type="number" name="score" />
+					<input type="number" name="score" th:field="*{score}"/>
 				</div>
 
 				<div id="answer-box" class="input-box">
 					<label>Answer content:</label>
 					<input type="text" name="closed-answer" class="content"/>
+					<input type="checkbox" name="correctness">
 				</div>
-
+				<input type="hidden" name="type" value="closed" />
 				<button type="button" onclick="showForm('addAnswer')" class="more">Add more answer</button>
 				<button type="submit">Create</button>
 			</form>
@@ -66,10 +66,14 @@
 				} else if (type === 'addAnswer') {
 					let answerLabel = document.createElement('label')
 					let answerInput = document.createElement('input')
+					let answerCheckbox = document.createElement('input');
                     answerInput.classList.add('content');
+					answerCheckbox.type = 'checkbox';
+					answerCheckbox.classList.add('checkbox');;
 					let answerContainer = document.getElementById('answer-box')
 					answerContainer.appendChild(answerLabel)
 					answerContainer.appendChild(answerInput)
+					answerContainer.appendChild(answerCheckbox);
 				}
 			}
 		</script>

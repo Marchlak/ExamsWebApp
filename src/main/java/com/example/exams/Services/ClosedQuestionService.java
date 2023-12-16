@@ -18,4 +18,9 @@ public class ClosedQuestionService {
     public List<Closedquestion> getAllByExamId(int examId) {
         return closedQuestionRepository.findByExamId(examId);
     }
+
+    public Closedquestion addClosedQuestion(Closedquestion newClosedQuestion)
+    {
+        return closedQuestionRepository.save(newClosedQuestion);
+    }
 }
