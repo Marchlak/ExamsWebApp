@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Report Problem</title>
+    <link rel="stylesheet" th:href="@{/css/problemReport.css}"/>
+    <link rel="stylesheet" href="../static/css/problemReport.css" />
 </head>
 <body>
     <div class="container">
         <form th:action="@{/addProblem}" method="post" enctype="multipart/form-data">
-            <select name="category" class="selectCategory">
-                <option th:each="category : ${categories}" th:text="${category}" th:value="${category}" class="category"></option>
-            </select>
+            <p>Category</p>
+            <label>
+                <select name="category" class="selectCategory">
+                    <option th:each="category : ${categories}" th:text="${category}" th:value="${category}" class="category"></option>
+                </select>
+            </label>
             <div class="description">
+                <p>Description</p>
                 <textarea name="description"></textarea>
             </div>
 

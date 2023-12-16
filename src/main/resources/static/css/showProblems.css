@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.problems {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.problem {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+
+.problem img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.problem p {
+    margin: 10px 0;
+}
+
+.problem:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
