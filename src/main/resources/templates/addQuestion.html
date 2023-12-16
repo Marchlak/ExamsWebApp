@@ -16,7 +16,7 @@
 			<button onclick="showForm('open')" class="option">Open Question</button>
 			<button onclick="showForm('closed')" class="option2">Closed Question</button>
 
-			<form th:action="@{/addQuestion/__${examId}__}" th:method="post"th:object="${openQuestion}" class="open-form">
+			<form th:action="@{/addQuestion/__${examId}__}" th:method="post" th:object="${openQuestion}" class="open-form">
 				<div class="input-box">
 					<label for="content">Question Content</label>
 					<textarea type="text" id="content" name="content" th:field="*{content}" class="form-control"></textarea>
@@ -29,7 +29,8 @@
 				<button type="submit">Create</button>
 			</form>
 
-			<form th:action="@{/addQuestion/__${examId}__}" th:method="post" th:object="${closedQuestion}" th:class="closed-form">
+			<form th:action="@{/addQuestion/__${examId}__}" th:method="post" th:object="${closedQuestion}"  class="closed-form">
+				<input type="hidden" name="type" value="closed" />
 				<div class="input-box">
 					<label for="content">Question Content</label>
 					<textarea type="text" name="content" th:field="*{content}" class="form-control"></textarea>
@@ -40,12 +41,11 @@
 					<input type="number" name="score" th:field="*{score}"/>
 				</div>
 
-				<div id="answer-box" class="input-box">
+				<div id="answer-box" class="input-box" th:object="${answerClosed}">
 					<label>Answer content:</label>
-					<input type="text" name="closed-answer" class="content"/>
-					<input type="checkbox" name="correctness">
+					<input type="text" name="closed-answer" th:field="*{description}"  class="content"/>
+					<input type="checkbox" name="correctness" th:field="*{correct}" >
 				</div>
-				<input type="hidden" name="type" value="closed" />
 				<button type="button" onclick="showForm('addAnswer')" class="more">Add more answer</button>
 				<button type="submit">Create</button>
 			</form>

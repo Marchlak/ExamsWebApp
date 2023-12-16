@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.example.exams.Model.Data.ProperDataModels.ExamResponseDTO;
+import org.thymeleaf.standard.expression.Each;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -507,7 +508,7 @@ public class ExamController {
     public ModelAndView addQuestion(@PathVariable Integer examId) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("closedQuestion", new Closedquestion());
-        modelAndView.addObject("answerClosedList", new Answerclosed());
+        modelAndView.addObject("answerClosed", new Answerclosed());
         modelAndView.addObject("openQuestion", new OpenQuestion());
         modelAndView.setViewName("addQuestion");
         return modelAndView;
@@ -519,6 +520,8 @@ public class ExamController {
             logsService.addClosedQuestionToExam(examId.intValue(),closedquestion);
             closedquestion.setExam(exam);
             closedQuestionService.addClosedQuestion(closedquestion);
+            answerClosedService.addAnswerClosed(answerclosed,closedquestion);
+
         } else {
             logsService.addOpenQuestionToExam(examId.intValue(),openQuestion);
             openQuestion.setExam(exam);

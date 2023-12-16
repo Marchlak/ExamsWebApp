@@ -36,8 +36,8 @@ public class Closedquestion {
     @JoinColumn(name = "exam_id", nullable = true)
     private Exam exam;
 
-  //  @OneToMany(mappedBy = "closedquestionQuestionid", cascade = CascadeType.ALL, orphanRemoval = true)
- //   private List<Answerclosed> answers = new ArrayList<>();
+    //@OneToMany(mappedBy = "closedquestionQuestionid", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Answerclosed> answers = new ArrayList<>();
 
     public Closedquestion(Integer closed_question_id, String content, Integer score, Exam exam) {
         this.id = closed_question_id;
