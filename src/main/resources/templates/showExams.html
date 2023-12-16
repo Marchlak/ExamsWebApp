@@ -17,7 +17,7 @@
 	<div id="nav">
 		<ul>
 			<li class="menu"><a th:href="@{/exams}">Exams</a></li>
-			<li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER')" th:href="@{/logs}">Show Logs</a></li>
+			<li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/logs}">Show Logs</a></li>
 			<li class="menu"><a sec:authorize="hasRole('ROLE_STUDENT')" th:href="@{/results}">Results</a></li>
 			<li class="menu"><a th:href="@{/reportProblem}">Contact us</a></li>
 			<li class="menu"><a>About App</a></li>
