@@ -33,4 +33,12 @@ public class StudentOpenAnswerService {
     }
 
 
+    @Transactional
+    public Studentopenanswer saveStudentOpenAnswer(Studentopenanswer studentOpenAnswer) {
+        return studentopenanswerRepository.save(studentOpenAnswer);
+    }
+
+
+
+
 }

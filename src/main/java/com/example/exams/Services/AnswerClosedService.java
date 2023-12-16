@@ -41,4 +41,9 @@ public class AnswerClosedService {
         return answerClosedRepository.save(newAnswerClosed);
     }
 
+    public Answerclosed getAnswerClosedById(String answerId) {
+        int id = Integer.parseInt(answerId);
+        return answerClosedRepository.findById(id).orElse(null);
+    }
+
 }
