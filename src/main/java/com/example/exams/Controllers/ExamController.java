@@ -290,6 +290,7 @@ public class ExamController {
         closedQuestionService.deleteAllClosedQuestionsByExamId(examId.intValue());
         logstudentexamService.deleteAllLogsForExam(examService.GetExam(examId.intValue()));
         boolean deleted = examService.deleteExam(examId);
+
         return "redirect:/exams";
     }
 
