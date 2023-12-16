@@ -19,4 +19,8 @@ public class StudentsService {
     public Student getStudentById(Integer studentId){
         return studentsRepository.findStudentByStudentId(studentId);
     }
+
+    public Student getStudentByLogin(String login) {
+        return studentsRepository.findStudentByLogin(login);
+    }
 }

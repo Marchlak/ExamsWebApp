@@ -46,6 +46,11 @@ public class OpenQuestionService {
         return openQuestionRepository.findByExamId(examId);
     }
 
+    public OpenQuestion getOpenQuestionById(String questionId) {
+        int id = Integer.parseInt(questionId);
+        return openQuestionRepository.findById(id).orElse(null);
+    }
+
 
     @Transactional
     public boolean deleteOpenQuestion(Integer questionID) {

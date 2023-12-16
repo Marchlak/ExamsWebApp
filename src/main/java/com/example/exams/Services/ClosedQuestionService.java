@@ -23,4 +23,8 @@ public class ClosedQuestionService {
     {
         return closedQuestionRepository.save(newClosedQuestion);
     }
+
+    public Closedquestion getClosedQuestionById(Integer questionId) {
+        return closedQuestionRepository.findById(questionId).orElse(null);
+    }
 }

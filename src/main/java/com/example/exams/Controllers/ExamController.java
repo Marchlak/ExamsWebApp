@@ -56,29 +56,20 @@ public class ExamController {
 
     @Autowired
     private AnswerClosedService answerClosedService;
+
     @Autowired
     private AnswerOpenService answerOpenService;
 
     @Autowired
-    private StudentclosedanswerRepository studentClosedAnswerRepository;
+    private StudentClosedAnswerService studentClosedAnswerService;
 
     @Autowired
-    private StudentopenanswerRepository studentOpenAnswerRepository;
+    private StudentOpenAnswerService studentOpenAnswerService;
 
-    @Autowired
-    private StudentsEntityRepository studentRepository;
-
-    @Autowired
-    private OpenQuestionRepository openQuestionRepository;
-
-    @Autowired
-    private AnswerClosedRepository answerclosedRepository;
-
-    @Autowired
-    private ClosedQuestionRepository closedQuestionRepository;
 
     @Autowired
     private UsersService usersService;
+
     @Autowired
     private LogsService logsService;
 
@@ -366,7 +357,7 @@ public class ExamController {
     }
 
     private boolean processOpenAnswers(Map<String, String> openAnswers, UserDetails userDetails) {
-        Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
+        Student student = studentsService.getStudentByLogin(userDetails.getUsername());
 
         if (openAnswers == null || openAnswers.isEmpty()) {
             return true;
@@ -374,14 +365,14 @@ public class ExamController {
 
         openAnswers.forEach((questionId, answer) -> {
             Studentopenanswer openAnswer = new Studentopenanswer();
-            OpenQuestion openquestion = openQuestionRepository.findById(Integer.parseInt(questionId)).orElse(null);
+            OpenQuestion openquestion = openQuestionService.getOpenQuestionById(questionId);
             if (openquestion != null && student != null) {
                 openAnswer.setOpenquestionQuestionid(openquestion);
                 openAnswer.setDescription(answer);
                 openAnswer.setStudentStudent(student);
                 openAnswer.setDate(LocalDate.now());
                 openAnswer.setTime(LocalTime.now());
-                studentOpenAnswerRepository.save(openAnswer);
+                studentOpenAnswerService.saveStudentOpenAnswer(openAnswer);
             }
         });
         return true;
@@ -415,7 +406,7 @@ public class ExamController {
     }
 
     private boolean processClosedAnswers(Map<String, String[]> closedAnswers, UserDetails userDetails, Integer currentlogsstudentexam) {
-        Student student = studentRepository.findStudentByLogin(userDetails.getUsername());
+        Student student = studentsService.getStudentByLogin(userDetails.getUsername());
         if (student == null) {
             return false;
         }
@@ -426,14 +417,13 @@ public class ExamController {
 
         for (Map.Entry<String, String[]> entry : closedAnswers.entrySet()) {
             Integer questionId = Integer.parseInt(entry.getKey());
-            Closedquestion closedQuestion = closedQuestionRepository.findById(questionId).orElse(null);
+            Closedquestion closedQuestion = closedQuestionService.getClosedQuestionById(questionId);
             Integer questionresult = 0;
             for (String answerId : entry.getValue()) {
-                Answerclosed answerclosed = answerclosedRepository.findById(Integer.parseInt(answerId)).orElse(null);
+                Answerclosed answerclosed = answerClosedService.getAnswerClosedById(answerId);
                 if (answerclosed == null) {
                     return false;
                 }
-
                 Studentclosedanswer closedAnswer = new Studentclosedanswer();
                 closedAnswer.setAnswerclosedAnswerid(answerclosed);
                 closedAnswer.setClosedquestionQuestionid(closedQuestion);
@@ -447,7 +437,7 @@ public class ExamController {
                     questionresult -=1;
                 }
                 closedAnswer.setCorrectness(isCorrect);
-                studentClosedAnswerRepository.save(closedAnswer);
+                studentClosedAnswerService.saveStudentClosedAnswer(closedAnswer);
             }
             resultsClosedAnswers(questionresult,currentlogsstudentexam,questionId);
         }
@@ -475,7 +465,7 @@ public class ExamController {
             session.setAttribute(user.getUsername()+"solved_" + examResponse.getExamId(), true);
         }
 
-        Student student = studentRepository.findStudentByLogin(user.getUsername());
+        Student student = studentsService.getStudentByLogin(user.getUsername());
         Exam currentExam = examService.GetExam(examResponse.getExamId());
         Integer logstudentexamid = logstudentexamService.createAndSaveLogstudentexam(currentExam, student);
         boolean openAnswersSaved = processOpenAnswers(examResponse.getOpenAnswers(), user);
