@@ -183,21 +183,6 @@ public class ExamController {
         return modelAndView;
     }
 
-//    public int calculateTotalPoints(List<Studentopenanswer> studentOpenAnswers) {
-//        int totalPoints = 0;
-//
-//        for (Studentopenanswer openAnswer : studentOpenAnswers) {
-//            if (openAnswer.getScore() == null){
-//                totalPoints += 0;
-//            }else {
-//                totalPoints += openAnswer.getScore();
-//            }
-//        }
-//
-//        return totalPoints;
-//    }
-
-
     @GetMapping("/showDoneExamUser/{examId}")
     public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
         Exam exam = examService.GetExam(examId.intValue());
@@ -257,10 +242,10 @@ public class ExamController {
     }
 
     @GetMapping("/evaluateExam")
-    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam("examId") Integer examId , @RequestParam List<Integer> scores) {
+    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam("examId") Integer examId , @RequestParam List<Integer> scores, @RequestParam("examinerComment") String examinerComment) {
         Student student = usersService.getStudentByid(studentId.intValue());
         Exam exam = examService.GetExam(examId.intValue());
-        logstudentexamService.setEvaluateDate(student, exam);
+        logstudentexamService.setDateTimeExaminerComment(student, exam, examinerComment);
         int points = answerOpenService.updateScores(student, scores);
         logstudentexamService.addOpenPoints(student, exam, points);
         return "redirect:/exams";

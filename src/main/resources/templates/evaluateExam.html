@@ -55,21 +55,15 @@
                 </div>
             </div>
         </li>
-    </ul>
 
-        <!-- W przyszlosci jak beda zamkniete -->
-        <!-- <li th:each="question, idx : ${listClosedQuestions}">
-            <div class="ques-points">
-                <p th:text="${question.getContent()} + ' (' + ${question.getScore()} + ' points)'">pytanie</p>
-                <p class="points">3p</p>
-            </div>
-            <p class="your-answer">Choose answer:</p>
-            <div class="checkbox-list" th:each="answer : ${closedAnswers[idx.index]}">
-                <input type="checkbox" th:name="'closedAnswers[' + ${question.getId()} + '][]'"
-                       th:value="${answer.getId()}" th:text="${answer.description}" value="ssssssssssss"/>ssss
+        <li class="comment-box">
+            <p class="add-comment-text">Add Comment to this exam</p>
+            <div class="examiner-comment">
+                <textarea class="examiner-comment-text" name="examinerComment"></textarea>
             </div>
         </li>
-    </ul> -->
+
+    </ul>
 
         <div class="button-container">
             <button type="submit">Save Points</button>

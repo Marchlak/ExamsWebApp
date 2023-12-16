@@ -29,11 +29,14 @@ public class LogstudentexamService {
         return logstudentexamRepository.findLogstudentexamsByExamExamid(exam);
     }
 
-    public void setEvaluateDate(Student student, Exam exam){
+    public void setDateTimeExaminerComment(Student student, Exam exam, String examinerComment){
         Logstudentexam logstudentexam = logstudentexamRepository.findLogstudentexamByStudentStudentAndExamExamid(student, exam);
         logstudentexam.setDate(LocalDate.now());
         logstudentexam.setTime(LocalTime.now());
+        logstudentexam.setDescription(examinerComment);
+        logstudentexamRepository.save(logstudentexam);
     }
+
 
     public void addOpenPoints(Student student, Exam exam, Integer openPoints){
         Logstudentexam logstudentexam = logstudentexamRepository.findLogstudentexamByStudentStudentAndExamExamid(student, exam);

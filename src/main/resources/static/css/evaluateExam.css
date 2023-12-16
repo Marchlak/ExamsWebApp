@@ -244,10 +244,38 @@ button{
     padding: 1.5vh 2vw;
     border: 1px solid #6524f0;
     font-size: 16px;
-    margin: 2vh 0;
 }
 
 button:hover{
     cursor: pointer;
     background: #5b1fda;
+}
+
+.examiner-comment{
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    /* justify-content: center; */
+    width: 100%;
+
+}
+
+.examiner-comment-text {
+    margin: 0 auto;
+    resize: none;
+    width: 93%;
+    height: 5vh;
+    color: #2c2c2e;
+    outline: none;
+    border: 1px solid #e6e6e6;
+    padding: 1% 1%;
+}
+
+.add-comment-text{
+    width: 95%;
+    margin: 0 auto;
+}
+
+.comment-box{
+    box-shadow: 0px 8px 24px 0px rgba(207, 207, 207, 0.82);
 }
