@@ -459,6 +459,14 @@ public class ExamController {
             modelAndView.addObject("UsersEntity", session.getAttribute("UsersEntity"));
             user = (UserDetails) session.getAttribute("UsersEntity");
         }
+        if (session.getAttribute("solved_" + examResponse.getExamId()) == null) {
+            Servicestatistic servicestatistic = logsService.getServiceStatistic();
+            int examCount = servicestatistic.getExamscount() + 1;
+            servicestatistic.setExamscount(examCount);
+            logsService.updateServicestatistic(servicestatistic);
+            session.setAttribute("solved_" + examResponse.getExamId(), true);
+        }
+
         Student student = studentRepository.findStudentByLogin(user.getUsername());
         Exam currentExam = examService.GetExam(examResponse.getExamId());
         Integer logstudentexamid = logstudentexamService.createAndSaveLogstudentexam(currentExam, student);

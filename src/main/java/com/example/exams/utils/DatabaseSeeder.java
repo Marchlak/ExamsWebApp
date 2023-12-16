@@ -21,8 +21,9 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final StudentsEntityRepository studentsEntityRepository;
     private final ProblemRepository problemRepository;
     private final GroupRepository groupRepository;
+    private final ServicestatisticRepository servicestatisticRepository;
 
-    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository, GroupRepository groupRepository) {
+    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository, GroupRepository groupRepository, ServicestatisticRepository servicestatisticRepository) {
         this.administratorRepository = administratorRepository;
         this.examinerRepository = examinersRepository;
         this.examRepository = examRepository;
@@ -33,6 +34,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.studentsEntityRepository = studentsEntityRepository;
         this.problemRepository = problemRepository;
         this.groupRepository = groupRepository;
+        this.servicestatisticRepository = servicestatisticRepository;
     }
 
 
@@ -91,6 +93,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         answerClosedRepository.save(new Answerclosed(10, "to jest moze 102?", false, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(11, "to jest moze 144?", true, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(12, "to jest moze 100?", false, closedQuestionRepository.findById(3).get()));
+
+        servicestatisticRepository.save(new Servicestatistic(0,0,studentsEntityRepository.findAll().size(),examinerRepository.findAll().size()));
 
 
     }

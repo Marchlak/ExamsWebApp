@@ -2,6 +2,7 @@ package com.example.exams.Services;
 
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.LogRepository;
+import com.example.exams.Repositories.Db.ServicestatisticRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,28 @@ public class LogsService {
     ExamService examService;
     @Autowired
     OpenQuestionService openQuestionService;
+    @Autowired
+    ServicestatisticRepository servicestatisticRepository;
 
-    public LogsService(LogRepository logRepository, UsersService usersService,ExamService examService, OpenQuestionService openQuestionService){
+    public LogsService(LogRepository logRepository, UsersService usersService,ExamService examService, OpenQuestionService openQuestionService,ServicestatisticRepository servicestatisticRepository){
         this.logRepository = logRepository;
         this.usersService = usersService;
         this.examService = examService;
         this.openQuestionService = openQuestionService;
+        this.servicestatisticRepository = servicestatisticRepository;
     }
     public List<Log> getLogs(){
         return logRepository.findAll();
     }
     public void addLog(Log log){
         logRepository.save(log);
+    }
+
+    public Servicestatistic getServiceStatistic(){
+        return servicestatisticRepository.getServicestatisticById(1);
+    }
+    public void updateServicestatistic (Servicestatistic servicestatistic){
+        servicestatisticRepository.save(servicestatistic);
     }
 
     public void updateOpenQuestion(OpenQuestion changedOpenQuestion, int openquestionId){

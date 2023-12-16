@@ -1,9 +1,6 @@
 package com.example.exams.Model.Data.db;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 @Table(name = "servicestatistics")
 public class Servicestatistic {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "statisticsID", nullable = false)
     private Integer id;
 
@@ -32,5 +30,15 @@ public class Servicestatistic {
 
     @Column(name = "startdate")
     private LocalDate startdate;
+
+    public Servicestatistic() {
+    }
+    public Servicestatistic(Integer visitorscount, Integer examscount, Integer studentscount,Integer examinatorscount){
+        this.visitorscount = visitorscount;
+        this.examscount =  examscount;
+        this.studentscount = studentscount;
+        this.examinatorscount = examinatorscount;
+        this.startdate = LocalDate.now();
+    }
 
 }
