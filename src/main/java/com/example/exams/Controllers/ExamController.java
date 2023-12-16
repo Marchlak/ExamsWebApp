@@ -381,18 +381,29 @@ public class ExamController {
 
     }
 
-    private void resultsClosedAnswers(Integer score, int id){
+    private void resultsClosedAnswers(Integer score, int id,Integer questionid){
         int result = 0;
-    List<Answerclosed> Answers = answerClosedService.getAllByQuestionId(id);
+      //  System.out.println(score);
+    List<Answerclosed> Answers = answerClosedService.getAllByQuestionId(questionid);
         for (Answerclosed answer : Answers) {
+
             if(answer.isCorrect())
             {
+             //   System.out.println(answer.getId() + " DObre Answerid");
                 result = result + 1;
             }
+            else {
+
+       //     System.out.println(answer.getId() + "Zle Answerid");
+            }
         }
+   //     System.out.println(result);
         if(result == score)
         {
-            logstudentexamService.addPointsToLogstudentexam(id,score);
+            logstudentexamService.addPointsToLogstudentexam(id,1);
+        }
+        else{
+            logstudentexamService.addPointsToLogstudentexam(id,0);
         }
     }
 
@@ -431,7 +442,7 @@ public class ExamController {
                 closedAnswer.setCorrectness(isCorrect);
                 studentClosedAnswerRepository.save(closedAnswer);
             }
-            resultsClosedAnswers(questionresult,currentlogsstudentexam);
+            resultsClosedAnswers(questionresult,currentlogsstudentexam,questionId);
         }
 
         return true;

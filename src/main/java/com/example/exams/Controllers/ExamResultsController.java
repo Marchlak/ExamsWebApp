@@ -30,7 +30,7 @@ public class ExamResultsController {
 
     @GetMapping("/results")
     public String studentExamHistory(Model model, HttpServletRequest request) {
-        System.out.println("odpalił się kontroler");
+        //System.out.println("odpalił się kontroler");
         UserDetails user = null;
         HttpSession session = request.getSession(false);
         if (session != null) {
