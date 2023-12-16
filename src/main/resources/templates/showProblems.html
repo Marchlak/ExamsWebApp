@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Show problems</title>
-    <div class="container">
-        <div class="problems">
-            <div th:each="problem : ${problems}" class="problem">
-                <img th:src="@{'data:image/bmp;base64,' + ${problem.photo != null ? problem.photo : ''}}" alt="Problem Photo" />
-                <p th:text="${problem.description}"></p>
-                <p th:text="${problem.category}"></p>
-                <p th:text="${problem.username}"></p>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" th:href="@{/css/showProblems.css}"/>
+    <link rel="stylesheet" href="../static/css/showProblems.css"/>
 </head>
 <body>
-
+<div class="container">
+    <div class="problems">
+        <div th:each="problem : ${problems}" class="problem">
+            <img th:src="@{'data:image/bmp;base64,' + ${problem.photo != null ? problem.photo : ''}}"
+                 alt="Problem Photo"/>
+            <p th:text="${problem.description}"></p>
+            <p th:text="${problem.category}"></p>
+            <p th:text="${problem.username}"></p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
