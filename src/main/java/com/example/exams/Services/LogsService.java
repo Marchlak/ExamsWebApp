@@ -71,6 +71,14 @@ public class LogsService {
         s= "Zmiany w egzaminie o id: "+exam.getId()+" zostały dokonane przez "+whoIsLogged()+". "+s;
         addLog(new Log(s));
     }
+    public void addOpenQuestionToExam(int examId, OpenQuestion openQuestion){
+        String s = "Do egzaminu o id: "+examId+" zostało dodane otwarte pytanie o tresci: "+openQuestion.getContent()+ " przez "+whoIsLogged();
+        addLog(new Log(s));
+    }
+    public void addClosedQuestionToExam(int examId, Closedquestion closedquestion){
+        String s = "Do egzaminu o id: "+examId+" zostało dodane zamkniete pytanie o tresci: "+closedquestion.getContent()+ " przez "+whoIsLogged();
+        addLog(new Log(s));
+    }
 
     public void deleteExam(int examId){
         Exam exam = examService.GetExam(examId);

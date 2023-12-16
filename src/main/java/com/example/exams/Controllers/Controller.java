@@ -2,6 +2,7 @@ package com.example.exams.Controllers;
 
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Services.*;
+import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import com.example.exams.Services.SubjectService;
 import jakarta.servlet.http.HttpSession;
@@ -44,10 +45,16 @@ public class Controller {
     }
 
     @GetMapping("/")
-    public ModelAndView showStatistics(Model model) {
+    public ModelAndView StartPage(Model model) {
+
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         if (session.getAttribute("visited") == null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
             Servicestatistic servicestatistic = logsService.getServiceStatistic();
             int visitorscount = servicestatistic.getVisitorscount() + 1;
             servicestatistic.setVisitorscount(visitorscount);
@@ -55,7 +62,6 @@ public class Controller {
             session.setAttribute("visited", true);
         }
         Servicestatistic servicestatistic = logsService.getServiceStatistic();
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         model.addAttribute("servicestatistic", servicestatistic);
@@ -73,10 +79,17 @@ public class Controller {
 
     @GetMapping("/logged")
     public ModelAndView logged(){
-
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
-        System.out.println(session);
+        CustomUserDetails customUserDetails = (CustomUserDetails) session.getAttribute("UserDetails");
+        if (session.getAttribute(customUserDetails.getUsername()+"_visited") == null) {
+            Servicestatistic servicestatistic = logsService.getServiceStatistic();
+            int visitorscount = servicestatistic.getVisitorscount() + 1;
+            servicestatistic.setVisitorscount(visitorscount);
+            logsService.updateServicestatistic(servicestatistic);
+            session.setAttribute(customUserDetails.getUsername()+"_visited", true);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("logged");
         return modelAndView;

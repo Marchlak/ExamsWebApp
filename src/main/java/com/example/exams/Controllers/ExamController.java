@@ -107,18 +107,18 @@ public class ExamController {
                 HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
                 HttpSession session = request.getSession(false);
                 if (session != null) {
-                    user = (UserDetails) session.getAttribute("UsersEntity");
+                    user = (UserDetails) session.getAttribute("UserDetails");
                 }
                 Collection<? extends GrantedAuthority> authorities= user.getAuthorities();
                 boolean isExaminer = false;
                 for (GrantedAuthority authority : authorities) {
-                    if ("EXAMINER".equals(authority.getAuthority())) {
+                    if ("ROLE_EXAMINER".equals(authority.getAuthority())) {
                         Examiner examiner = usersService.getExaminerByLoginAndPassword(user.getUsername());
                         logsService.addLog(new Log("Egzaminator: "+examiner.getFirstname()+" "+examiner.getLastname()+" dodał nowy egzamin o id: "+examService.getNextExamId()+" oraz opisie: "+exam.getDescription()));
                         examService.AddExam(exam);
                         break;
                     }
-                    if ("ADMIN".equals(authority.getAuthority())) {
+                    if ("ROLE_ADMIN".equals(authority.getAuthority())) {
                         Administrator administrator = usersService.getAdministratorByLogin(user.getUsername());
                         logsService.addLog(new Log("Administrator: "+administrator.getFirstname()+" "+administrator.getLastname()+" dodał nowy egzamin o id: "+examService.getNextExamId()+" oraz opisie: "+exam.getDescription()));
                         examService.AddExam(exam);
@@ -482,12 +482,12 @@ public class ExamController {
             user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
 
-        if (session.getAttribute("solved_" + examResponse.getExamId()) == null) {
+        if (session.getAttribute(user.getUsername()+"_solved_" + examResponse.getExamId()) == null) {
             Servicestatistic servicestatistic = logsService.getServiceStatistic();
             int examCount = servicestatistic.getExamscount() + 1;
             servicestatistic.setExamscount(examCount);
             logsService.updateServicestatistic(servicestatistic);
-            session.setAttribute("solved_" + examResponse.getExamId(), true);
+            session.setAttribute(user.getUsername()+"solved_" + examResponse.getExamId(), true);
         }
 
         Student student = studentsService.getStudentByLogin(user.getUsername());
@@ -516,9 +516,11 @@ public class ExamController {
     public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @ModelAttribute Closedquestion closedquestion,@ModelAttribute Answerclosed answerclosed, @RequestParam(value = "type", required = false) String type,@PathVariable Integer examId){
         Exam exam = examService.GetExam(examId);
         if ("closed".equals(type)) {
+            logsService.addClosedQuestionToExam(examId.intValue(),closedquestion);
             closedquestion.setExam(exam);
             closedQuestionService.addClosedQuestion(closedquestion);
         } else {
+            logsService.addOpenQuestionToExam(examId.intValue(),openQuestion);
             openQuestion.setExam(exam);
             openQuestionService.AddOpenQuestion(openQuestion);
         }

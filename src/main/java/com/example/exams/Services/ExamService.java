@@ -10,9 +10,11 @@ import com.example.exams.Repositories.Db.StudentsEntityRepository;
 import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,13 +150,22 @@ public class ExamService {
 
     }
     public List<Exam> getUserExams() {
-        CustomUserDetails loggedUser =  (CustomUserDetails) httpSession.getAttribute("UserDetails");
-        Student student = studentsRepository.findById(loggedUser.getUserId()).orElse(null);
+        CustomUserDetails loggedUser = (CustomUserDetails) httpSession.getAttribute("UserDetails");
 
-        if (student != null) {
-            return student.getExams();
-        } else {
-            return null;
+        if (loggedUser != null) {
+            Collection<? extends GrantedAuthority> authorities = loggedUser.getAuthorities();
+
+            if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN") || authority.getAuthority().equals("ROLE_EXAMINER"))) {
+                return this.examRepository.findAll();
+            } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_STUDENT"))) {
+                Student student = studentsRepository.findById(loggedUser.getUserId()).orElse(null);
+                if (student != null) {
+                    return student.getExams();
+                }
+            }
         }
+
+        return null;
     }
+
 }
