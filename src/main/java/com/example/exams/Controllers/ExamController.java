@@ -496,15 +496,23 @@ public class ExamController {
         return modelAndView;
     }
     @PostMapping("/addQuestion/{examId}")
-    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @ModelAttribute Closedquestion closedquestion,@ModelAttribute Answerclosed answerclosed, @RequestParam(value = "type", required = false) String type,@PathVariable Integer examId){
+    public String addQuestion(@ModelAttribute OpenQuestion openQuestion, @ModelAttribute Closedquestion closedquestion,@RequestParam(required = false) List<String> closedanswer, @RequestParam(required = false) List<String> correctness, @RequestParam(value = "type", required = false) String type,@PathVariable Integer examId){
         Exam exam = examService.GetExam(examId);
         if ("closed".equals(type)) {
             logsService.addClosedQuestionToExam(examId.intValue(),closedquestion);
             closedquestion.setExam(exam);
             closedQuestionService.addClosedQuestion(closedquestion);
-            answerClosedService.addAnswerClosed(answerclosed,closedquestion);
+            for(int i=0;i<closedanswer.size();i++){
+                String answer = closedanswer.get(i);
+                Answerclosed answerclosed = new Answerclosed();
+                Boolean correct = correctness.get(i).equals("on");
+                answerclosed.setCorrect(correct);
+                answerclosed.setDescription(answer);
+                answerClosedService.addAnswerClosed(answerclosed,closedquestion);
+            }
 
-        } else {
+        }
+        else {
             logsService.addOpenQuestionToExam(examId.intValue(),openQuestion);
             openQuestion.setExam(exam);
             openQuestionService.AddOpenQuestion(openQuestion);
