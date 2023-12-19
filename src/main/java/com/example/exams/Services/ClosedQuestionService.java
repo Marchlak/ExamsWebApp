@@ -5,6 +5,7 @@ import com.example.exams.Repositories.Db.ClosedQuestionRepository;
 import com.example.exams.Repositories.Db.StudentclosedanswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class ClosedQuestionService {
     {
         return closedQuestionRepository.save(newClosedQuestion);
     }
+    @Transactional
+    public Closedquestion save(Closedquestion closedQuestion) {
+        return closedQuestionRepository.save(closedQuestion);
+    }
+
 
     public Closedquestion getClosedQuestionById(Integer questionId) {
         return closedQuestionRepository.findById(questionId).orElse(null);
