@@ -18,4 +18,10 @@ public class StudentClosedAnswerService {
     public void deleteStudentClosedAnswersByQuestionId(int questionId) {
         studentClosedAnswerRepository.deleteByQuestionId(questionId);
     }
+
+    public void deleteStudentClosedAnswerByAnswerId(int answerId) {
+        studentClosedAnswerRepository.deleteByAnswerId(answerId);
+    }
+
+
 }

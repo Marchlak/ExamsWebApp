@@ -16,6 +16,9 @@ public class AnswerForm {
         if (answers != null) {
             for (Answerclosed answer : answers) {
                 System.out.println(answer.getDescription());
+                System.out.println(answer.getId());
+                System.out.println(answer.getClosedquestionQuestionid());
+                System.out.println(answer.isCorrect());
             }
         }
     }

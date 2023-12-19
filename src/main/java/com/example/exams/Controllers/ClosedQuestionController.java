@@ -6,6 +6,7 @@ import com.example.exams.Model.Data.db.Closedquestion;
 import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,8 +61,9 @@ LogsService logsService;
         AnswerForm answerForm = new AnswerForm();
         answerForm.setQuestion(question);
         answerForm.setAnswers(answers);
-
+        Integer examId = question.getExam() != null ? question.getExam().getId() : null;
         modelAndView.addObject("answerForm", answerForm);
+        modelAndView.addObject("examId", examId);
         modelAndView.setViewName("editClosedQuestion");
         return modelAndView;
     }
@@ -71,13 +73,18 @@ LogsService logsService;
     public String saveQuestionChanges(@ModelAttribute("answerForm")  AnswerForm answerForm, Integer examId, BindingResult result, Model model) {
        //
         Closedquestion question = answerForm.getQuestion();
+        List<Answerclosed> answercloseds = answerForm.getAnswers();
+        for(Answerclosed answer : answercloseds){
+            answer.setClosedquestionQuestionid(question);
+            answerClosedService.save(answer);
+        }
         System.out.println(question.getContent());
         System.out.println(question.getId());
         System.out.println("tu");
-       answerForm.printAnswersContent();
         if (result.hasErrors()) {
             return "editClosedQuestion";
         }
+        System.out.println(examId);
         if (examId != null) {
             Exam exam = examService.GetExam(examId);
             question.setExam(exam);
@@ -87,5 +94,20 @@ LogsService logsService;
         closedQuestionService.save(question);
 
         return "redirect:/exams";
+    }
+
+    @PostMapping("/deleteAnswer")
+    public String deleteAnswer(@RequestParam("answerId") Integer answerId,
+                               @RequestParam("questionId") Integer questionId) {
+        System.out.println("dziala");
+        studentClosedAnswerService.deleteStudentClosedAnswerByAnswerId(answerId);
+        answerClosedService.deleteAnswerById(answerId);
+        return "redirect:/editClosedQuestion/" + questionId;
+    }
+
+    @PostMapping("/addNewAnswer")
+    public String addNewAnswer(@RequestParam("questionId") Integer questionId) {
+            Answerclosed newAnswer = answerClosedService.createEmptyAnswerForQuestion(questionId);
+        return "redirect:/editClosedQuestion/" + questionId;
     }
 }

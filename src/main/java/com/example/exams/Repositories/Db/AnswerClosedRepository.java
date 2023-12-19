@@ -14,4 +14,7 @@ public interface AnswerClosedRepository extends JpaRepository<Answerclosed, Inte
 
     @Transactional
     void deleteByClosedquestionQuestionid_Id(Integer questionId);
+
+    @Transactional
+    void deleteById(Integer answerId);
 }

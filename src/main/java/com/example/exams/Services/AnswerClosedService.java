@@ -52,8 +52,20 @@ public class AnswerClosedService {
     }
 
     @Transactional
+    public void deleteAnswerById(Integer answerId) {
+        answerClosedRepository.deleteById(answerId);
+    }
+
+    @Transactional
     public void deleteAnswersByQuestionId(Integer questionId) {
         answerClosedRepository.deleteByClosedquestionQuestionid_Id(questionId);
+    }
+
+    public Answerclosed createEmptyAnswerForQuestion(Integer questionId) {
+        Closedquestion question = closedQuestionRepository.findById(questionId).orElseThrow();
+        Answerclosed newAnswer = new Answerclosed();
+        newAnswer.setClosedquestionQuestionid(question);
+        return answerClosedRepository.save(newAnswer);
     }
 
 }

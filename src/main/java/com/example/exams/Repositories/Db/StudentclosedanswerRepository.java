@@ -20,4 +20,9 @@ public interface StudentclosedanswerRepository extends JpaRepository<Studentclos
     @Query("delete from Studentclosedanswer s where s.answerclosedAnswerid.closedquestionQuestionid.id = :questionId")
     void deleteByQuestionId(@Param("questionId") int questionId);
 
+    @Modifying
+    @Transactional
+    @Query("delete from Studentclosedanswer s where s.id = :answerId")
+    void deleteByAnswerId(@Param("answerId") int answerId);
+
 }
