@@ -20,4 +20,8 @@ public class ExaminerService {
         Optional <Examiner> examiner = examinersRepository.findById(id);
         return examiner.orElse(null);
     }
+
+    public Examiner findByLogin(String name){
+        return examinersRepository.findByLogin(name);
+    }
 }

@@ -1,13 +1,17 @@
 package com.example.exams.Model.Data.db;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "problem")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Problem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

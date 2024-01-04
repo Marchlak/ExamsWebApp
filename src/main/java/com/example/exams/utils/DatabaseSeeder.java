@@ -4,9 +4,14 @@ import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.*;
 import com.example.exams.Services.GroupsService;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -43,7 +48,7 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws Exception {
         administratorRepository.save(new Administrator(1, "Szast", "Prast", "wipb", "pebegate", "wi@pb.edu.pl", true));
         administratorRepository.save(new Administrator(2, "Wojciech", "WI PB", "wojtek", "1", "wojtek@pb.edu.pl", true));
 
@@ -53,9 +58,12 @@ public class DatabaseSeeder implements CommandLineRunner {
         subjectRepository.save(new Subject(4, "Historia"));
         subjectRepository.save(new Subject(5, "Niemiecki"));
 
-        examinerRepository.save(new Examiner(1, "Slawomir", "Golibroda", "z", "z", "s.golibrodai@pb.edu.pl", true));
-        examinerRepository.save(new Examiner(2, "Dorota", "Warka", "y", "y", "wedliny@pb.edu.pl", true));
-        examinerRepository.save(new Examiner(3, "Julita", "Komarewska", "enjoyer", "szastprast", "smok@pb.edu.pl", false));
+        Examiner examiner1 = new Examiner(1, "Slawomir", "Golibroda", "z", "z", "s.golibrodai@pb.edu.pl", true);
+        Examiner examiner2 = new Examiner(2, "Dorota", "Warka", "y", "y", "wedliny@pb.edu.pl", true);
+        Examiner examiner3 = new Examiner(3, "Julita", "Komarewska", "enjoyer", "szastprast", "smok@pb.edu.pl", false);
+        examinerRepository.save(examiner1);
+        examinerRepository.save(examiner2);
+        examinerRepository.save(examiner3);
 
         List<Student> students1 = new ArrayList<>();
         List<Student> students2 = new ArrayList<>();
@@ -106,15 +114,15 @@ public class DatabaseSeeder implements CommandLineRunner {
 //        studentsRepository.save(new Student(7, groupRepository.getReferenceById(1), "Pawel", "Kulka", "kuleczka", "123", "kule@pb.edu.pl" ));
 //        studentsRepository.save(new Student(8, groupRepository.getReferenceById(2), "Michal", "Zalewski", "1", "123", "zalewski@pb.edu.pl" ));
 //        studentsRepository.save(new Student(9, groupRepository.getReferenceById(3), "Tomasz", "Adamek", "a", "123", "adamczyk@pb.edu.pl" ));
- //       studentsRepository.save(new Student(10, groupRepository.getReferenceById(3), "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@pb.edu.pl" ));
+        //       studentsRepository.save(new Student(10, groupRepository.getReferenceById(3), "Dziekan", "Dziekanski", "Dziekan", "123", "dziekan@pb.edu.pl" ));
 
         openQuestionRepository.save(new OpenQuestion(1, "Ile to 5+5?", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, examRepository.getReferenceById(1)));
 
-        closedQuestionRepository.save(new Closedquestion(1, "ile to jest 10*10", 1, examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(2, "ile to jest 11*11", 1, examRepository.getReferenceById(1) ));
-        closedQuestionRepository.save(new Closedquestion(3, "ile to jest 12*12", 1, examRepository.getReferenceById(1) ));
+        closedQuestionRepository.save(new Closedquestion(1, "ile to jest 10*10", 1, examRepository.getReferenceById(1)));
+        closedQuestionRepository.save(new Closedquestion(2, "ile to jest 11*11", 1, examRepository.getReferenceById(1)));
+        closedQuestionRepository.save(new Closedquestion(3, "ile to jest 12*12", 1, examRepository.getReferenceById(1)));
 
         answerClosedRepository.save(new Answerclosed(1, "to jest moze 101?", false, closedQuestionRepository.findById(1).get()));
         answerClosedRepository.save(new Answerclosed(2, "to jest moze 102?", true, closedQuestionRepository.findById(1).get()));
@@ -131,7 +139,36 @@ public class DatabaseSeeder implements CommandLineRunner {
         answerClosedRepository.save(new Answerclosed(11, "to jest moze 144?", true, closedQuestionRepository.findById(3).get()));
         answerClosedRepository.save(new Answerclosed(12, "to jest moze 100?", false, closedQuestionRepository.findById(3).get()));
 
-        servicestatisticRepository.save(new Servicestatistic(0,0,studentsRepository.findAll().size(),examinerRepository.findAll().size()));
+        servicestatisticRepository.save(new Servicestatistic(0, 0, studentsRepository.findAll().size(), examinerRepository.findAll().size()));
+
+        problemRepository.save(new Problem(1, convertImage("/static/images/createExam.jpg"), "Opracowanie metody szybkiego oceniania testów wyboru", student1, examiner1, "Edukacja", examiner1.getFirstname()));
+        problemRepository.save(new Problem(2, convertImage("/static/images/editExam.jpg"), "Analiza skuteczności egzaminów ustnych online", student1, examiner1, "Informatyka", examiner1.getFirstname()));
+        problemRepository.save(new Problem(3, convertImage("/static/images/createExam.jpg"), "Badanie wpływu muzyki na wyniki testów", student2, examiner1, "Psychologia", examiner1.getFirstname()));
+        problemRepository.save(new Problem(4, convertImage("/static/images/editExam.jpg"), "Projektowanie egzaminów z zakresu pierwszej pomocy", student2, examiner1, "Medycyna", examiner1.getFirstname()));
+        problemRepository.save(new Problem(5, convertImage("/static/images/questionsView.jpg"), "Rozwój kryteriów oceny w szkolnych konkursach artystycznych", student3, examiner2, "Sztuka", examiner2.getFirstname()));
+        problemRepository.save(new Problem(6, convertImage("/static/images/createExam.jpg"), "Tworzenie testów z architektury zorientowanej na zrównoważony rozwój", student3, examiner2, "Architektura", examiner2.getFirstname()));
+        problemRepository.save(new Problem(7, convertImage("/static/images/questionsView.jpg"), "Ocena umiejętności biznesowych na podstawie studiów przypadków", student4, examiner2, "Biznes", examiner2.getFirstname()));
+        problemRepository.save(new Problem(8, convertImage("/static/images/createExam.jpg"), "Ewaluacja wpływu mediów na zrozumienie treści nauczania", student4, examiner3, "Socjologia", examiner3.getFirstname()));
+        problemRepository.save(new Problem(9, convertImage("/static/images/questionsView.jpg"), "Projektowanie testów z zakresu podstaw robotyki", student4, examiner3, "AI i Robotyka", examiner3.getFirstname()));
+        problemRepository.save(new Problem(10, convertImage("/static/images/editExam.jpg"), "Analiza metod oceny wiedzy o zrównoważonym rolnictwie", student5, examiner3, "Rolnictwo", examiner3.getFirstname()));
+        problemRepository.save(new Problem(11, convertImage("/static/images/createExam.jpg"), "Opracowanie sprawiedliwego systemu oceniania egzaminów pisemnych", student5, examiner2, "Edukacja", examiner2.getFirstname()));
+        problemRepository.save(new Problem(12, convertImage("/static/images/createExam.jpg"), "Projektowanie interaktywnego systemu egzaminowania online", student5, examiner3, "Informatyka", examiner3.getFirstname()));
+        problemRepository.save(new Problem(13, convertImage("/static/images/questionsView.jpg"), "Badanie wpływu stresu egzaminacyjnego na wyniki studentów", student6, examiner1, "Psychologia", examiner1.getFirstname()));
+        problemRepository.save(new Problem(14, convertImage("/static/images/editExam.jpg"), "Rozwój metod oceny kreatywności w egzaminach artystycznych", student6, examiner2, "Sztuka", examiner2.getFirstname()));
+        problemRepository.save(new Problem(15, convertImage("/static/images/questionsView.jpg"), "Analiza efektywności egzaminów ustnych w porównaniu z pisemnymi", student3, examiner1, "Edukacja", examiner1.getFirstname()));
+        problemRepository.save(new Problem(16, convertImage("/static/images/createExam.jpg"), "Tworzenie systemu zapobiegającego oszustwom na egzaminach online", student2, examiner3, "Informatyka", examiner3.getFirstname()));
+        problemRepository.save(new Problem(17, convertImage("/static/images/createExam.jpg"), "Badanie różnic w wynikach egzaminów w zależności od pory dnia", student4, examiner2, "Edukacja", examiner2.getFirstname()));
+        problemRepository.save(new Problem(18, convertImage("/static/images/editExam.jpg"), "Optymalizacja formatu egzaminów dla różnych stylów uczenia się", student5, examiner1, "Psychologia", examiner1.getFirstname()));
+        problemRepository.save(new Problem(19, convertImage("/static/images/createExam.jpg"), "Projektowanie egzaminów praktycznych w edukacji medycznej", student1, examiner2, "Medycyna", examiner2.getFirstname()));
+        problemRepository.save(new Problem(20, convertImage("/static/images/questionsView.jpg"), "Ewaluacja skuteczności egzaminów multimedialnych w nauczaniu języków", student2, examiner1, "Edukacja", examiner1.getFirstname()));
+    }
+
+    public static byte[] convertImage(String resourcePath) throws Exception {
+        ClassPathResource imgFile = new ClassPathResource(resourcePath);
+        BufferedImage bImage = ImageIO.read(imgFile.getInputStream());
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(bImage, "jpg", bos);
+        return bos.toByteArray();
     }
 }
 
