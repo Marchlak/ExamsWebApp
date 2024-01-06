@@ -23,4 +23,27 @@ public class StudentsService {
     public Student getStudentByLogin(String login) {
         return studentsRepository.findStudentByLogin(login);
     }
+
+    public void editStudent(Integer studentId, String firstName, String lastName, String login, String password, String email){
+        Student student = studentsRepository.findStudentByStudentId(studentId);
+
+        if(student != null){
+            if(firstName != null && !firstName.trim().isEmpty())
+                student.setFirstname(firstName);
+
+            if(lastName != null && !lastName.trim().isEmpty())
+                student.setLastname(lastName);
+
+            if(login != null && !login.trim().isEmpty())
+                student.setLogin(login);
+
+            if(password != null && !password.trim().isEmpty())
+                student.setPassword(password);
+
+            if(email != null && !email.trim().isEmpty())
+                student.setEmail(email);
+
+            studentsRepository.save(student);
+        }
+    }
 }
