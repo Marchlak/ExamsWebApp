@@ -49,16 +49,44 @@ public class GroupsController {
         }catch(NumberFormatException e){
             System.err.println("Parsing error - groupId: " + groupId);
         }
-        return "redirect:/groups/" + groupId;
+        return "redirect:/manageGroup/" + groupId;
     }
-    @PostMapping("/deleteUser")
-    public String deleteUser(@RequestParam("groupId") String groupId, @RequestParam("studentId") Integer studentId){
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(@RequestParam("groupId") String groupId, @RequestParam("studentId") Integer studentId){
         try {
             int parsedGroupId = Integer.parseInt(groupId);
             this.groupsService.removeStudent(parsedGroupId, studentId);
         }catch (NumberFormatException e) {
             System.err.println("Parsing error - groupId: " + groupId);
         }
-        return "redirect:/groups/" + groupId;
+        return "redirect:/manageGroup/" + groupId;
+    }
+
+    @GetMapping("/editStudent/{groupId}/{studentId}")
+    public ModelAndView showEditStudentForm(@PathVariable Integer groupId, @PathVariable Integer studentId){
+        ModelAndView modelAndView = new ModelAndView();
+
+        Student student = this.studentsService.getStudentById(studentId);
+        Student editedStudent = new Student();
+        editedStudent.setStudentId(studentId);
+
+        modelAndView.addObject("student", student);
+        modelAndView.addObject("editedStudent", new Student());
+        modelAndView.addObject("groupId", groupId);
+
+        modelAndView.setViewName("editStudent");
+        return modelAndView;
+    }
+    @PostMapping("/editStudent")
+    public String editStudent(@ModelAttribute("editedStudent") Student editedStudent, @ModelAttribute("groupId") String groupId){
+        Integer studentId = editedStudent.getStudentId();
+        String firstName = editedStudent.getFirstname();
+        String lastName = editedStudent.getLastname();
+        String login = editedStudent.getLogin();
+        String password = editedStudent.getPassword();
+        String email = editedStudent.getEmail();
+
+        studentsService.editStudent(studentId, firstName, lastName, login, password, email);
+        return "redirect:/manageGroup" + groupId;
     }
 }
