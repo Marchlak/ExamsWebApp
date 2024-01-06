@@ -11,10 +11,7 @@ import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -96,14 +93,25 @@ public class Controller {
     }
 
     @GetMapping("/exams")
-    public ModelAndView exams() {
+    public ModelAndView exams(@RequestParam(name = "searchQuery", required = false) String searchQuery) {
         ModelAndView modelAndView = new ModelAndView();
-        //modelAndView.addObject("exams", examService.getAllExams());
-        modelAndView.addObject("exams", examService.getUserExams());
-        modelAndView.addObject("subjects", subjectService.GetAll());
+
+        List<Subject> subjects = subjectService.GetAll();
+        modelAndView.addObject("subjects", subjects);
+        List<Exam> exams;
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            exams = examService.searchExams(searchQuery);
+        } else {
+            exams = examService.getUserExams();
+        }
+        modelAndView.addObject("exams", exams);
         modelAndView.setViewName("showExams");
         return modelAndView;
     }
+
+
+
     @GetMapping("/logs")
     public ModelAndView showLogs() {
         ModelAndView modelAndView = new ModelAndView();

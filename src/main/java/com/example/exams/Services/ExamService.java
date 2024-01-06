@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamService {
@@ -166,6 +167,22 @@ public class ExamService {
         }
 
         return null;
+
     }
+    // W klasie ExamService
+    public List<Exam> searchExams(String searchQuery) {
+        // Pobierz wszystkie egzaminy
+        List<Exam> allExams = examRepository.findAll();
+
+        // Filtruj egzaminy na podstawie nazwy przedmiotu lub opisu
+        List<Exam> matchingExams = allExams.stream()
+                .filter(exam -> exam.getExamsSubject().getName().toLowerCase().contains(searchQuery.toLowerCase()) ||
+                        exam.getDescription().toLowerCase().contains(searchQuery.toLowerCase()))
+                .collect(Collectors.toList());
+
+        return matchingExams;
+    }
+
+
 
 }

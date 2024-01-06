@@ -36,10 +36,12 @@
 <div class="container-list">
 	<p>Exam Listing</p>
 
-	<form class="search-form">
-		<input type="search" placeholder="Search..." />
+	<form class="search-form" th:action="@{/exams}" method="get">
+		<input type="search" name="searchQuery" placeholder="Search..." th:value="${param.searchQuery}" />
 		<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 	</form>
+
+
 
 	<form class="filter-form">
 		<select id="sortOrder" name="sortOrder" aria-placeholder="Filter">
