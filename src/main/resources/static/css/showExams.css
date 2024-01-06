@@ -120,6 +120,10 @@ input[type="search"]::placeholder {
 }
 
 .search-submit {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
     border: none;
     background: transparent;
     opacity: 0.7;
@@ -137,16 +141,8 @@ input[type="search"]:focus {
     outline: none;
 }
 
-.filter-form{
-    position: absolute;
-    top: 20vh;
-    left: 25vw;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    border: 1px solid #9095A1;
-    background: #FFF;
-}
+
+
 
 select{
     border: none;
@@ -282,4 +278,36 @@ button:hover{
     overflow-y: auto;
     overflow-x: clip;
     height: 200px;
+}
+.subject-filter-form{
+    position: absolute;
+    top: 20.5vh;
+    left: 25vw;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #9095A1;
+    background: #FFF;
+}
+
+.filter-form{
+    position: absolute;
+    top: 19.7vh;
+    left: 33vw;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background: #FFF;
+    flex-wrap: nowrap;
+}
+
+.filter-form label, .filter-form input[type="date"] {
+    margin-right: 15px;
+}
+
+
+.filter-form .date-input {
+
+    flex: 0 0 auto;
+    width: auto;
 }

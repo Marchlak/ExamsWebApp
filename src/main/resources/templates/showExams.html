@@ -41,19 +41,23 @@
 		<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 	</form>
 
-
-
-	<form class="filter-form">
-		<select id="sortOrder" name="sortOrder" aria-placeholder="Filter">
-			<option value="" selected disabled hidden>Filter</option>
-			<option>Option 1</option>
-			<option>Option 2</option>
-			<option>Option 3</option>
-			<option>Option 4</option>
-			<option>Option 5</option>
+	<form class="subject-filter-form">
+		<select id="subjects" name="subjects" aria-placeholder="Select subject">
+			<option value="" selected disabled hidden>Select subject</option>
+			<option th:each="Subject : ${subjects}" th:value="${Subject.id}" th:text="${Subject.name}"></option>
 		</select>
 		<i class="fa-solid fa-filter"></i>
 	</form>
+
+
+	<form class="filter-form">
+		<label>Select start date:</label>
+		<input type="date" class="data date-input" name="startdate" id="startdate" />
+		<label>Select end date:</label>
+		<input type="date" class="data date-input" name="enddate" id="enddate" />
+	</form>
+
+
 
 	<form class="add-exam-form">
 		<button sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER')" type="button" class="create-exam-submit"><i class="fa-solid fa-plus"></i>Create Exam</button>
