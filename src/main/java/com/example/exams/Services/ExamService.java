@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -173,7 +174,7 @@ public class ExamService {
 
     public List<Exam> searchExams(String searchQuery) {
 
-        List<Exam> allExams = examRepository.findAll();
+        List<Exam> allExams = getUserExams();
 
         List<Exam> matchingExams = allExams.stream()
                 .filter(exam -> exam.getExamsSubject().getName().toLowerCase().contains(searchQuery.toLowerCase()) ||
@@ -183,7 +184,7 @@ public class ExamService {
         return matchingExams;
     }
     public List<Exam> getExamsDependsOnDates(LocalDate startDate, LocalDate endDate) {
-        List<Exam> allExams = examRepository.findAll();
+        List<Exam> allExams = getUserExams();
         List<Exam> examsBetweenDates;
 
         if (startDate != null && endDate != null) {
@@ -212,6 +213,20 @@ public class ExamService {
 
     private boolean isDateBefore(LocalDate dateToCheck, LocalDate endDate) {
         return dateToCheck != null && dateToCheck.isBefore(endDate) || dateToCheck.isEqual(endDate);
+    }
+
+    public List<Exam> getSortedExams(String sortType){
+        List<Exam> exams = getUserExams();
+        if ("Przedmiot A-Z".equals(sortType)) {
+            exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName()));
+        } else if ("Przedmiot Z-A".equals(sortType)) {
+            exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName(), Comparator.reverseOrder()));
+        } else if ("Data rosnąco".equals(sortType)) {
+            exams.sort(Comparator.comparing(Exam::getStartDate));
+        } else if ("Data malejąco".equals(sortType)) {
+            exams.sort(Comparator.comparing(Exam::getStartDate, Comparator.reverseOrder()));
+        }
+        return exams;
     }
 
 }

@@ -98,7 +98,9 @@ public class Controller {
     public ModelAndView exams(
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
             @RequestParam(name = "mindate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate minDate,
-            @RequestParam(name = "maxdate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maxDate) {
+            @RequestParam(name = "maxdate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maxDate,
+            @RequestParam(name = "sortType", required = false) String sortType)
+    {
         ModelAndView modelAndView = new ModelAndView();
 
 
@@ -110,7 +112,10 @@ public class Controller {
             exams = examService.searchExams(searchQuery);
         } else if (minDate != null || maxDate != null) {
             exams = examService.getExamsDependsOnDates(minDate, maxDate);
-        } else {
+        } else if(sortType != null){
+            exams = examService.getSortedExams(sortType);
+        }
+        else {
             exams = examService.getUserExams();
         }
         modelAndView.addObject("exams", exams);

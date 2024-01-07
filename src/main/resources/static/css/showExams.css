@@ -279,7 +279,7 @@ button:hover{
     overflow-x: clip;
     height: 200px;
 }
-.subject-filter-form{
+.sortType-filter-form{
     position: absolute;
     top: 20.5vh;
     left: 25vw;

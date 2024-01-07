@@ -41,8 +41,8 @@
 		<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
 	</form>
 
-	<form class="subject-filter-form">
-		<select id="subjects" name="subjects" aria-placeholder="Select sorting">
+	<form class="sortType-filter-form" th:action="@{/exams}" method="get">
+		<select id="sortType" name="sortType" aria-placeholder="Select sorting" th:value="${param.sortType}">
 			<option value="" selected disabled hidden>Select sorting</option>
 			<option>Przedmiot A-Z</option>
 			<option>Przedmiot Z-A</option>
@@ -224,6 +224,7 @@
 	document.addEventListener("DOMContentLoaded", function() {
 		var minDateInput = document.getElementById("mindate");
 		var maxDateInput = document.getElementById("maxdate");
+		var sortTypeInput = document.getElementById("sortType");
 
 		minDateInput.addEventListener("input", function() {
 			document.forms["filter-form"].submit();
@@ -232,8 +233,10 @@
 		maxDateInput.addEventListener("input", function() {
 			document.forms["filter-form"].submit();
 		});
+		sortTypeInput.addEventListener("select",function (){
+			document.forms["sortType-filter-form"].submit();
+		});
 	});
 </script>
-
 </body>
 </html>
