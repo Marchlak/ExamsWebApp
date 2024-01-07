@@ -59,6 +59,7 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/addQuestion/*")).hasAnyRole("ADMIN", "EXAMINER")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/showDoneExamUser/*")).hasAnyRole("ADMIN", "EXAMINER")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/editExam/*")).hasAnyRole("ADMIN", "EXAMINER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/editStudent/**")).hasAnyRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/confirmExamDeletion/*")).hasAnyRole("ADMIN", "EXAMINER")
                         .anyRequest().authenticated()
                 )

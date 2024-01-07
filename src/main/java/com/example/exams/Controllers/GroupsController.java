@@ -67,11 +67,8 @@ public class GroupsController {
         ModelAndView modelAndView = new ModelAndView();
 
         Student student = this.studentsService.getStudentById(studentId);
-        Student editedStudent = new Student();
-        editedStudent.setStudentId(studentId);
 
         modelAndView.addObject("student", student);
-        modelAndView.addObject("editedStudent", new Student());
         modelAndView.addObject("groupId", groupId);
 
         modelAndView.setViewName("editStudent");
