@@ -50,11 +50,11 @@
 	</form>
 
 
-	<form class="filter-form">
-		<label>Select start date:</label>
-		<input type="date" class="data date-input" name="startdate" id="startdate" />
-		<label>Select end date:</label>
-		<input type="date" class="data date-input" name="enddate" id="enddate" />
+	<form class="filter-form" th:action="@{/exams}" method="get" name="filter-form">
+		<label>Select min date:</label>
+		<input type="date" class="data date-input" name="mindate" id="mindate" th:value="${param.mindate}" />
+		<label>Select max date:</label>
+		<input type="date" class="data date-input" name="maxdate" id="maxdate" th:value="${param.maxdate}" />
 	</form>
 
 
@@ -217,5 +217,20 @@
 
 <script type="text/javascript" th:src="@{/javascript/exams.js}"></script>
 <script src="../static/javascript/exams.js"></script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var minDateInput = document.getElementById("mindate");
+		var maxDateInput = document.getElementById("maxdate");
+
+		minDateInput.addEventListener("input", function() {
+			document.forms["filter-form"].submit();
+		});
+
+		maxDateInput.addEventListener("input", function() {
+			document.forms["filter-form"].submit();
+		});
+	});
+</script>
+
 </body>
 </html>

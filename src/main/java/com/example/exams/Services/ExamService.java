@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -169,12 +170,11 @@ public class ExamService {
         return null;
 
     }
-    // W klasie ExamService
+
     public List<Exam> searchExams(String searchQuery) {
-        // Pobierz wszystkie egzaminy
+
         List<Exam> allExams = examRepository.findAll();
 
-        // Filtruj egzaminy na podstawie nazwy przedmiotu lub opisu
         List<Exam> matchingExams = allExams.stream()
                 .filter(exam -> exam.getExamsSubject().getName().toLowerCase().contains(searchQuery.toLowerCase()) ||
                         exam.getDescription().toLowerCase().contains(searchQuery.toLowerCase()))
@@ -182,7 +182,36 @@ public class ExamService {
 
         return matchingExams;
     }
+    public List<Exam> getExamsDependsOnDates(LocalDate startDate, LocalDate endDate) {
+        List<Exam> allExams = examRepository.findAll();
+        List<Exam> examsBetweenDates;
 
+        if (startDate != null && endDate != null) {
+            examsBetweenDates = allExams.stream()
+                    .filter(exam -> isDateAfter(exam.getStartDate(), startDate) &&
+                            isDateBefore(exam.getStartDate(), endDate))
+                    .collect(Collectors.toList());
+        } else if (startDate != null) {
+            examsBetweenDates = allExams.stream()
+                    .filter(exam -> isDateAfter(exam.getStartDate(),startDate))
+                    .collect(Collectors.toList());
+        } else if (endDate != null) {
+            examsBetweenDates = allExams.stream()
+                    .filter(exam -> isDateBefore(exam.getStartDate(),endDate))
+                    .collect(Collectors.toList());
+        } else {
+            examsBetweenDates = allExams;
+        }
 
+        return examsBetweenDates;
+    }
+
+    private boolean isDateAfter(LocalDate dateToCheck, LocalDate startDate) {
+        return dateToCheck != null && dateToCheck.isAfter(startDate) || dateToCheck.isEqual(startDate);
+    }
+
+    private boolean isDateBefore(LocalDate dateToCheck, LocalDate endDate) {
+        return dateToCheck != null && dateToCheck.isBefore(endDate) || dateToCheck.isEqual(endDate);
+    }
 
 }

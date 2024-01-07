@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -93,8 +95,12 @@ public class Controller {
     }
 
     @GetMapping("/exams")
-    public ModelAndView exams(@RequestParam(name = "searchQuery", required = false) String searchQuery) {
+    public ModelAndView exams(
+            @RequestParam(name = "searchQuery", required = false) String searchQuery,
+            @RequestParam(name = "mindate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate minDate,
+            @RequestParam(name = "maxdate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate maxDate) {
         ModelAndView modelAndView = new ModelAndView();
+
 
         List<Subject> subjects = subjectService.GetAll();
         modelAndView.addObject("subjects", subjects);
@@ -102,6 +108,8 @@ public class Controller {
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             exams = examService.searchExams(searchQuery);
+        } else if (minDate != null || maxDate != null) {
+            exams = examService.getExamsDependsOnDates(minDate, maxDate);
         } else {
             exams = examService.getUserExams();
         }
@@ -173,18 +181,4 @@ public class Controller {
                 return new ModelAndView("register");
         }
     }
-
-//    @GetMapping("/createQuestion")
-//    public ModelAndView createQuestion() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("createQuestion");
-//        return modelAndView;
-//    }
-
-//    @GetMapping("/showQuestion")
-//    public ModelAndView showQuestion() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("questionsView");
-//        return modelAndView;
-//    }
 }
