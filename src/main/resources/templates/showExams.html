@@ -42,9 +42,12 @@
 	</form>
 
 	<form class="subject-filter-form">
-		<select id="subjects" name="subjects" aria-placeholder="Select subject">
-			<option value="" selected disabled hidden>Select subject</option>
-			<option th:each="Subject : ${subjects}" th:value="${Subject.id}" th:text="${Subject.name}"></option>
+		<select id="subjects" name="subjects" aria-placeholder="Select sorting">
+			<option value="" selected disabled hidden>Select sorting</option>
+			<option>Przedmiot A-Z</option>
+			<option>Przedmiot Z-A</option>
+			<option>Data rosnąco</option>
+			<option>Data malejąco</option>
 		</select>
 		<i class="fa-solid fa-filter"></i>
 	</form>
