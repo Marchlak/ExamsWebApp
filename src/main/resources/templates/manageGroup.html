@@ -26,14 +26,18 @@
     </thead>
     <tbody>
     <!-- Iteracja przez dostępnych uczestników -->
-    <tr th:each="student : ${students}">
+    <tr th:each="student : ${addedStudents}">
         <td th:text="${student.studentId}"></td>
         <td th:text="${student.firstname}"></td>
         <td th:text="${student.lastname}"></td>
         <td>
             <a th:href="@{/editStudent/{groupId}/{studentId}(groupId=${groupId}, studentId=${student.studentId})}">Edytuj</a>
             |
-            <a th:href="@{/deleteStudent(groupId=${groupId}, studentId=${student.studentId})}">Usuń</a>
+            <form th:action="@{/deleteStudent}" method="post">
+                <input type="hidden" name="groupId" th:value="${groupId}" />
+                <input type="hidden" name="studentId" th:value="${student.studentId}" />
+                <button type="submit">Usuń</button>
+            </form>
         </td>
     </tr>
     </tbody>

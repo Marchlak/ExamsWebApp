@@ -9,9 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Controller;
 
 
-@RestController
+@Controller
 public class GroupsController {
     final StudentsService studentsService;
     final GroupsService groupsService;
@@ -59,10 +60,11 @@ public class GroupsController {
         return "redirect:/manageGroup/" + groupId;
     }
     @PostMapping("/deleteStudent")
-    public String deleteStudent(@RequestParam("groupId") String groupId, @RequestParam("studentId") Integer studentId){
+    public String deleteStudent(@RequestParam("groupId") String groupId, @RequestParam("studentId") String studentId){
         try {
             int parsedGroupId = Integer.parseInt(groupId);
-            this.groupsService.removeStudent(parsedGroupId, studentId);
+            int parsedStudentId = Integer.parseInt(studentId);
+            this.groupsService.removeStudent(parsedGroupId, parsedStudentId);
         }catch (NumberFormatException e) {
             System.err.println("Parsing error - groupId: " + groupId);
         }
