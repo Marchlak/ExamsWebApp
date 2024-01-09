@@ -113,4 +113,12 @@ public class ProblemController {
         modelAndView.addObject("photo", photo);
         return modelAndView;
     }
+
+    @PostMapping("/changeProblemStatus")
+    public String changeProblemStatus(@RequestParam("id") Integer id,
+                                      @RequestParam("status") String status) {
+        problemService.changeStatus(id,status);
+        return "redirect:/showProblems/" + id;
+    }
+
 }

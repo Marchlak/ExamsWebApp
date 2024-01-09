@@ -29,4 +29,10 @@ public class ProblemService {
     public Problem findById(int id) {
         return problemRepository.getReferenceById(id);
     }
+
+    public Problem changeStatus(int id, String newStatus) {
+        Problem problem = findById(id);
+        problem.setStatus(newStatus);
+        return problemRepository.save(problem);
+    }
 }

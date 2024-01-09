@@ -141,26 +141,26 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         servicestatisticRepository.save(new Servicestatistic(0, 0, studentsRepository.findAll().size(), examinerRepository.findAll().size()));
 
-        problemRepository.save(new Problem(1, convertImage("/static/images/createExam.jpg"), "Opracowanie metody szybkiego oceniania testów wyboru", student1, examiner1, "Edukacja", examiner1.getFirstname()));
-        problemRepository.save(new Problem(2, convertImage("/static/images/editExam.jpg"), "Analiza skuteczności egzaminów ustnych online", student1, examiner1, "Informatyka", examiner1.getFirstname()));
-        problemRepository.save(new Problem(3, convertImage("/static/images/createExam.jpg"), "Badanie wpływu muzyki na wyniki testów", student2, examiner1, "Psychologia", examiner1.getFirstname()));
-        problemRepository.save(new Problem(4, convertImage("/static/images/editExam.jpg"), "Projektowanie egzaminów z zakresu pierwszej pomocy", student2, examiner1, "Medycyna", examiner1.getFirstname()));
-        problemRepository.save(new Problem(5, convertImage("/static/images/questionsView.jpg"), "Rozwój kryteriów oceny w szkolnych konkursach artystycznych", student3, examiner2, "Sztuka", examiner2.getFirstname()));
-        problemRepository.save(new Problem(6, convertImage("/static/images/createExam.jpg"), "Tworzenie testów z architektury zorientowanej na zrównoważony rozwój", student3, examiner2, "Architektura", examiner2.getFirstname()));
-        problemRepository.save(new Problem(7, convertImage("/static/images/questionsView.jpg"), "Ocena umiejętności biznesowych na podstawie studiów przypadków", student4, examiner2, "Biznes", examiner2.getFirstname()));
-        problemRepository.save(new Problem(8, convertImage("/static/images/createExam.jpg"), "Ewaluacja wpływu mediów na zrozumienie treści nauczania", student4, examiner3, "Socjologia", examiner3.getFirstname()));
-        problemRepository.save(new Problem(9, convertImage("/static/images/questionsView.jpg"), "Projektowanie testów z zakresu podstaw robotyki", student4, examiner3, "AI i Robotyka", examiner3.getFirstname()));
-        problemRepository.save(new Problem(10, convertImage("/static/images/editExam.jpg"), "Analiza metod oceny wiedzy o zrównoważonym rolnictwie", student5, examiner3, "Rolnictwo", examiner3.getFirstname()));
-        problemRepository.save(new Problem(11, convertImage("/static/images/createExam.jpg"), "Opracowanie sprawiedliwego systemu oceniania egzaminów pisemnych", student5, examiner2, "Edukacja", examiner2.getFirstname()));
-        problemRepository.save(new Problem(12, convertImage("/static/images/createExam.jpg"), "Projektowanie interaktywnego systemu egzaminowania online", student5, examiner3, "Informatyka", examiner3.getFirstname()));
-        problemRepository.save(new Problem(13, convertImage("/static/images/questionsView.jpg"), "Badanie wpływu stresu egzaminacyjnego na wyniki studentów", student6, examiner1, "Psychologia", examiner1.getFirstname()));
-        problemRepository.save(new Problem(14, convertImage("/static/images/editExam.jpg"), "Rozwój metod oceny kreatywności w egzaminach artystycznych", student6, examiner2, "Sztuka", examiner2.getFirstname()));
-        problemRepository.save(new Problem(15, convertImage("/static/images/questionsView.jpg"), "Analiza efektywności egzaminów ustnych w porównaniu z pisemnymi", student3, examiner1, "Edukacja", examiner1.getFirstname()));
-        problemRepository.save(new Problem(16, convertImage("/static/images/createExam.jpg"), "Tworzenie systemu zapobiegającego oszustwom na egzaminach online", student2, examiner3, "Informatyka", examiner3.getFirstname()));
-        problemRepository.save(new Problem(17, convertImage("/static/images/createExam.jpg"), "Badanie różnic w wynikach egzaminów w zależności od pory dnia", student4, examiner2, "Edukacja", examiner2.getFirstname()));
-        problemRepository.save(new Problem(18, convertImage("/static/images/editExam.jpg"), "Optymalizacja formatu egzaminów dla różnych stylów uczenia się", student5, examiner1, "Psychologia", examiner1.getFirstname()));
-        problemRepository.save(new Problem(19, convertImage("/static/images/createExam.jpg"), "Projektowanie egzaminów praktycznych w edukacji medycznej", student1, examiner2, "Medycyna", examiner2.getFirstname()));
-        problemRepository.save(new Problem(20, convertImage("/static/images/questionsView.jpg"), "Ewaluacja skuteczności egzaminów multimedialnych w nauczaniu języków", student2, examiner1, "Edukacja", examiner1.getFirstname()));
+        problemRepository.save(new Problem(1, convertImage("/static/images/createExam.jpg"), "Opracowanie metody szybkiego oceniania testów wyboru", student1, examiner1, "Edukacja", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(2, convertImage("/static/images/editExam.jpg"), "Analiza skuteczności egzaminów ustnych online", student1, examiner1, "Informatyka", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(3, convertImage("/static/images/createExam.jpg"), "Badanie wpływu muzyki na wyniki testów", student2, examiner1, "Psychologia", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(4, convertImage("/static/images/editExam.jpg"), "Projektowanie egzaminów z zakresu pierwszej pomocy", student2, examiner1, "Medycyna", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(5, convertImage("/static/images/questionsView.jpg"), "Rozwój kryteriów oceny w szkolnych konkursach artystycznych", student3, examiner2, "Sztuka", examiner2.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(6, convertImage("/static/images/createExam.jpg"), "Tworzenie testów z architektury zorientowanej na zrównoważony rozwój", student3, examiner2, "Architektura", examiner2.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(7, convertImage("/static/images/questionsView.jpg"), "Ocena umiejętności biznesowych na podstawie studiów przypadków", student4, examiner2, "Biznes", examiner2.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(8, convertImage("/static/images/createExam.jpg"), "Ewaluacja wpływu mediów na zrozumienie treści nauczania", student4, examiner3, "Socjologia", examiner3.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(9, convertImage("/static/images/questionsView.jpg"), "Projektowanie testów z zakresu podstaw robotyki", student4, examiner3, "AI i Robotyka", examiner3.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(10, convertImage("/static/images/editExam.jpg"), "Analiza metod oceny wiedzy o zrównoważonym rolnictwie", student5, examiner3, "Rolnictwo", examiner3.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(11, convertImage("/static/images/createExam.jpg"), "Opracowanie sprawiedliwego systemu oceniania egzaminów pisemnych", student5, examiner2, "Edukacja", examiner2.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(12, convertImage("/static/images/createExam.jpg"), "Projektowanie interaktywnego systemu egzaminowania online", student5, examiner3, "Informatyka", examiner3.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(13, convertImage("/static/images/questionsView.jpg"), "Badanie wpływu stresu egzaminacyjnego na wyniki studentów", student6, examiner1, "Psychologia", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(14, convertImage("/static/images/editExam.jpg"), "Rozwój metod oceny kreatywności w egzaminach artystycznych", student6, examiner2, "Sztuka", examiner2.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(15, convertImage("/static/images/questionsView.jpg"), "Analiza efektywności egzaminów ustnych w porównaniu z pisemnymi", student3, examiner1, "Edukacja", examiner1.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(16, convertImage("/static/images/createExam.jpg"), "Tworzenie systemu zapobiegającego oszustwom na egzaminach online", student2, examiner3, "Informatyka", examiner3.getFirstname(), "Nowy"));
+        problemRepository.save(new Problem(17, convertImage("/static/images/createExam.jpg"), "Badanie różnic w wynikach egzaminów w zależności od pory dnia", student4, examiner2, "Edukacja", examiner2.getFirstname(),"Nowy"));
+        problemRepository.save(new Problem(18, convertImage("/static/images/editExam.jpg"), "Optymalizacja formatu egzaminów dla różnych stylów uczenia się", student5, examiner1, "Psychologia", examiner1.getFirstname(),"Nowy"));
+        problemRepository.save(new Problem(19, convertImage("/static/images/createExam.jpg"), "Projektowanie egzaminów praktycznych w edukacji medycznej", student1, examiner2, "Medycyna", examiner2.getFirstname(),"Nowy"));
+        problemRepository.save(new Problem(20, convertImage("/static/images/questionsView.jpg"), "Ewaluacja skuteczności egzaminów multimedialnych w nauczaniu języków", student2, examiner1, "Edukacja", examiner1.getFirstname(),"Nowy"));
     }
 
     public static byte[] convertImage(String resourcePath) throws Exception {

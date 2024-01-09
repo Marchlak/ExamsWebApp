@@ -37,4 +37,7 @@ public class Problem {
 
     @Column(name = "username", length = 20)
     private String username;
+
+    @Column(name = "status", length = 20)
+    private String status = "Nowy";
 }

@@ -44,6 +44,21 @@
         <h2>Photo</h2>
         <img class="problem" th:src="@{'data:image/bmp;base64,' + ${photo != null ? photo : ''}}" alt="Problem Photo"/>
     </div>
+
+    <div class="category">
+        <h2>Status</h2>
+        <p>Current Status: <span th:text="${problem.status}">[Status]</span></p>
+        <form th:action="@{/changeProblemStatus}" method="post">
+            <select name="status">
+                <option th:selected="${problem.status == 'Nowy'}" value="Nowy">Nowy</option>
+                <option th:selected="${problem.status == 'Rozpatrywowany'}" value="Rozpatrywowany">Rozpatrywowany</option>
+                <option th:selected="${problem.status == 'Zakończony'}" value="Zakończony">Zakończony</option>
+            </select>
+            <input type="hidden" name="id" th:value="${problem.id}"/>
+            <button type="submit">Change Status</button>
+        </form>
+    </div>
+
 </div>
 </body>
 </html>
