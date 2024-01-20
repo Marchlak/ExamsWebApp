@@ -106,17 +106,15 @@ public class Controller {
 
         List<Subject> subjects = subjectService.GetAll();
         modelAndView.addObject("subjects", subjects);
-        List<Exam> exams;
+        List<Exam> exams = examService.getUserExams();
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
-            exams = examService.searchExams(searchQuery);
-        } else if (minDate != null || maxDate != null) {
-            exams = examService.getExamsDependsOnDates(minDate, maxDate);
-        } else if(sortType != null){
-            exams = examService.getSortedExams(sortType);
+            exams = examService.searchExams(searchQuery, exams);
         }
-        else {
-            exams = examService.getUserExams();
+        if (minDate != null || maxDate != null) {
+            exams = examService.getExamsDependsOnDates(minDate, maxDate,exams);
+        } if(sortType != null){
+            exams = examService.getSortedExams(sortType,exams);
         }
         modelAndView.addObject("exams", exams);
         modelAndView.setViewName("showExams");
