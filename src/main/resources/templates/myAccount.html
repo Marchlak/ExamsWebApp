@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Account</title>
+    <link rel="stylesheet" th:href="@{/css/myAccount.css}"/>
+</head>
+<body>
+<div th:insert="navigation :: navigation"></div>
+
+<div class="header">
+    <h1 th:text="'You Are ' + ${permission}"></h1>
+</div>
+
+<div class="container">
+    <div class="details">
+        <h2>FirstName</h2>
+        <p class="problem" th:text="${user.getFirstname()}"></p>
+    </div>
+
+    <div class="details">
+        <h2>LastName</h2>
+        <p class="problem" th:text="${user.getLastname()}"></p>
+    </div>
+
+    <div class="details">
+        <h2>Email</h2>
+        <p class="problem" th:text="${user.getEmail()}"></p>
+    </div>
+
+    <div class="details">
+        <h2>Login</h2>
+        <p class="problem" th:text="${user.getLogin()}"></p>
+    </div>
+
+    <div class="details">
+        <h2>Password</h2>
+        <p class="problem" th:text="${user.getPassword()}"></p>
+    </div>
+</div>
+</body>
+</html>

@@ -11,6 +11,7 @@ import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,6 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -36,6 +38,13 @@ public class Controller {
     UsersService usersService;
     @Autowired
     LogsService logsService;
+
+    @Autowired
+    StudentsService studentsService;
+    @Autowired
+    ExaminerService examinerService;
+    @Autowired
+    AdministartorService administartorService;
 
 
     public Controller(ExamService examService)
@@ -183,5 +192,38 @@ public class Controller {
             default:
                 return new ModelAndView("register");
         }
+    }
+
+    @GetMapping("/myAccount")
+    public ModelAndView myAccount(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("myAccount");
+
+        CustomUserDetails user = null;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
+        }
+        assert user != null;
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            if ("ROLE_ADMIN".equals(authority.getAuthority())) {
+                model.addAttribute("permission", authority.getAuthority().substring(5));
+                model.addAttribute("user", administartorService.getAdminById(user.getUserId()));
+                break;
+            }
+            if ("ROLE_EXAMINER".equals(authority.getAuthority())) {
+                model.addAttribute("permission", authority.getAuthority().substring(5));
+                model.addAttribute("user", examinerService.Get(user.getUserId()));
+                break;
+            }
+            if ("ROLE_STUDENT".equals(authority.getAuthority())) {
+                model.addAttribute("permission", authority.getAuthority().substring(5));
+                model.addAttribute("user", studentsService.getStudentById(user.getUserId()));
+                break;
+            }
+        }
+        return modelAndView;
     }
 }
