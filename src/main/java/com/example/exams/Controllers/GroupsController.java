@@ -29,6 +29,13 @@ public class GroupsController {
         return modelAndView;
     }
 
+    @GetMapping("/addGroup")
+    public ModelAndView addGroups(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addGroup");
+        return modelAndView;
+    }
+
     @GetMapping("/manageGroup/{groupId}")
     public ModelAndView manageGroup(@PathVariable Integer groupId){
         ModelAndView modelAndView = new ModelAndView();
