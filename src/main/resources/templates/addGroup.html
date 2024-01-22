@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/addGroup.css" />
+    <link rel="stylesheet" th:href="@{/css/addGroup.css}" />
+    <title>Add Group</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>Create New Group</h1>
+    <form id="classGroupForm">
+
+        <label for="classSubject">Group Code:</label>
+        <input type="text" id="classSubject" name="classSubject" required>
+
+        <label for="studentsList">Add Students:</label>
+        <select id="studentsList">
+            <option value="John Doe">John Doe</option>
+            <option value="Jane Smith">Jane Smith</option>
+            <option value="Robert Johnson">Robert Johnson</option>
+        </select>
+
+        <p>Added Students</p>
+        <div id="selectedStudents"></div>
+
+        <button type="button" onclick="addStudent()">Add Student</button>
+        <button type="submit">Create Group</button>
+    </form>
+</div>
+
+<script>
+    function addStudent() {
+        const select = document.getElementById('studentsList');
+        const selectedStudent = select.options[select.selectedIndex];
+
+        if (selectedStudent) {
+            const selectedStudentsDiv = document.getElementById('selectedStudents');
+            const studentContainer = document.createElement('div');
+            studentContainer.className = 'student-container';
+
+            const newStudentDiv = document.createElement('div');
+            newStudentDiv.textContent = selectedStudent.value;
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.className = 'remove-button';
+            removeButton.onclick = function () {
+                removeStudent(studentContainer, selectedStudent);
+            };
+
+            studentContainer.appendChild(newStudentDiv);
+            studentContainer.appendChild(removeButton);
+            selectedStudentsDiv.appendChild(studentContainer);
+
+            select.remove(select.selectedIndex);
+        }
+    }
+
+    function removeStudent(studentContainer, option) {
+        const selectedStudentsDiv = document.getElementById('selectedStudents');
+        selectedStudentsDiv.removeChild(studentContainer);
+
+        const select = document.getElementById('studentsList');
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.text = option.text;
+        select.add(newOption);
+    }
+</script>
+
+</body>
+</html>

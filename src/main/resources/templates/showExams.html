@@ -36,28 +36,29 @@
 <div class="container-list">
 	<p>Exam Listing</p>
 
-	<form class="search-form" th:action="@{/exams}" method="get">
-		<input type="search" name="searchQuery" placeholder="Search..." th:value="${param.searchQuery}" />
-		<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-	</form>
+	<form th:action="@{/exams}" method="get" id="main-form">
+		<div class="search-form">
+			<input type="search" name="searchQuery" placeholder="Search..." th:value="${param.searchQuery}" />
+			<button type="submit" class="search-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+		</div>
 
-	<form class="sortType-filter-form" th:action="@{/exams}" method="get">
-		<select id="sortType" name="sortType" aria-placeholder="Select sorting" th:value="${param.sortType}">
-			<option value="" selected disabled hidden>Select sorting</option>
-			<option>Przedmiot A-Z</option>
-			<option>Przedmiot Z-A</option>
-			<option>Data rosnąco</option>
-			<option>Data malejąco</option>
-		</select>
-		<i class="fa-solid fa-filter"></i>
-	</form>
+		<div class="sortType-filter-form">
+			<select id="sortType" name="sortType" aria-placeholder="Select sorting" th:value="${param.sortType}">
+				<option value="" selected disabled hidden>Select sorting</option>
+				<option>Przedmiot A-Z</option>
+				<option>Przedmiot Z-A</option>
+				<option>Data rosnąco</option>
+				<option>Data malejąco</option>
+			</select>
+			<i class="fa-solid fa-filter"></i>
+		</div>
 
-
-	<form class="filter-form" th:action="@{/exams}" method="get" name="filter-form">
-		<label>Select min date:</label>
-		<input type="date" class="data date-input" name="mindate" id="mindate" th:value="${param.mindate}" />
-		<label>Select max date:</label>
-		<input type="date" class="data date-input" name="maxdate" id="maxdate" th:value="${param.maxdate}" />
+		<div class="filter-form">
+			<label>Select min date:</label>
+			<input type="date" class="data date-input" name="mindate" id="mindate" th:value="${param.mindate}" />
+			<label>Select max date:</label>
+			<input type="date" class="data date-input" name="maxdate" id="maxdate" th:value="${param.maxdate}" />
+		</div>
 	</form>
 
 
@@ -233,7 +234,7 @@
 		maxDateInput.addEventListener("input", function() {
 			document.forms["filter-form"].submit();
 		});
-		sortTypeInput.addEventListener("select",function (){
+		sortTypeInput.addEventListener("change",function (){
 			document.forms["sortType-filter-form"].submit();
 		});
 	});

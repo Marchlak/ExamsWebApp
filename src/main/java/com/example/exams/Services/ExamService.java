@@ -172,9 +172,7 @@ public class ExamService {
 
     }
 
-    public List<Exam> searchExams(String searchQuery) {
-
-        List<Exam> allExams = getUserExams();
+    public List<Exam> searchExams(String searchQuery, List<Exam> allExams) {
 
         List<Exam> matchingExams = allExams.stream()
                 .filter(exam -> exam.getExamsSubject().getName().toLowerCase().contains(searchQuery.toLowerCase()) ||
@@ -183,8 +181,8 @@ public class ExamService {
 
         return matchingExams;
     }
-    public List<Exam> getExamsDependsOnDates(LocalDate startDate, LocalDate endDate) {
-        List<Exam> allExams = getUserExams();
+    public List<Exam> getExamsDependsOnDates(LocalDate startDate, LocalDate endDate, List<Exam> allExams) {
+
         List<Exam> examsBetweenDates;
 
         if (startDate != null && endDate != null) {
@@ -215,8 +213,8 @@ public class ExamService {
         return dateToCheck != null && dateToCheck.isBefore(endDate) || dateToCheck.isEqual(endDate);
     }
 
-    public List<Exam> getSortedExams(String sortType){
-        List<Exam> exams = getUserExams();
+    public List<Exam> getSortedExams(String sortType, List<Exam> exams){
+
         if ("Przedmiot A-Z".equals(sortType)) {
             exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName()));
         } else if ("Przedmiot Z-A".equals(sortType)) {
