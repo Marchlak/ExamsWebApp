@@ -11,6 +11,10 @@ h1 {
     color: #9b67e9;
 }
 
+h2 {
+    color: #00c1ff;
+    text-align: center;
+}
 
 .container {
     max-width: 800px;
@@ -24,21 +28,15 @@ h1 {
     border-radius: 20px;
 }
 
-.problems{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
 .details {
     border: 2px solid #ddd;
     border-radius: 10px;
-    margin-bottom: 20px;
     padding: 20px;
+    margin: 20px;
     background-color: #f9f9f9;
 }
 
-.problem{
+.content{
     margin: 10px;
     box-sizing: border-box;
     background-color: #fff;
@@ -48,18 +46,10 @@ h1 {
     text-align: center;
 }
 
-.problem p {
+.content p {
     margin: 10px 0;
 }
 
-.problem .title {
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin: 20px 0;
-    color: #00c1ff;
-}
-
-.problem:hover {
+.content:hover {
     box-shadow: 0 0 20px rgba(123, 54, 231, 0.3);
 }
