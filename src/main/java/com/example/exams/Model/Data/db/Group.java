@@ -16,6 +16,7 @@ import java.util.List;
 @Table(name = "`group`")
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "classid", nullable = false)
     private Integer id;
 
@@ -31,6 +32,12 @@ public class Group {
     private List<Student> students;
 
     public Group(){}
+
+    public Group(String code, List<Student> students) {
+        this.code = code;
+        this.students = students;
+    }
+
     public Group(Integer group_id, String code, List<Student> students) {
         this.id = group_id;
         this.code = code;
