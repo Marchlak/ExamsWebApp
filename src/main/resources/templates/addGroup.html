@@ -5,50 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/addGroup.css" />
     <link rel="stylesheet" th:href="@{/css/addGroup.css}" />
-    <title>Add Group</title>
+    <title>Dodaj Grupę</title>
 </head>
 <body>
 
 <div class="container">
-    <h1>Create New Group</h1>
-    <form id="classGroupForm">
+    <h1>Utwórz nową grupę</h1>
+    <form th:action="@{/addGroup}" th:object="${group}" method="post" id="classGroupForm">
 
-        <label for="classSubject">Group Code:</label>
-        <input type="text" id="classSubject" name="classSubject" required>
+        <label for="classCode">Kod grupy:</label>
+        <input type="text" id="classCode" name="classCode" th:field="*{code}" required>
 
-        <label for="studentsList">Add Students:</label>
-        <select id="studentsList">
-            <option value="John Doe">John Doe</option>
-            <option value="Jane Smith">Jane Smith</option>
-            <option value="Robert Johnson">Robert Johnson</option>
+        <label for="studentsList">Dodaj studentów:</label>
+        <select id="studentsList" multiple="multiple">
+            <option th:each="student : ${students}" th:value="${student.studentId}" th:text="${student.firstname + ' ' + student.lastname}"></option>
         </select>
 
-        <p>Added Students</p>
+        <input type="hidden" id="group_students" name="group.students" th:field="*{students}">
+
+        <p>Wybrani studenci</p>
         <div id="selectedStudents"></div>
 
-        <button type="button" onclick="addStudent()">Add Student</button>
-        <button type="submit">Create Group</button>
+        <button type="button" onclick="addStudent()">Dodaj studenta</button>
+        <button type="submit">Utwórz grupę</button>
     </form>
 </div>
 
 <script>
+    let selectedStudents = [];
+
     function addStudent() {
         const select = document.getElementById('studentsList');
         const selectedStudent = select.options[select.selectedIndex];
 
-        if (selectedStudent) {
+        if (selectedStudent && !selectedStudents.includes(selectedStudent.value)) {
+            selectedStudents.push(selectedStudent.value);
+
             const selectedStudentsDiv = document.getElementById('selectedStudents');
             const studentContainer = document.createElement('div');
             studentContainer.className = 'student-container';
 
             const newStudentDiv = document.createElement('div');
-            newStudentDiv.textContent = selectedStudent.value;
+            newStudentDiv.textContent = selectedStudent.text;
 
             const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
             removeButton.className = 'remove-button';
             removeButton.onclick = function () {
-                removeStudent(studentContainer, selectedStudent);
+                removeStudent(studentContainer, selectedStudent.value);
             };
 
             studentContainer.appendChild(newStudentDiv);
@@ -56,18 +60,31 @@
             selectedStudentsDiv.appendChild(studentContainer);
 
             select.remove(select.selectedIndex);
+
+            updateGroupStudents();
         }
     }
 
-    function removeStudent(studentContainer, option) {
+    function removeStudent(studentContainer, studentValue) {
         const selectedStudentsDiv = document.getElementById('selectedStudents');
         selectedStudentsDiv.removeChild(studentContainer);
 
         const select = document.getElementById('studentsList');
         const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.text = option.text;
+        newOption.value = studentValue;
+        newOption.text = 'Student ' + studentValue;
         select.add(newOption);
+
+        selectedStudents = selectedStudents.filter(value => value !== studentValue);
+
+        updateGroupStudents();
+    }
+
+    function updateGroupStudents() {
+        const groupStudentsInput = document.getElementById('group_students');
+        if (groupStudentsInput) {
+            groupStudentsInput.value = selectedStudents.join(',');
+        }
     }
 </script>
 

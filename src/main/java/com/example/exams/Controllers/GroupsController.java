@@ -32,8 +32,19 @@ public class GroupsController {
     @GetMapping("/addGroup")
     public ModelAndView addGroups(){
         ModelAndView modelAndView = new ModelAndView();
+        Group group = new Group();
+        List<Student> students = studentsService.getAllStudents();
         modelAndView.setViewName("addGroup");
+        modelAndView.addObject("group", group);
+        modelAndView.addObject("students", students);
         return modelAndView;
+    }
+
+    @PostMapping("/addGroup")
+    public String addGroup(@ModelAttribute("group") Group group){
+        System.out.println("Adding students to group: " + group.getStudents());
+        groupsService.addGroup(group);
+        return "redirect:/groups";
     }
 
     @GetMapping("/manageGroup/{groupId}")

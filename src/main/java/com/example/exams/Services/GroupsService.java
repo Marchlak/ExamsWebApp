@@ -46,4 +46,8 @@ public class GroupsService {
             }
         }
     }
+
+    public void addGroup(Group group) {
+        groupsRepository.save(group);
+    }
 }
