@@ -10,25 +10,8 @@
 </head>
 <body>
 
-<div class="container-nav">
-    <div id="nav">
-        <ul>
-            <li class="menu"><a th:href="@{/exams}">Exams</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/logs}">Show Logs</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_STUDENT')" th:href="@{/results}">Results</a></li>
-            <li class="menu"><a th:href="@{/reportProblem}">Contact us</a></li>
-            <li class="menu"><a>About App</a></li>
-            <div class="icon-container">
-                <i class="fa-regular fa-bell"></i>
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-        </ul>
-    </div>
-    <div class="logo-container">
-        <div class="logo">Examify365</div>
-    </div>
-</div>
+<div th:insert="navigation :: navigation"></div>
+
 <form action="/evaluateExam" method="get">
     <input type="hidden" th:name="studentId" th:value="${student.studentId}" />
     <input type="hidden" th:name="examId" th:value="${exam.id}">
