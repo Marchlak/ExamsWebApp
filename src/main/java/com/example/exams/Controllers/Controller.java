@@ -76,6 +76,14 @@ public class Controller {
         return modelAndView;
     }
 
+    @GetMapping("/editUser")
+    public ModelAndView editUser(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("editUser");
+        return modelAndView;
+    }
+
+
 
     @GetMapping("/login")
     public ModelAndView login(Model model) {
