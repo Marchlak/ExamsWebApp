@@ -25,7 +25,10 @@ public class GroupsController {
     @GetMapping("/groups")
     public ModelAndView groups(){
         ModelAndView modelAndView = new ModelAndView();
+        List<Group> groups = groupsService.getAllGroups();
+        modelAndView.addObject("groups", groups);
         modelAndView.setViewName("groupsView");
+        modelAndView.addObject("groups", groups);
         return modelAndView;
     }
 
