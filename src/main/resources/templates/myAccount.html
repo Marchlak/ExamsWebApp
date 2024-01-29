@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>My Account</title>
     <link rel="stylesheet" th:href="@{/css/myAccount.css}"/>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"/>
 </head>
 <body>
 <div th:insert="navigation :: navigation"></div>
@@ -15,28 +21,99 @@
 <div class="container">
     <div class="details">
         <h2>Firstname</h2>
-        <p class="content" th:text="${user.getFirstname()}"></p>
+        <div class="content-box">
+            <p id="firstName" class="content" th:text="${user.getFirstname()}"></p>
+            <i id="firstNameIcon" class="fa-regular fa-pen-to-square"></i>
+            <i id="firstNameSaveIcon" class="fa-solid fa-check"></i>
+        </div>
     </div>
 
     <div class="details">
         <h2>Lastname</h2>
-        <p class="content" th:text="${user.getLastname()}"></p>
+        <div class="content-box">
+            <p id="lastName" class="content" th:text="${user.getLastname()}"></p>
+            <i id="lastNameEditIcon" class="fa-regular fa-pen-to-square"></i>
+            <i id="lastNameSaveIcon" class="fa-solid fa-check"></i>
+        </div>
     </div>
 
     <div class="details">
         <h2>Email</h2>
-        <p class="content" th:text="${user.getEmail()}"></p>
+        <div class="content-box">
+            <p id="email" class="content" th:text="${user.getEmail()}"></p>
+            <i id="emailEditIcon" class="fa-regular fa-pen-to-square"></i>
+            <i id="emailSaveIcon" class="fa-solid fa-check"></i>
+        </div>
     </div>
 
     <div class="details">
         <h2>Login</h2>
-        <p class="content" th:text="${user.getLogin()}"></p>
+        <div class="content-box">
+            <p id="login" class="content" th:text="${user.getLogin()}"></p>
+            <i id="loginEditIcon" class="fa-regular fa-pen-to-square"></i>
+            <i id="loginSaveIcon" class="fa-solid fa-check"></i>
+        </div>
     </div>
 
     <div class="details">
         <h2>Password</h2>
-        <p class="content" th:text="${user.getPassword()}"></p>
+        <div class="content-box">
+            <p id="password" class="content" th:text="${user.getPassword()}"></p>
+            <i id="passwordEditIcon" class="fa-regular fa-pen-to-square"></i>
+            <i id="passwordSaveIcon" class="fa-solid fa-check"></i>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function toggleEditSave(editIcon, saveIcon, contentElement, headerElement, isEditing) {
+            if (isEditing) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'edit-input';
+                input.value = contentElement.textContent;
+                contentElement.replaceWith(input);
+
+                editIcon.style.display = 'none';
+                saveIcon.style.display = 'inline-block';
+
+                headerElement.textContent = 'Edited ' + headerElement.textContent;
+            } else {
+                const p = document.createElement('p');
+                p.id = contentElement.id;
+                p.className = 'content';
+                p.textContent = contentElement.value;
+                contentElement.replaceWith(p);
+
+                editIcon.style.display = 'inline-block';
+                saveIcon.style.display = 'none';
+                headerElement.textContent = headerElement.textContent.replace('Edited ', '');
+            }
+        }
+
+        document.querySelectorAll('.fa-pen-to-square').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const contentBox = this.parentElement;
+                const contentElement = contentBox.querySelector('.content');
+                const saveIcon = contentBox.querySelector('.fa-check');
+                const headerElement = contentBox.parentElement.querySelector('h2');
+                toggleEditSave(this, saveIcon, contentElement, headerElement, true);
+            });
+        });
+
+        document.querySelectorAll('.fa-check').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const contentBox = this.parentElement;
+                const inputElement = contentBox.querySelector('.edit-input');
+                const editIcon = contentBox.querySelector('.fa-pen-to-square');
+                const headerElement = contentBox.parentElement.querySelector('h2');
+                toggleEditSave(editIcon, this, inputElement, headerElement, false);
+            });
+        });
+    });
+</script>
+
+
 </body>
 </html>
