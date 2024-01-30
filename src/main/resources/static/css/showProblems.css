@@ -68,6 +68,13 @@ h2 {
     box-shadow: 0 0 20px rgba(123, 54, 231, 0.3);
 }
 
+.filter-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
 a{
     text-decoration: none;
     color: #2c2c2e;

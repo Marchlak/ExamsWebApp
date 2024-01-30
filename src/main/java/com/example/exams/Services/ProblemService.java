@@ -2,12 +2,14 @@ package com.example.exams.Services;
 
 //import com.example.exams.Model.Data.ProperDataModels.ProblemDTO;
 
+import com.example.exams.Model.Data.ProperDataModels.ShowProblem;
 import com.example.exams.Model.Data.db.Problem;
 import com.example.exams.Repositories.Db.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProblemService {
@@ -35,4 +37,23 @@ public class ProblemService {
         problem.setStatus(newStatus);
         return problemRepository.save(problem);
     }
+
+    public Map<String, List<ShowProblem>> getProblemsBySelectedCategory(Map<String, List<ShowProblem>> problemsByCategory, String selectedCategory) {
+        Map<String, List<ShowProblem>> filteredProblemsByCategory = new HashMap<>();
+        if (selectedCategory == null || selectedCategory.equals("")) {
+            return new HashMap<>(problemsByCategory);
+        } else {
+            filteredProblemsByCategory.put(selectedCategory, problemsByCategory.getOrDefault(selectedCategory, Collections.emptyList()));
+        }
+
+        return filteredProblemsByCategory;
+    }
+    public List<String> getUniqueCategories() {
+        List<Problem> allProblems = GetAll();
+        return allProblems.stream()
+                .map(Problem::getCategory)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
 }
