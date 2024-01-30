@@ -8,6 +8,19 @@
 <body>
 <div class="header">
     <h1>Problems</h1>
+    <br>
+    <h2>Filtrowanie po:</h2>
+</div>
+<div class="filter-form-container">
+    <form action="/showProblems" method="get">
+        <select name="category">
+            <option value="">All</option>
+            <th:block th:each="category : ${categories}">
+                <option th:value="${category}" th:text="${category}"></option>
+            </th:block>
+        </select>
+        <input type="submit" value="Filtruj">
+    </form>
 </div>
 <div class="container">
     <div th:each="entry : ${problemsByCategory}" class="category">

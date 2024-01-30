@@ -78,7 +78,7 @@ public class ProblemController {
     }
 
     @GetMapping("/showProblems")
-    public ModelAndView showProblems() {
+    public ModelAndView showProblems(@RequestParam(required = false) String category) {
         ModelAndView modelAndView = new ModelAndView("showProblems");
 
         List<Problem> problems = problemService.GetAll();
@@ -98,8 +98,17 @@ public class ProblemController {
 
             problemsByCategory.computeIfAbsent(problem.getCategory(), k -> new ArrayList<>()).add(showProblem);
         }
+        if(category != null){
+            Map<String, List<ShowProblem>> selectedProblemsByCategory = problemService.getProblemsBySelectedCategory(problemsByCategory, category);
+            modelAndView.addObject("problemsByCategory", selectedProblemsByCategory);
 
-        modelAndView.addObject("problemsByCategory", problemsByCategory);
+        }
+        else {
+            modelAndView.addObject("problemsByCategory", problemsByCategory);
+        }
+        List<String> categories = problemService.getUniqueCategories();
+        modelAndView.addObject("categories", categories);
+
         return modelAndView;
     }
 
