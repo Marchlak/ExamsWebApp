@@ -14,7 +14,10 @@
     <div class="buttonsImg">
       <img th:src="@{/images/editExam.jpg}" alt="" srcset="" />
       <div class="buttons">
-        <button class="cancel-edit-exam">Cancel</button> <button class="createExam" type="submit">Add Question</button>
+        <a th:href="@{/exams}">
+          <button class="cancel-edit-exam">Cancel</button>
+        </a>
+<!--        <button class="createExam" type="submit">Add Question</button>-->
       </div>
     </div>
     <input type="hidden" name="examId" th:value="${examId}" />
@@ -47,12 +50,13 @@
       </div>
 
       <div class="questions">
-        <label>Questions List to Edit</label>
+<!--        <label>Questions List to Edit</label>-->
 
-        <div class="questionList"><p class="info">-------</p></div>
+<!--        <div class="questionList"><p class="info">-&#45;&#45;&#45;&#45;&#45;&#45;</p></div>-->
 
-        <button class="addQuestion">Edit Exam</button>
+            <button class="addQuestion">Edit Exam</button>
       </div>
+
     </form>
   </div>
 </div>
