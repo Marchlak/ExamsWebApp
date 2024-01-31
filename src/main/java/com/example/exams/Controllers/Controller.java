@@ -83,6 +83,13 @@ public class Controller {
         return modelAndView;
     }
 
+    @GetMapping("/aboutApp")
+    public ModelAndView aboutApp(Model model) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("aboutApp");
+        return modelAndView;
+    }
+
 
 
     @GetMapping("/login")
