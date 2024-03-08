@@ -43,4 +43,8 @@ public class Administrator {
         this.email = email;
         this.verificationStatus = verificationStatus;
     }
+
+    public void setActivity(boolean activity) {
+        this.verificationStatus = activity;
+    }
 }
