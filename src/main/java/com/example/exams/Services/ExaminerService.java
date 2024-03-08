@@ -13,8 +13,8 @@ public class ExaminerService {
     private final ExaminerRepository examinersRepository;
 
     @Autowired
-    public ExaminerService(ExaminerRepository examiexaminersRepository){
-        this.examinersRepository = examiexaminersRepository;
+    public ExaminerService(ExaminerRepository examinersRepository){
+        this.examinersRepository = examinersRepository;
     }
 
     public List<Examiner> getAllExaminers() {
@@ -33,7 +33,7 @@ public class ExaminerService {
     public void activate(int id){
         Optional <Examiner> examiner = examinersRepository.findById(id);
         if(examiner.isPresent()){
-            examiner.get().setActivity(true);
+            examiner.get().setVerificationStatus(true);
             examinersRepository.save(examiner.get());
         }
     }
@@ -41,7 +41,7 @@ public class ExaminerService {
     public void deactivate(int id){
         Optional <Examiner> examiner = examinersRepository.findById(id);
         if(examiner.isPresent()){
-            examiner.get().setActivity(false);
+            examiner.get().setVerificationStatus(false);
             examinersRepository.save(examiner.get());
         }
     }

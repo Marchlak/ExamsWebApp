@@ -14,6 +14,10 @@ public class AdministartorService {
     @Autowired
     AdministratorsEntityRepository administratorsEntityRepository;
 
+    public AdministartorService(AdministratorsEntityRepository administratorsEntityRepository){
+        this.administratorsEntityRepository = administratorsEntityRepository;
+    }
+
     public List<Administrator> getAllAdministrators() {
         return administratorsEntityRepository.findAll();
     }
@@ -30,7 +34,7 @@ public class AdministartorService {
     public void activate(int id){
         Optional <Administrator> administrator = administratorsEntityRepository.findById(id);
         if(administrator.isPresent()){
-            administrator.get().setActivity(true);
+            administrator.get().setVerificationStatus(true);
             administratorsEntityRepository.save(administrator.get());
         }
     }
@@ -38,7 +42,7 @@ public class AdministartorService {
     public void deactivate(int id){
         Optional <Administrator> administrator = administratorsEntityRepository.findById(id);
         if(administrator.isPresent()){
-            administrator.get().setActivity(false);
+            administrator.get().setVerificationStatus(false);
             administratorsEntityRepository.save(administrator.get());
         }
     }
