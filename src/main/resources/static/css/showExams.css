@@ -1,13 +1,20 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family:  "Manrope", Helvetica;
+    font-family: "Manrope", Helvetica;
 }
+
 .container-nav {
     background-color: #f8f9fa;
     display: flex;
     justify-content: center;
     width: 100vw;
+}
+
+.container-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .logo-container {
@@ -35,7 +42,7 @@
     background-color: #f8f9fa;
     box-shadow: 0px 2px 5px 0px rgba(23, 26, 31, 0.09), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
     position: absolute;
-    margin:auto;
+    margin: auto;
     height: 9vh;
     top: 0;
 }
@@ -54,7 +61,7 @@
     padding: 0.5vh 1vw;
 }
 
-.icon-container{
+.icon-container {
     position: absolute;
     display: flex;
     align-items: center;
@@ -71,7 +78,7 @@
     margin-right: 20px;
 }
 
-.fa-solid.fa-chevron-down{
+.fa-solid.fa-chevron-down {
     font-size: 16px;
     margin-left: 4px;
 }
@@ -80,15 +87,16 @@
     cursor: pointer;
 }
 
-#nav ul li a:hover{
+#nav ul li a:hover {
     color: #6D31ED;
 }
 
 
-p{
+p {
     position: absolute;
     top: 12vh;
-    left: 4vw;
+    left: 50%;
+    transform: translateX(-50%);
     color: #171a1f;
     font-size: 32px;
     letter-spacing: 0;
@@ -97,14 +105,34 @@ p{
 .search-form {
     position: absolute;
     top: 20vh;
-    left: 4vw;
+    left: 15vw;
     display: flex;
-    width: 20vw;
+    width: 12vw;
     align-items: center;
     gap: 6px;
     border-radius: 8px;
     border: 1px solid #9095A1;
     background: #FFF;
+    height: 40px;
+}
+
+.box-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-date-first {
+    position: absolute;
+    right: -4vw;
+    top: -20px;
+}
+
+.box-date-last {
+    position: absolute;
+    left: 28vw;
+    top: -20px;
 }
 
 input[type="search"] {
@@ -142,9 +170,7 @@ input[type="search"]:focus {
 }
 
 
-
-
-select{
+select {
     border: none;
     background: transparent;
     padding: 7px 8px;
@@ -152,22 +178,22 @@ select{
     appearance: none;
 }
 
-select:focus{
+select:focus {
     outline: none;
 }
 
-.fa-solid.fa-filter{
+.fa-solid.fa-filter {
     padding: 0 8px;
     font-size: 14px;
 }
 
-.add-exam-form{
+.add-exam-form {
     position: absolute;
     top: 20vh;
     right: 12.5vw;
 }
 
-.create-exam-submit{
+.create-exam-submit {
     border: none;
     border-radius: 4px;
     background: #382F4B;
@@ -180,7 +206,7 @@ select:focus{
     line-height: 26px;
 }
 
-.fa-solid.fa-plus{
+.fa-solid.fa-plus {
     padding-right: 8px;
     font-size: 14px;
 }
@@ -189,7 +215,8 @@ select:focus{
 table {
     position: absolute;
     top: 30vh;
-    left: 4vw;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 table thead {
@@ -211,6 +238,7 @@ table thead tr th span {
 table tbody tr {
     color: #555;
 }
+
 table tbody tr td {
     font-size: 14px;
     text-align: center;
@@ -220,25 +248,32 @@ table tbody tr td {
 
 }
 
-.buttons_exam{
+.buttons_exam {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-btn, .box-btn2 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin: 5px;
 }
 
 /*.solveExam{*/
 /*    width: 150px;*/
 /*}*/
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
-.solveExam{
+.solveExam {
     width: 160px;
 }
 
-.edit-delete{
+.edit-delete {
     border: none;
     border-radius: 4px;
     background: #6D31ED;
@@ -250,47 +285,54 @@ table tbody tr td {
     font-size: 16px;
 }
 
-.exam-id{
+.exam-id {
     width: 5vw;
 }
 
-.exam-description{
-    width: 15vw;
+.exam-description {
+    width: 40vw;
+}
+
+.exam-operations {
+    width: 30vw;
 }
 
 .exam-start-date,
-.exam-end-date{
-    width: 5vw;
+.exam-end-date {
+    width: 15vw;
 }
 
-.exam-subject{
-    width: 8vw;
+.exam-subject {
+    width: 12vw;
 }
 
-.exam-questions{
+.exam-questions {
     width: 10vw;
 }
 
-button:hover{
+button:hover {
     cursor: pointer;
 }
+
 .question-inputs {
     overflow-y: auto;
     overflow-x: clip;
     height: 200px;
 }
-.sortType-filter-form{
+
+.sortType-filter-form {
     position: absolute;
-    top: 20.5vh;
-    left: 25vw;
+    top: 20vh;
+    left: 45.5vw;
     display: flex;
     align-items: center;
     border-radius: 8px;
     border: 1px solid #9095A1;
     background: #FFF;
+    height: 40px;
 }
 
-.filter-form{
+.filter-form {
     position: absolute;
     top: 19.7vh;
     left: 34vw;
@@ -307,7 +349,6 @@ button:hover{
 
 
 .filter-form .date-input {
-
     flex: 0 0 auto;
     width: auto;
 }
