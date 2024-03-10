@@ -352,3 +352,8 @@ button:hover {
     flex: 0 0 auto;
     width: auto;
 }
+
+.defaultOption{
+    color: #BDC1CA;
+    font-style: italic;
+}

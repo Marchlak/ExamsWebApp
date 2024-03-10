@@ -27,7 +27,7 @@
 
         <div class="sortType-filter-form">
             <select id="sortType" name="sortType" aria-placeholder="Select sorting" th:value="${param.sortType}">
-                <option value="" selected disabled hidden>Select sorting</option>
+                <option class="defaultOption" value="" selected>Default</option>
                 <option>Przedmiot A-Z</option>
                 <option>Przedmiot Z-A</option>
                 <option>Data rosnąco</option>
@@ -228,16 +228,21 @@
         var sortTypeInput = document.getElementById("sortType");
 
         minDateInput.addEventListener("input", function () {
-            document.forms["filter-form"].submit();
+            document.forms["main-form"].submit();
         });
 
         maxDateInput.addEventListener("input", function () {
-            document.forms["filter-form"].submit();
+            document.forms["main-form"].submit();
         });
         sortTypeInput.addEventListener("change", function () {
-            document.forms["sortType-filter-form"].submit();
+            document.forms["main-form"].submit();
         });
     });
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('sortType')) {
+        const sortType = urlParams.get('sortType');
+        document.getElementById('sortType').value = sortType;
+    }
 </script>
 </body>
 </html>
