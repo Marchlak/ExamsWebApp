@@ -46,6 +46,18 @@ public class GroupsService {
             }
         }
     }
+    public boolean deleteGroup(Integer groupId) {
+        Group group = getGroupByGroupId(groupId);
+        List<Student> addedStudents = group.getStudents();
+        for(int i=0;i<addedStudents.size();i++){
+            removeStudent(groupId, addedStudents.get(i).getStudentId());
+        }
+        if (groupsRepository.existsById(groupId)) {
+            groupsRepository.deleteById(groupId);
+            return true;
+        }
+        return false;
+    }
 
     public void addGroup(Group group) {
         groupsRepository.save(group);

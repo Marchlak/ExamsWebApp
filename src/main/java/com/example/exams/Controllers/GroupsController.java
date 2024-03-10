@@ -49,6 +49,11 @@ public class GroupsController {
         groupsService.addGroup(group);
         return "redirect:/groups";
     }
+    @GetMapping("/deleteGroup/{groupId}")
+    public String deleteGroup(@PathVariable Integer groupId){
+        groupsService.deleteGroup(groupId);
+        return "redirect:/groups";
+    }
 
     @GetMapping("/manageGroup/{groupId}")
     public ModelAndView manageGroup(@PathVariable Integer groupId){
