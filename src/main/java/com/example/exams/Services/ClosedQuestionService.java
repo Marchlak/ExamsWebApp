@@ -1,6 +1,7 @@
 package com.example.exams.Services;
 
 import com.example.exams.Model.Data.db.Closedquestion;
+import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Repositories.Db.ClosedQuestionRepository;
 import com.example.exams.Repositories.Db.StudentclosedanswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,12 @@ public class ClosedQuestionService {
 
     public Closedquestion addClosedQuestion(Closedquestion newClosedQuestion)
     {
-        return closedQuestionRepository.save(newClosedQuestion);
+        Exam exam = newClosedQuestion.getExam();
+        Closedquestion closedquestion = closedQuestionRepository.save(newClosedQuestion);
+        if(!exam.getQuestionPoolStrategy()){
+            exam.setQuestionPool(exam.getQuestionPool() + 1);
+        }
+        return closedquestion;
     }
     @Transactional
     public Closedquestion save(Closedquestion closedQuestion) {

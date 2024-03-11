@@ -28,16 +28,18 @@ public class ExamService {
     private final SubjectService subjectService;
     private final ExaminerService egzaminatorService;
     private final OpenQuestionService openQuestionService;
+    private final ClosedQuestionService closedQuestionService;
     private final HttpSession httpSession;
 
     @Autowired
-    public ExamService(ExamRepository examRepository, StudentsEntityRepository studentsRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService, HttpSession httpSession) {
+    public ExamService(ExamRepository examRepository, StudentsEntityRepository studentsRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService, HttpSession httpSession, ClosedQuestionService closedQuestionService) {
         this.examRepository = examRepository;
         this.studentsRepository = studentsRepository;
         this.subjectService = subjectService;
         this.egzaminatorService = examinerService;
         this.openQuestionService = openQuestionService;
         this.httpSession = httpSession;
+        this.closedQuestionService = closedQuestionService;
     }
 
     public Exam AddExam(Exam exam) {
@@ -226,5 +228,20 @@ public class ExamService {
         }
         return exams;
     }
-
+    public void changeExamPoolStrategy(boolean poolStrategy, Exam exam){
+        if(exam.getQuestionPoolStrategy() != poolStrategy) {
+            exam.setQuestionPoolStrategy(poolStrategy);
+            if (!poolStrategy) {
+                exam.setQuestionPool(openQuestionService.getAllByExamId(exam.getId()).size() + closedQuestionService.getAllByExamId(exam.getId()).size());
+            }
+            examRepository.save(exam);
+        }
+    }
+    public int setExamPool(int count, Exam exam){
+        if(exam.getQuestionPoolStrategy()){
+            exam.setQuestionPool(count);
+        }
+        examRepository.save(exam);
+        return exam.getQuestionPool();
+    }
 }

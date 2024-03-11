@@ -1,5 +1,6 @@
 package com.example.exams.Services;
 
+import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Model.Data.db.OpenQuestion;
 import com.example.exams.Repositories.Db.OpenQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,12 @@ public class OpenQuestionService {
     }
 
     public OpenQuestion AddOpenQuestion(OpenQuestion newOpenQuestion){
-        return openQuestionRepository.save(newOpenQuestion);
+        Exam exam = newOpenQuestion.getExam();
+        OpenQuestion openQuestion = openQuestionRepository.save(newOpenQuestion);
+        if(!exam.getQuestionPoolStrategy()){
+            exam.setQuestionPool(exam.getQuestionPool() + 1);
+        }
+        return openQuestion;
     }
 
     public List<OpenQuestion> getAll() {

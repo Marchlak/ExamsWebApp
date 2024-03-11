@@ -18,6 +18,12 @@ public class Exam {
     @Column(name = "exam_id", nullable = false)
     private Integer id;
 
+    @Column(name = "question_pool")
+    private Integer questionPool;
+
+    @Column(name = "question_pool_strategy")
+    private Boolean questionPoolStrategy;
+
     @Column(name = "description", length = 100)
     private String description;
 
@@ -52,7 +58,9 @@ public class Exam {
     public Exam() {
     }
 
-    public Exam(Integer id, String description, LocalDate startdate, LocalTime starttime, LocalDate enddate, LocalTime endtime, Subject subject, List<Student> students) {
+    public Exam(Integer id, Integer questionPool, Boolean questionPoolStrategy , String description, LocalDate startdate, LocalTime starttime, LocalDate enddate, LocalTime endtime, Subject subject, List<Student> students) {
+        this.questionPool = questionPool;
+        this.questionPoolStrategy = questionPoolStrategy;
         this.id = id;
         this.description = description;
         this.startDate = startdate;

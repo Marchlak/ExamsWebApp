@@ -48,6 +48,14 @@
           <input type="time" class="czas" name="endtime" th:value="${#temporals.format(exam.endTime, 'HH:mm')}" />
         </div>
       </div>
+      <div class="input-box">
+        <label>Pula pytan</label>
+        <select name="exampoolstrategy" class="form-control">
+          <option th:value="0">Nie</option>
+          <option th:value="1">Tak</option>
+        </select>
+        <input type="number" name="count" class="form-control"/>
+      </div>
 
       <div class="questions">
 <!--        <label>Questions List to Edit</label>-->

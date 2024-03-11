@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +140,8 @@ public class ExamController {
     }
     @PostMapping("/addExam/{egzaminator_egzaminator_id}")
     public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid) {
-
+        exam.setQuestionPoolStrategy(false);
+        exam.setQuestionPool(0);
         //Testy
         egzaminator_egzaminator_id = 1;
 
@@ -154,7 +156,8 @@ public class ExamController {
     }
 
     @PostMapping("/editExamDetails/{examId}")
-    public String editExamDetails(@PathVariable Integer examId, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam(value = "startdate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam(value = "starttime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam(value = "enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam(value = "endtime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+    public String editExamDetails(@PathVariable Integer examId, @RequestParam("exampoolstrategy") Boolean exampoolstrategy, @RequestParam("count") Integer exampool ,@ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam(value = "startdate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam(value = "starttime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam(value = "enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam(value = "endtime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+        exam = examService.GetExam(examId.intValue());
         exam.setStartDate(startDate);
         exam.setStartTime(startTime);
         exam.setEndDate(endDate);
@@ -168,6 +171,8 @@ public class ExamController {
             logsService.updateExam(exam,s);
             examService.updateExam(exam);
         }
+        examService.changeExamPoolStrategy(exampoolstrategy, exam);
+        examService.setExamPool(exampool, exam);
         return "redirect:/exams";
     }
 
@@ -181,6 +186,25 @@ public class ExamController {
         modelAndView.addObject("exam", exam);
         model.addAttribute("examId", examId);
         return modelAndView;
+    }
+
+    @GetMapping("/setExamPoolStrategy/{examId}")
+    public String setExamPoolStrategy(@PathVariable Integer examId, @RequestParam Boolean strategy){
+        examService.changeExamPoolStrategy(strategy , examService.GetExam(examId));
+        return "redirect:/exams";
+    }
+
+    @GetMapping("/setExamPoolStrategyTrue/{examId}/{count}")
+    public String setExamPoolStrategyTrue(@PathVariable Integer examId, @PathVariable Integer count){
+        examService.changeExamPoolStrategy(true , examService.GetExam(examId));
+        int pool = examService.setExamPool(count, examService.GetExam(examId));
+        return "redirect:/exams";
+    }
+
+    @PostMapping("/setExamPoolStrategyFalse/{examId}")
+    public String setExamPoolStrategyFalse(@PathVariable Integer examId){
+        examService.changeExamPoolStrategy(false , examService.GetExam(examId));
+        return "redirect:/exams";
     }
 
     @GetMapping("/showDoneExamUser/{examId}")
@@ -311,6 +335,7 @@ public class ExamController {
         LocalDate endDate = exam.getEndDate();
         LocalTime endTime = exam.getEndTime();
 
+
         CustomUserDetails user = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
@@ -348,8 +373,34 @@ public class ExamController {
         } else
             modelAndView.addObject("timeEnds", true);
 
+        List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(Integer.parseInt(examId));
+        List<Closedquestion> closedQuestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
+
+        int open_Question_Size = openQuestionService.getAllByExamId(Integer.parseInt(examId)).size();
+        int close_Question_Size = closedQuestionService.getAllByExamId(Integer.parseInt(examId)).size();
+
+        List<Integer> randomIndexes = generateRandomNumbers(open_Question_Size + close_Question_Size, exam.getQuestionPool());
+        List<Integer> openQuestionIndexes = selectNumbersInRange(randomIndexes, 0, open_Question_Size - 1);
+
+        List<Integer> closedQuestionIndexes = selectNumbersInRange(randomIndexes, open_Question_Size, open_Question_Size + close_Question_Size - 1);
+        for(int i = 0; i < closedQuestionIndexes.size(); i++){
+            closedQuestionIndexes.set(i, closedQuestionIndexes.get(i) - open_Question_Size);
+        }
+
+        List<OpenQuestion> randomOpenQuestions = new ArrayList<>();
+        List<Closedquestion> randomClosedQuestions = new ArrayList<>();
+
+        for(int index: openQuestionIndexes){
+            randomOpenQuestions.add(openQuestions.get(index));
+        }
+        for(int index: closedQuestionIndexes){
+            randomClosedQuestions.add(closedQuestions.get(index));
+        }
+
         modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
-        modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        //modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        modelAndView.addObject("listOpenQuestions", randomOpenQuestions);
+
 
         List<Closedquestion> listClosedQuestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
         List<List<Answerclosed>> closedAnswers = new ArrayList<>();
@@ -358,10 +409,38 @@ public class ExamController {
         for (int i = 0; i < listClosedQuestions.size(); i++)
             closedAnswers.add(answerClosedService.getAllByQuestionId(listClosedQuestions.get(i).getId()));
 
-        modelAndView.addObject("listClosedQuestions", closedQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        //modelAndView.addObject("listClosedQuestions", closedQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        modelAndView.addObject("listClosedQuestions", randomClosedQuestions);
+
         modelAndView.addObject("closedAnswers", closedAnswers);
 
         return modelAndView;
+    }
+
+    public static List<Integer> generateRandomNumbers(int x, int t) {
+        List<Integer> selectedNumbers = new ArrayList<>();
+        Random random = new Random();
+
+        while (selectedNumbers.size() < t) {
+            int randomNumber = random.nextInt(x);
+            if (!selectedNumbers.contains(randomNumber)) {
+                selectedNumbers.add(randomNumber);
+            }
+        }
+
+        return selectedNumbers;
+    }
+
+    public static List<Integer> selectNumbersInRange(List<Integer> numbers, int a, int b) {
+        List<Integer> selectedNumbersInRange = new ArrayList<>();
+
+        for (int number : numbers) {
+            if (number >= a && number <= b) {
+                selectedNumbersInRange.add(number);
+            }
+        }
+
+        return selectedNumbersInRange;
     }
 
     private boolean processOpenAnswers(Map<String, String> openAnswers, UserDetails userDetails) {
