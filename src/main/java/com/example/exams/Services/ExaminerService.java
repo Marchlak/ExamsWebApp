@@ -50,7 +50,7 @@ public class ExaminerService {
 
 
     public void editExaminer(Integer examinerId, String firstName, String lastName, String login, String password, String email){
-        Examiner examiner = examinersRepository.findExaminerByLogin(login);
+        Examiner examiner = examinersRepository.findExaminerById(examinerId);
 
         if(examiner != null){
             if(firstName != null && !firstName.trim().isEmpty())

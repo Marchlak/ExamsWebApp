@@ -31,7 +31,7 @@ public class AdministartorService {
         return administratorsEntityRepository.findAdministratorByLogin(login);
     }
     public void editAdministator(Integer administratorId, String firstName, String lastName, String login, String password, String email){
-        Administrator administrator = administratorsEntityRepository.findAdministratorByLogin(login);
+        Administrator administrator = administratorsEntityRepository.findAdministratorById(administratorId);
 
         if(administrator != null){
             if(firstName != null && !firstName.trim().isEmpty())
