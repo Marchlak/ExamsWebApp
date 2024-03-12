@@ -30,6 +30,29 @@ public class AdministartorService {
     public Administrator getAdminByLogin(String login) {
         return administratorsEntityRepository.findAdministratorByLogin(login);
     }
+    public void editAdministator(Integer administratorId, String firstName, String lastName, String login, String password, String email){
+        Administrator administrator = administratorsEntityRepository.findAdministratorByLogin(login);
+
+        if(administrator != null){
+            if(firstName != null && !firstName.trim().isEmpty())
+                administrator.setFirstname(firstName);
+
+            if(lastName != null && !lastName.trim().isEmpty())
+                administrator.setLastname(lastName);
+
+            if(login != null && !login.trim().isEmpty())
+                administrator.setLogin(login);
+
+            if(password != null && !password.trim().isEmpty())
+                administrator.setPassword(password);
+
+            if(email != null && !email.trim().isEmpty())
+                administrator.setEmail(email);
+
+            administratorsEntityRepository.save(administrator);
+        }
+    }
+
 
     public void activate(int id){
         Optional <Administrator> administrator = administratorsEntityRepository.findById(id);

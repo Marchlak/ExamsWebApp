@@ -11,8 +11,11 @@ import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class Controller {
@@ -209,36 +213,5 @@ public class Controller {
         }
     }
 
-    @GetMapping("/myAccount")
-    public ModelAndView myAccount(Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("myAccount");
 
-        CustomUserDetails user = null;
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            user = (CustomUserDetails) session.getAttribute("UserDetails");
-        }
-        assert user != null;
-        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        for (GrantedAuthority authority : authorities) {
-            if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-                model.addAttribute("permission", authority.getAuthority().substring(5));
-                model.addAttribute("user", administartorService.getAdminById(user.getUserId()));
-                break;
-            }
-            if ("ROLE_EXAMINER".equals(authority.getAuthority())) {
-                model.addAttribute("permission", authority.getAuthority().substring(5));
-                model.addAttribute("user", examinerService.Get(user.getUserId()));
-                break;
-            }
-            if ("ROLE_STUDENT".equals(authority.getAuthority())) {
-                model.addAttribute("permission", authority.getAuthority().substring(5));
-                model.addAttribute("user", studentsService.getStudentById(user.getUserId()));
-                break;
-            }
-        }
-        return modelAndView;
-    }
 }

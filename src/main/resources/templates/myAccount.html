@@ -14,106 +14,67 @@
 <body>
 <div th:insert="navigation :: navigation"></div>
 
-<div class="header">
-    <h1 th:text="'You Are ' + ${permission}"></h1>
-</div>
-
-<div class="container">
-    <div class="details">
-        <h2>Firstname</h2>
-        <div class="content-box">
-            <p id="firstName" class="content" th:text="${user.getFirstname()}"></p>
-            <i id="firstNameIcon" class="fa-regular fa-pen-to-square"></i>
-            <i id="firstNameSaveIcon" class="fa-solid fa-check"></i>
-        </div>
+<form action="#" th:action="@{/myAccount}" th:object="${user}" method="post">
+    <div class="header">
+        <h1 th:text="'You Are ' + ${permission}"></h1>
     </div>
 
-    <div class="details">
-        <h2>Lastname</h2>
-        <div class="content-box">
-            <p id="lastName" class="content" th:text="${user.getLastname()}"></p>
-            <i id="lastNameEditIcon" class="fa-regular fa-pen-to-square"></i>
-            <i id="lastNameSaveIcon" class="fa-solid fa-check"></i>
+    <div class="container">
+        <!-- Firstname -->
+        <div class="details">
+            <label for="firstName">Firstname</label>
+            <div class="content-box">
+                <input type="text" id="firstName" name="firstname" th:value="*{firstname}" />
+                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <!-- Lastname -->
+        <div class="details">
+            <label for="lastName">Lastname</label>
+            <div class="content-box">
+                <input type="text" id="lastName" name="lastname" th:value="*{lastname}" />
+                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="details">
+            <label for="email">Email</label>
+            <div class="content-box">
+                <input type="email" id="email" name="email" th:value="*{email}" />
+                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <!-- Login -->
+        <div class="details">
+            <label for="login">Login</label>
+            <div class="content-box">
+                <input type="text" id="login" name="login" th:value="*{login}" />
+                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="details">
+            <label for="password">Password</label>
+            <div class="content-box">
+                <input type="password" id="password" name="password" th:value="*{password}" />
+                <i class="fa-regular fa-pen-to-square"></i>
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
+
+        <div class="submit-button">
+            <button type="submit" class="btn">Save Changes</button>
         </div>
     </div>
-
-    <div class="details">
-        <h2>Email</h2>
-        <div class="content-box">
-            <p id="email" class="content" th:text="${user.getEmail()}"></p>
-            <i id="emailEditIcon" class="fa-regular fa-pen-to-square"></i>
-            <i id="emailSaveIcon" class="fa-solid fa-check"></i>
-        </div>
-    </div>
-
-    <div class="details">
-        <h2>Login</h2>
-        <div class="content-box">
-            <p id="login" class="content" th:text="${user.getLogin()}"></p>
-            <i id="loginEditIcon" class="fa-regular fa-pen-to-square"></i>
-            <i id="loginSaveIcon" class="fa-solid fa-check"></i>
-        </div>
-    </div>
-
-    <div class="details">
-        <h2>Password</h2>
-        <div class="content-box">
-            <p id="password" class="content" th:text="${user.getPassword()}"></p>
-            <i id="passwordEditIcon" class="fa-regular fa-pen-to-square"></i>
-            <i id="passwordSaveIcon" class="fa-solid fa-check"></i>
-        </div>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        function toggleEditSave(editIcon, saveIcon, contentElement, headerElement, isEditing) {
-            if (isEditing) {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'edit-input';
-                input.value = contentElement.textContent;
-                contentElement.replaceWith(input);
-
-                editIcon.style.display = 'none';
-                saveIcon.style.display = 'inline-block';
-
-                headerElement.textContent = 'Edited ' + headerElement.textContent;
-            } else {
-                const p = document.createElement('p');
-                p.id = contentElement.id;
-                p.className = 'content';
-                p.textContent = contentElement.value;
-                contentElement.replaceWith(p);
-
-                editIcon.style.display = 'inline-block';
-                saveIcon.style.display = 'none';
-                headerElement.textContent = headerElement.textContent.replace('Edited ', '');
-            }
-        }
-
-        document.querySelectorAll('.fa-pen-to-square').forEach(icon => {
-            icon.addEventListener('click', function() {
-                const contentBox = this.parentElement;
-                const contentElement = contentBox.querySelector('.content');
-                const saveIcon = contentBox.querySelector('.fa-check');
-                const headerElement = contentBox.parentElement.querySelector('h2');
-                toggleEditSave(this, saveIcon, contentElement, headerElement, true);
-            });
-        });
-
-        document.querySelectorAll('.fa-check').forEach(icon => {
-            icon.addEventListener('click', function() {
-                const contentBox = this.parentElement;
-                const inputElement = contentBox.querySelector('.edit-input');
-                const editIcon = contentBox.querySelector('.fa-pen-to-square');
-                const headerElement = contentBox.parentElement.querySelector('h2');
-                toggleEditSave(editIcon, this, inputElement, headerElement, false);
-            });
-        });
-    });
-</script>
-
+</form>
 
 </body>
 </html>

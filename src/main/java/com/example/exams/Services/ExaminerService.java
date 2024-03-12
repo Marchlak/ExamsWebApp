@@ -1,6 +1,7 @@
 package com.example.exams.Services;
 
 import com.example.exams.Model.Data.db.Examiner;
+import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.ExaminerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,31 @@ public class ExaminerService {
         if(examiner.isPresent()){
             examiner.get().setVerificationStatus(false);
             examinersRepository.save(examiner.get());
+        }
+    }
+
+
+
+    public void editExaminer(Integer examinerId, String firstName, String lastName, String login, String password, String email){
+        Examiner examiner = examinersRepository.findExaminerByLogin(login);
+
+        if(examiner != null){
+            if(firstName != null && !firstName.trim().isEmpty())
+                examiner.setFirstname(firstName);
+
+            if(lastName != null && !lastName.trim().isEmpty())
+                examiner.setLastname(lastName);
+
+            if(login != null && !login.trim().isEmpty())
+                examiner.setLogin(login);
+
+            if(password != null && !password.trim().isEmpty())
+                examiner.setPassword(password);
+
+            if(email != null && !email.trim().isEmpty())
+                examiner.setEmail(email);
+
+            examinersRepository.save(examiner);
         }
     }
 }
