@@ -265,14 +265,20 @@ public class ExamController {
         return modelAndView;
     }
 
-    @GetMapping("/evaluateExam")
-    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam("examId") Integer examId , @RequestParam List<Integer> scores, @RequestParam("examinerComment") String examinerComment) {
+   @GetMapping("/evaluateExam")
+    public String evaluateExam(@RequestParam("studentId") Integer studentId, @RequestParam("examId") Integer examId , @RequestParam List<Integer> scores, @RequestParam("examinerComment") String examinerComment, String to) {
         Student student = usersService.getStudentByid(studentId.intValue());
         Exam exam = examService.GetExam(examId.intValue());
         logstudentexamService.setDateTimeExaminerComment(student, exam, examinerComment);
         int points = answerOpenService.updateScores(student, scores);
         logstudentexamService.addOpenPoints(student, exam, points);
-        return "redirect:/exams";
+
+         String sendTo = student.getEmail();
+         String subject = "Wyniki egzaminu";
+         String text = String.format("Witaj %s, Twój egzamin '%s' został oceniony. Uzyskałeś %d punktów. Komentarz egzaminatora: %s", student.getFirstname(), exam.getDescription(), points, examinerComment);
+         notificationService.sendNotification(sendTo, subject, text);
+            return "redirect:/exams";
+        }
     }
 
 
