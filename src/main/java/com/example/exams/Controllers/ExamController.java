@@ -276,10 +276,10 @@ public class ExamController {
          String sendTo = student.getEmail();
          String subject = "Wyniki egzaminu";
          String text = String.format("Witaj %s, Twój egzamin '%s' został oceniony. Uzyskałeś %d punktów. Komentarz egzaminatora: %s", student.getFirstname(), exam.getDescription(), points, examinerComment);
-         notificationService.sendNotification(sendTo, subject, text);
+        // notificationService.sendNotification(sendTo, subject, text);
             return "redirect:/exams";
         }
-    }
+
 
 
     @GetMapping("/confirmExamDeletion/{examId}")
