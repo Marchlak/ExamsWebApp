@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Aplikacji</title>
+    <title>O Aplikacji | Aplikacja do Egzaminów</title>
+    <meta name="description" content="Aplikacja do Egzaminów - nowoczesne narzędzie edukacyjne do przeprowadzania i rozwiązywania egzaminów online.">
     <link rel="stylesheet" href="../static/css/aboutApp.css" />
     <link rel="stylesheet" th:href="@{/css/aboutApp.css}" />
 </head>
@@ -12,19 +13,27 @@
 <header>
     <div th:insert="navigation :: navigation"></div>
 </header>
-<section>
-    <h2>Co to jest Aplikacja do Egzaminów?</h2>
-    <p>Aplikacja do Egzaminów to nowoczesne narzędzie edukacyjne przeznaczone do przeprowadzania i rozwiązywania egzaminów online.</p>
-</section>
-<section>
-    <h2>Funkcje</h2>
-    <ul>
-        <li>Tworzenie niestandardowych egzaminów</li>
-        <li>Automatyczne ocenianie odpowiedzi</li>
-        <li>Analityka wyników</li>
-        <li>Wsparcie dla wielu typów pytań</li>
-    </ul>
-</section>
+<main>
+    <section>
+        <h2>Co to jest Aplikacja do Egzaminów?</h2>
+        <p>Aplikacja do Egzaminów to nowoczesne narzędzie edukacyjne przeznaczone do przeprowadzania i rozwiązywania egzaminów online. Nasza aplikacja umożliwia tworzenie niestandardowych egzaminów, automatyczne ocenianie odpowiedzi, analizę wyników i oferuje wsparcie dla wielu typów pytań, co czyni ją idealnym rozwiązaniem dla edukatorów i uczniów.</p>
+    </section>
+    <section>
+        <h2>Funkcje</h2>
+        <ul class="features-list">
+            <li>Tworzenie niestandardowych egzaminów</li>
+            <li>Automatyczne ocenianie odpowiedzi</li>
+            <li>Analityka wyników</li>
+            <li>Wsparcie dla wielu typów pytań</li>
+        </ul>
+    </section>
+    <!-- Dodajemy nową sekcję z opiniami użytkowników -->
+    <section>
+        <h2>Opinie Użytkowników</h2>
+        <p>"Dzięki Aplikacji do Egzaminów, proces egzaminowania stał się dla nas prostszy i bardziej efektywny." - Jan Kowalski, nauczyciel</p>
+        <p>"Uwielbiam możliwość szybkiego sprawdzania wyników i otrzymywania natychmiastowej informacji zwrotnej!" - Ewa Nowak, studentka</p>
+    </section>
+</main>
 <footer>
     <p>Kontakt: kontakt@aplikacjadoegzaminow.pl</p>
 </footer>

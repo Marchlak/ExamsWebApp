@@ -128,6 +128,45 @@
             text-decoration: none;
             display: block;
         }
+
+        .construction-modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .construction-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0px 2px 5px rgba(23, 26, 31, 0.2), 0px 0px 2px rgba(23, 26, 31, 0.24);
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 
     <div id="nav">
@@ -158,27 +197,51 @@
         <div class="logo"><a href="/logged">Examify365</a></div>
     </div>
 
+    <div id="settings-under-construction" class="construction-modal" style="display: none;">
+        <div class="construction-content">
+            <span class="close">&times;</span>
+            <h2>Obecnie pracujemy nad stroną ustawień. Dziękujemy za Twoją cierpliwość!</h2>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userIcon = document.querySelector('.fa-user');
             const dropdownMenu = document.getElementById('user-dropdown');
+            const settingsLink = document.querySelector('a[href="/settings"]');
+            const constructionModal = document.getElementById('settings-under-construction');
+            const closeModal = document.querySelector('.close');
 
             userIcon.addEventListener('click', function() {
                 dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
             });
 
+            settingsLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                constructionModal.style.display = "flex";
+            });
+
+            closeModal.addEventListener('click', function() {
+                constructionModal.style.display = "none";
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === constructionModal) {
+                    constructionModal.style.display = "none";
+                }
+            });
+
             window.onclick = function(event) {
                 if (!event.target.matches('.fa-user')) {
                     let dropdowns = document.getElementsByClassName("dropdown-content");
-                    let i;
-                    for (i = 0; i < dropdowns.length; i++) {
+                    for (let i = 0; i < dropdowns.length; i++) {
                         let openDropdown = dropdowns[i];
                         if (openDropdown.style.display === 'flex') {
                             openDropdown.style.display = 'none';
                         }
                     }
                 }
-            }
+            };
         });
     </script>
 

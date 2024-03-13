@@ -1,7 +1,12 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Manrope", Helvetica;
+    font-family: "Manrope", Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5;
 }
 
 header {
@@ -10,44 +15,48 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-    box-shadow: 0px 2px 5px 0px rgba(23, 26, 31, 0.09), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
-    position: relative;
+    box-shadow: 0 2px 5px rgba(23, 26, 31, 0.09), 0 0 2px rgba(23, 26, 31, 0.12);
     height: 9vh;
 }
 
-.logo, .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.logo {
     font-weight: 700;
     color: #060606;
-    font-size: 22px;
+    font-size: 24px;
+}
+
+main {
+    padding: 20px;
 }
 
 section {
     text-align: center;
-    padding: 20px;
+    padding: 40px 20px;
     color: #171a1f;
+    margin-bottom: 20px;
 }
 
 section h2 {
     font-size: 32px;
     margin-bottom: 20px;
+    color: #333;
 }
 
 section p, section ul {
+    font-size: 18px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
 }
 
-section > ul {
-    text-align: center;
+.features-list {
     list-style-type: none;
+    text-align: center;
     padding: 0;
-    margin: 0;
 }
 
-.section li {
+.features-list li {
     font-size: 20px;
     line-height: 1.5;
     margin-bottom: 10px;
@@ -58,7 +67,9 @@ footer {
     padding: 20px 0;
     font-size: 18px;
     color: #424856;
-    position: absolute;
+    background-color: #f8f9fa;
+    box-shadow: 0 -2px 5px rgba(23, 26, 31, 0.09), 0 0 2px rgba(23, 26, 31, 0.12);
+    position: relative;
     width: 100%;
     bottom: 0;
 }
