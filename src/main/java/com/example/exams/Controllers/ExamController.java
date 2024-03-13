@@ -81,6 +81,13 @@ public class ExamController {
     @Autowired
     private StudentsService studentsService;
 
+   // private final NotificationService notificationService;
+
+   // @Autowired
+   // public ExamController(NotificationService notificationService) {
+   //     this.notificationService = notificationService;
+   // }
+
     @PostMapping("/addExamQuestions")
     public String addExamQuestions(@RequestBody String body){
 
@@ -275,12 +282,10 @@ public class ExamController {
 
          String sendTo = student.getEmail();
          String subject = "Wyniki egzaminu";
-         String text = String.format("Witaj %s, Twój egzamin '%s' został oceniony. Uzyskałeś %d punktów. Komentarz egzaminatora: %s", student.getFirstname(), exam.getDescription(), points, examinerComment);
-        // notificationService.sendNotification(sendTo, subject, text);
+         String text = String.format("Twój egzamin '%s' został oceniony. Uzyskałeś %d punktów. Komentarz egzaminatora: %s", exam.getDescription(), points, examinerComment);
+         //notificationService.sendNotification(sendTo, subject, text);
             return "redirect:/exams";
         }
-
-
 
     @GetMapping("/confirmExamDeletion/{examId}")
     public ModelAndView deleteExam(@PathVariable Integer examId, Model model) {
