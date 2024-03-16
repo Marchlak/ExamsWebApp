@@ -18,10 +18,10 @@ public class Student {
     @Column(name = "student_id", nullable = false)
     private Integer studentId;
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> groups;
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Exam> exams;
 
     @Column(name = "firstname", nullable = false, length = 20)
@@ -38,6 +38,18 @@ public class Student {
 
     @Column(name = "email", length = 40)
     private String email;
+
+    @OneToMany(mappedBy = "problemsStudent", cascade = CascadeType.ALL)
+    private List<Problem> problems;
+
+    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    private List<Studentopenanswer> studentopenanswers;
+
+    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    private List<Studentclosedanswer> studentclosedanswer;
+
+    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    private List<Logstudentexam> logstudentexam;
 
     public Student() {}
 

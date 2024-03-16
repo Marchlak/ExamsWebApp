@@ -69,4 +69,8 @@ public class AdministartorService {
             administratorsEntityRepository.save(administrator.get());
         }
     }
+
+    public void deleteAdministrator(int id){
+        administratorsEntityRepository.deleteById(id);
+    }
 }

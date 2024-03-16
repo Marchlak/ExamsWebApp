@@ -71,4 +71,8 @@ public class ExaminerService {
             examinersRepository.save(examiner);
         }
     }
+
+    public void deleteExaminer(int id){
+        examinersRepository.deleteById(id);
+    }
 }

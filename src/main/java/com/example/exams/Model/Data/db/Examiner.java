@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
-//@Table(name = "egzaminator")
+@Table(name = "examiner")
 public class Examiner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,6 +33,15 @@ public class Examiner {
 
     @Column(name = "verification_status", nullable = false)
     private boolean verificationStatus;
+
+    @OneToMany(mappedBy = "problemsExaminer", cascade = CascadeType.ALL)
+    private List<Problem> problems;
+
+    @OneToMany(mappedBy = "conductingExaminer", cascade = CascadeType.ALL)
+    private List<Exam> exams;
+
+    @OneToMany(mappedBy = "egzaminatorEgzaminator", cascade = CascadeType.ALL)
+    private List<Relation23> relation23s;
 
     public Examiner() {}
 
