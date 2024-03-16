@@ -5,34 +5,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O Aplikacji | Aplikacja do Egzaminów</title>
-    <meta name="description" content="Aplikacja do Egzaminów - nowoczesne narzędzie edukacyjne do przeprowadzania i rozwiązywania egzaminów online.">
-    <link rel="stylesheet" href="../static/css/aboutApp.css" />
-    <link rel="stylesheet" th:href="@{/css/aboutApp.css}" />
+    <meta name="description"
+          content="Aplikacja do Egzaminów - nowoczesne narzędzie edukacyjne do przeprowadzania i rozwiązywania egzaminów online.">
+    <link rel="stylesheet" href="../static/css/aboutApp.css"/>
+    <link rel="stylesheet" th:href="@{/css/aboutApp.css}"/>
 </head>
 <body>
 <header>
     <div th:insert="navigation :: navigation"></div>
 </header>
 <main>
-    <section>
+    <section class="about-app">
         <h2>Co to jest Aplikacja do Egzaminów?</h2>
-        <p>Aplikacja do Egzaminów to nowoczesne narzędzie edukacyjne przeznaczone do przeprowadzania i rozwiązywania egzaminów online. Nasza aplikacja umożliwia tworzenie niestandardowych egzaminów, automatyczne ocenianie odpowiedzi, analizę wyników i oferuje wsparcie dla wielu typów pytań, co czyni ją idealnym rozwiązaniem dla edukatorów i uczniów.</p>
+        <div class="about-content">
+            <p>Aplikacja do Egzaminów to nowoczesne narzędzie edukacyjne przeznaczone do przeprowadzania i rozwiązywania
+                egzaminów online. Nasza aplikacja umożliwia tworzenie niestandardowych egzaminów, automatyczne ocenianie
+                odpowiedzi, analizę wyników i oferuje wsparcie dla wielu typów pytań, co czyni ją idealnym rozwiązaniem
+                dla edukatorów i uczniów.</p>
+        </div>
     </section>
-    <section>
+
+    <section class="features">
         <h2>Funkcje</h2>
         <ul class="features-list">
-            <li>Tworzenie niestandardowych egzaminów</li>
-            <li>Automatyczne ocenianie odpowiedzi</li>
-            <li>Analityka wyników</li>
-            <li>Wsparcie dla wielu typów pytań</li>
+            <li class="feature-item">
+                <h3>Tworzenie niestandardowych egzaminów</h3>
+                <p>Możliwość tworzenia egzaminów dostosowanych do indywidualnych potrzeb kursu czy przedmiotu. To
+                    umożliwia nauczycielom i instytucjom edukacyjnym oferowanie bardziej spersonalizowanego podejścia do
+                    oceniania, zachęcając do głębszego zrozumienia materiału przez uczniów.</p>
+            </li>
+            <li class="feature-item">
+                <h3>Automatyczne ocenianie odpowiedzi</h3>
+                <p>System automatycznie ocenia odpowiedzi, co znacznie oszczędza czas nauczycieli. Automatyzacja procesu
+                    oceniania pozwala na natychmiastową informację zwrotną dla uczniów, wspierając ich proces nauki i
+                    rozwój.</p>
+            </li>
+            <li class="feature-item">
+                <h3>Analityka wyników</h3>
+                <p>Zaawansowane narzędzia do analizy i porównywania wyników egzaminów w czasie. Umożliwia to
+                    identyfikację trendów, mocnych i słabych stron uczniów, a także dostosowywanie metodyk nauczania do
+                    potrzeb klasowych i indywidualnych uczniów.</p>
+            </li>
+            <li class="feature-item">
+                <h3>Wsparcie dla wielu typów pytań</h3>
+                <p>Obsługa różnych formatów pytań, od wyboru pojedynczego po pytania otwarte. Elastyczność w
+                    projektowaniu egzaminów pozwala na bardziej kompleksową ocenę wiedzy i umiejętności uczniów,
+                    przyczyniając się do bardziej wszechstronnej edukacji.</p>
+            </li>
         </ul>
     </section>
-    <!-- Dodajemy nową sekcję z opiniami użytkowników -->
-    <section>
+
+
+    <section class="user-reviews">
         <h2>Opinie Użytkowników</h2>
-        <p>"Dzięki Aplikacji do Egzaminów, proces egzaminowania stał się dla nas prostszy i bardziej efektywny." - Jan Kowalski, nauczyciel</p>
-        <p>"Uwielbiam możliwość szybkiego sprawdzania wyników i otrzymywania natychmiastowej informacji zwrotnej!" - Ewa Nowak, studentka</p>
+        <div class="reviews-carousel">
+            <div class="review-item">
+                <p>"Dzięki Aplikacji do Egzaminów, proces egzaminowania stał się dla nas prostszy i bardziej efektywny."
+                    - Jan Kowalski, nauczyciel</p>
+            </div>
+            <div class="review-item">
+                <p>"Uwielbiam możliwość szybkiego sprawdzania wyników i otrzymywania natychmiastowej informacji
+                    zwrotnej!" - Ewa Nowak, studentka</p>
+            </div>
+        </div>
     </section>
+
 </main>
 <footer>
     <p>Kontakt: kontakt@aplikacjadoegzaminow.pl</p>
