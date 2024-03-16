@@ -1,12 +1,21 @@
 package com.example.exams.Model.Data.db;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,21 +28,18 @@ public class OpenQuestion {
     @Column(name = "open_question_id", nullable = false)
     private Integer openQuestionId;
 
-    @Column(name = "content", length = 100)
+    @NotBlank(message = "Content cannot be empty")
+    @Size(max = 100, message = "Content must not exceed 100 characters")
+    @Column(name = "content", length = 100, nullable = false)
     private String content;
 
-    @Column(name = "score")
+    @NotNull(message = "Score cannot be empty")
+    @Min(value = 0, message = "Score must be greater than or equal to 0")
+    @Column(name = "score", nullable = false)
     private Integer score;
 
-    /*@ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "subject_subjectid", nullable = true)
-    private Subject questionSubject;*/
-
-   // @OneToMany(mappedBy = "openquestionQuestionid", cascade = CascadeType.ALL, orphanRemoval = true)
-  //  private List<Answeropen> answers = new ArrayList<>();
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = true)
-    @JoinColumn(name = "exam_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id")
     private Exam exam;
 
     public OpenQuestion(Integer openQuestionId, String content, Integer score, Exam exam) {

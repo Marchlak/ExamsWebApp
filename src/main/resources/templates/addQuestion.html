@@ -65,6 +65,9 @@
 <body>
 <div class="question-box">
 	<p id="instruction">Choose which question you want to add!</p>
+	<span class="error" th:if="${fieldErrors != null and fieldErrors.containsKey('content')}" th:text="${fieldErrors.get('content')}"></span>
+	<span class="error" th:if="${fieldErrors != null and fieldErrors.containsKey('score')}" th:text="${fieldErrors.get('score')}"></span>
+
 	<button onclick="showForm('open')" class="option">Open Question</button>
 	<button onclick="showForm('closed')" class="option2">Closed Question</button>
 
@@ -79,6 +82,9 @@
 			<input type="number" id="score" name="score" th:field="*{score}" class="form-control" />
 		</div>
 		<button type="submit">Create</button>
+		<a th:href="@{/exams}">
+			<p><span class="back">Cancel</span></p>
+		</a>
 	</form>
 
 	<form th:action="@{/addQuestion/__${examId}__}" th:method="post" class="closed-form" onsubmit="submitForm()">

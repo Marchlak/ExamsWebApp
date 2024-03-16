@@ -149,3 +149,41 @@ span {
 	font-weight: bold;
 	transition: 0.3s;
 }
+
+.question-box a {
+	margin: 10px;
+	font-size: 0.9em;
+	text-align: center;
+	color: #fd4040;
+	text-decoration: none;
+}
+
+.back {
+	display: inline-block;
+	padding: 10px 15px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.back:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #5f5aea;
+}
+
+.error {
+	display: block;
+	margin: 10px 0;
+	padding: 8px;
+	background-color: #ffdddd;
+	color: #d8000c;
+	border: 1px solid #d8000c;
+	border-radius: 4px;
+	font-size: 14px;
+	text-align: left;
+}
+
