@@ -1,17 +1,21 @@
 package com.example.exams.Services;
 
+import com.example.exams.Model.Data.db.Administrator;
 import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.StudentsEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,5 +86,28 @@ class StudentsServiceTest {
 
         studentsService.editStudent(1, "NewFirstName", "NewLastName", "newlogin", "newpassword", "newemail@example.com");
         verify(studentsRepository, times(1)).save(student);
+    }
+
+    @Test
+    public void testDelete() {
+        List<Student> students = new ArrayList<>();
+        Student student1 = new Student(1, "John", "Doe", "johndoe", "password", "johndoe@example.com");
+        Student student2 = new Student(2, "Jane", "Doe", "janedoe", "password", "janedoe@example.com");
+        students.add(student1);
+        students.add(student2);
+
+        when(studentsRepository.findById(1)).thenReturn(Optional.of(student1));
+        doAnswer(invocation -> {
+            Integer id = invocation.getArgument(0);
+            students.removeIf(student -> student.getStudentId().equals(id));
+            return null;
+        }).when(studentsRepository).deleteById(any(Integer.class));
+
+        studentsService.deleteStudent(1);
+
+        Optional<Student> deletedStudent = students.stream().filter(student -> student.getStudentId().equals(1)).findFirst();
+        assertFalse(deletedStudent.isPresent());
+
+        verify(studentsRepository, times(1)).deleteById(1);
     }
 }
