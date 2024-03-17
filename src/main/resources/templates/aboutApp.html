@@ -74,5 +74,23 @@
 <footer>
     <p>Kontakt: kontakt@aplikacjadoegzaminow.pl</p>
 </footer>
+<!-- przycisk powrot na gore -->
+<button id="back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px;">↑ Powrót na górę</button>
 </body>
+
+<script>
+    window.onscroll = function() {
+        if (window.scrollY > 100) { // Po przewinięciu więcej niż 100px
+            document.getElementById('back-to-top').style.display = 'block';
+        } else {
+            document.getElementById('back-to-top').style.display = 'none';
+        }
+    };
+
+    document.getElementById('back-to-top').onclick = function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+</script>
 </html>
+
+
