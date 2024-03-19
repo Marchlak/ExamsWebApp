@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wskazówka dnia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #tipOfTheDay {
+            text-align: center;
+        }
+
+        #tipOfTheDay h2, #tipOfTheDay h3, #tipOfTheDay p {
+            font-size: 40px;
+        }
+
+        #random-tip-button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #random-tip-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="navigation :: navigation"></div>
+
+<div id="tipOfTheDay">
+    <h2>Wskazówka dnia</h2>
+    <br><br><br>
+    <p id="tip-text">[wskazówka]</p>
+    <button id="random-tip-button">Losuj wskazówkę</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var tips = [
+            "Przerwa na naukę co 45 minut poprawia koncentrację.",
+            "Wizualizacja materiału pomoże Ci lepiej zapamiętać.",
+            "Powtarzaj trudne informacje tuż przed snem, by lepiej je zapamiętać.",
+            "Nauka w grupie może pomóc w zrozumieniu trudnych koncepcji.",
+            "Stosuj technikę Pomodoro, aby zwiększyć efektywność nauki.",
+            "Ucz się aktywnie, zadając pytania i tworząc notatki.",
+            "Utrzymuj czyste i uporządkowane miejsce do nauki, wolne od zakłóceń.",
+            "Stawiaj sobie konkretne, mierzalne, osiągalne, realistyczne i czasowo określone cele (metoda SMART).",
+            "Twórz fiszki do zapamiętywania faktów i pojęć.",
+            "Zaczynaj naukę z wyprzedzeniem, aby uniknąć ogromnego stresu",
+            "Regularne ćwiczenia fizyczne poprawiają zdolność koncentracji."
+        ];
+
+        document.getElementById("random-tip-button").addEventListener("click", function() {
+            var randomIndex = Math.floor(Math.random() * tips.length);
+            document.getElementById("tip-text").textContent = tips[randomIndex];
+        });
+    });
+</script>
+
+</body>
+</html>
