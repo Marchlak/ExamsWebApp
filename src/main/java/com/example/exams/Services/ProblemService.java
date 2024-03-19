@@ -48,10 +48,40 @@ public class ProblemService {
 
         return filteredProblemsByCategory;
     }
+    public static Map<String, List<ShowProblem>> getProblemsBySelectedStatus(Map<String, List<ShowProblem>> problemsByStatus, String selectedStatus) {
+        Map<String, List<ShowProblem>> filteredProblemsByCategory = new HashMap<>();
+        if (selectedStatus == null || selectedStatus.isEmpty() || selectedStatus.equals("")) {
+            return problemsByStatus;
+        }
+
+        for (Map.Entry<String, List<ShowProblem>> entry : problemsByStatus.entrySet()) {
+            List<ShowProblem> problems = entry.getValue();
+            List<ShowProblem> filteredProblems = new ArrayList<>();
+
+            for (ShowProblem problem : problems) {
+                if (problem.getStatus().equals(selectedStatus)) {
+                    filteredProblems.add(problem);
+                }
+            }
+
+            if (!filteredProblems.isEmpty()) {
+                filteredProblemsByCategory.put(entry.getKey(), filteredProblems);
+            }
+        }
+
+        return filteredProblemsByCategory;
+    }
     public List<String> getUniqueCategories() {
         List<Problem> allProblems = GetAll();
         return allProblems.stream()
                 .map(Problem::getCategory)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+    public List<String> getUniqueStatuses() {
+        List<Problem> allProblems = GetAll();
+        return allProblems.stream()
+                .map(Problem::getStatus)
                 .distinct()
                 .collect(Collectors.toList());
     }
