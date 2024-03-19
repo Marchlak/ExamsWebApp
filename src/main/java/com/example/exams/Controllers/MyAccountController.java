@@ -46,6 +46,12 @@ public class MyAccountController {
         this.usersService = usersService;
     }
 
+        @GetMapping("/tipOfTheDay")
+        public String tipOfTheDay(Model model) {
+            // Dodaj logikę do pobierania wskazówki dnia i dodaj ją do modelu
+            return "tipOfTheDay"; // Nazwa widoku, który ma być wyrenderowany
+        }
+
     @GetMapping("/myAccount")
     public ModelAndView myAccount(Model model) {
         ModelAndView modelAndView = new ModelAndView();
