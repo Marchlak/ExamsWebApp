@@ -12,5 +12,6 @@ public class ShowProblem {
     private String photo;
     private String category;
     private String username;
+    private String status;
     private Examiner examiner;
 }

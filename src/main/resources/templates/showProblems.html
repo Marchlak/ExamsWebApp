@@ -13,10 +13,23 @@
 </div>
 <div class="filter-form-container">
     <form action="/showProblems" method="get">
+        <p>Kategorii</p>
         <select name="category">
             <option value="">All</option>
             <th:block th:each="category : ${categories}">
                 <option th:value="${category}" th:text="${category}"></option>
+            </th:block>
+        </select>
+        <input type="submit" value="Filtruj">
+    </form>
+</div>
+<div class="filter-form-container">
+    <form action="/showProblems" method="get">
+        <p>Statusie</p>
+        <select name="status">
+            <option value="">All</option>
+            <th:block th:each="status : ${statuses}">
+                <option th:value="${status}" th:text="${status}"></option>
             </th:block>
         </select>
         <input type="submit" value="Filtruj">

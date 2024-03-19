@@ -152,6 +152,8 @@
             max-width: 600px;
             box-shadow: 0px 2px 5px rgba(23, 26, 31, 0.2), 0px 0px 2px rgba(23, 26, 31, 0.24);
             border-radius: 5px;
+            display: flex;
+            flex-direction: column;
         }
 
         .close {
@@ -166,6 +168,101 @@
             color: #000;
             text-decoration: none;
             cursor: pointer;
+        }
+        .switch {
+            --button-width: 3.5em;
+            --button-height: 2em;
+            --toggle-diameter: 1.5em;
+            --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+            --toggle-shadow-offset: 10px;
+            --toggle-wider: 3em;
+            --color-grey: #cccccc;
+            --color-green: #4296f4;
+        }
+
+        .slider {
+            display: inline-block;
+            width: var(--button-width);
+            height: var(--button-height);
+            background-color: var(--color-grey);
+            border-radius: calc(var(--button-height) / 2);
+            position: relative;
+            transition: 0.3s all ease-in-out;
+        }
+
+        .slider::after {
+            content: "";
+            display: inline-block;
+            width: var(--toggle-diameter);
+            height: var(--toggle-diameter);
+            background-color: #fff;
+            border-radius: calc(var(--toggle-diameter) / 2);
+            position: absolute;
+            top: var(--button-toggle-offset);
+            transform: translateX(var(--button-toggle-offset));
+            box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+            transition: 0.3s all ease-in-out;
+        }
+
+        .switch input[type="checkbox"]:checked + .slider {
+            background-color: var(--color-green);
+        }
+
+        .switch input[type="checkbox"]:checked + .slider::after {
+            transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+            box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+        }
+
+        .switch input[type="checkbox"] {
+            display: none;
+        }
+
+        .switch input[type="checkbox"]:active + .slider::after {
+            width: var(--toggle-wider);
+        }
+
+        .switch input[type="checkbox"]:checked:active + .slider::after {
+            transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+        }
+
+
+        .flex{
+            display: flex;
+            justify-content: space-between;
+            height: 5vh;
+            align-items: center;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 2vh;
+        }
+
+        select{
+            height: 3vh;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+
+        .submit-button:active {
+            background-color: #3e8e41;
+        }
+        .wrapper {
+            font-size: 24px;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .f {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 
@@ -200,8 +297,68 @@
 
     <div id="settings-under-construction" class="construction-modal" style="display: none;">
         <div class="construction-content">
-            <span class="close">&times;</span>
-            <h2>Obecnie pracujemy nad stroną ustawień. Dziękujemy za Twoją cierpliwość!</h2>
+            <div class="f">
+                <div class="wrapper">Ustawienia</div>
+                <div class="close">&times;</div>
+            </div>
+
+
+            <div class="settings-container">
+                <form th:action="@{/exams}" method="post">
+                    <div class="settings">
+                        <div class="flex">
+                            Motyw
+                            <label class="switch">
+                                <input type="checkbox" id="theme-switch">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex">
+                            Tryb niesłyszących
+                            <label class="switch">
+                                <input type="checkbox" id="deaf-mode-switch">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="flex">
+                            Powiększenie tekstu
+                            <input type="range" id="text-size-slider" min="1" max="3" value="2" step="0.1">
+                        </div>
+                        <div class="flex">
+                            Kontrast
+                            <input type="range" id="contrast-slider" min="1" max="3" value="2" step="0.1">
+                        </div>
+                        <div class="flex">
+                            Język interfejsu
+                            <select id="language-select">
+                                <option value="pl">Polski</option>
+                                <option value="en">English</option>
+                                <option value="de">Deutsch</option>
+                            </select>
+                        </div>
+                        <div class="flex">
+                            Czcionka
+                            <select id="font-select">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Verdana">Verdana</option>
+                            </select>
+                        </div>
+                        <div class="flex">
+                            Tryb pojedynczego pytania
+                            <input type="checkbox" id="single-question-mode">
+                        </div>
+                        <div class="flex">
+                            Przejscie do nastepnego pytania - jednokrotnego wyboru
+                            <select id="question-navigation">
+                                <option value="buttons">Przycisk</option>
+                                <option value="answer_selection">Wybranie odpowiedzi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="submit-button">Zapisz ustawienia</button>
+                </form>
+            </div>
         </div>
     </div>
 

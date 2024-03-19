@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StudentsServiceTest {
+class StudentServiceTest {
     @Mock
     private StudentsEntityRepository studentsRepository;
     @InjectMocks

@@ -78,7 +78,7 @@ public class ProblemController {
     }
 
     @GetMapping("/showProblems")
-    public ModelAndView showProblems(@RequestParam(required = false) String category) {
+    public ModelAndView showProblems(@RequestParam(required = false) String category, @RequestParam(required = false) String status) {
         ModelAndView modelAndView = new ModelAndView("showProblems");
 
         List<Problem> problems = problemService.GetAll();
@@ -95,19 +95,33 @@ public class ProblemController {
             showProblem.setUsername(problem.getUsername());
             showProblem.setExaminer(problem.getProblemsExaminer());
             showProblem.setId(problem.getId());
+            showProblem.setStatus(problem.getStatus());
 
             problemsByCategory.computeIfAbsent(problem.getCategory(), k -> new ArrayList<>()).add(showProblem);
         }
+
+
+
+        Map<String, List<ShowProblem>> selectedProblemsByCategory = null;
         if(category != null){
-            Map<String, List<ShowProblem>> selectedProblemsByCategory = problemService.getProblemsBySelectedCategory(problemsByCategory, category);
-            modelAndView.addObject("problemsByCategory", selectedProblemsByCategory);
+            selectedProblemsByCategory = problemService.getProblemsBySelectedCategory(problemsByCategory, category);
 
         }
-        else {
+        if(status != null){
+            selectedProblemsByCategory = problemService.getProblemsBySelectedStatus(problemsByCategory, status);
+        }
+        if (status == null && category == null)  {
             modelAndView.addObject("problemsByCategory", problemsByCategory);
         }
+        else {
+            modelAndView.addObject("problemsByCategory", selectedProblemsByCategory);
+        }
+
         List<String> categories = problemService.getUniqueCategories();
         modelAndView.addObject("categories", categories);
+
+        List<String> statuses = problemService.getUniqueStatuses();
+        modelAndView.addObject("statuses", statuses);
 
         return modelAndView;
     }
