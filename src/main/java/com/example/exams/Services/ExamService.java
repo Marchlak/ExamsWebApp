@@ -222,9 +222,9 @@ public class ExamService {
         } else if ("Przedmiot Z-A".equals(sortType)) {
             exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName(), Comparator.reverseOrder()));
         } else if ("Data rosnąco".equals(sortType)) {
-            exams.sort(Comparator.comparing(Exam::getStartDate));
+            exams.sort(Comparator.comparing(Exam::getStartDate).thenComparing(Exam::getStartTime));
         } else if ("Data malejąco".equals(sortType)) {
-            exams.sort(Comparator.comparing(Exam::getStartDate, Comparator.reverseOrder()));
+            exams.sort(Comparator.comparing(Exam::getStartDate, Comparator.reverseOrder()).thenComparing(Exam::getStartTime));
         }
         return exams;
     }
