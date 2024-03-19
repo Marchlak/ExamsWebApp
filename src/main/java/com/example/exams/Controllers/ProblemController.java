@@ -55,6 +55,20 @@ public class ProblemController {
     public String addProblem(@RequestParam("category") String category,
                              @RequestParam("description") String description,
                              @RequestParam("image") MultipartFile imageFile) throws IOException {
+        if (imageFile.isEmpty()) {
+            // Obsłuż przypadek pustego pliku
+            return "redirect:/logged";
+        }
+        String contentType = imageFile.getContentType();
+        if (!"image/jpeg".equals(contentType) && !"image/png".equals(contentType)) {
+            // Obsłuż przypadek nieakceptowalnego typu pliku
+            return "redirect:/logged";
+        }
+        if (imageFile.getSize() > 5 * 1024 * 1024) {
+            // Przekierowanie na stronę logged, jeśli plik jest większy niż 10 MB
+            return "redirect:/logged";
+        }
+
 
         Problem problem = new Problem();
         problem.setDescription(description);

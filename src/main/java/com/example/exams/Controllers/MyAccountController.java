@@ -13,6 +13,7 @@ import com.example.exams.Services.UsersService;
 import com.example.exams.SpringSecurity.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -55,6 +56,7 @@ public class MyAccountController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         if (session != null) {
+            setUserModel(model, request);
             user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
         assert user != null;
@@ -81,7 +83,7 @@ public class MyAccountController {
 
 
     @PostMapping("/myAccount")
-    public String updateUser(@ModelAttribute("user") User usersave, BindingResult result, Model model) {
+    public String updateUser(@Valid @ModelAttribute("user") User usersave, BindingResult result, Model model) {
 
         CustomUserDetails user = null;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -89,8 +91,12 @@ public class MyAccountController {
         if (session != null) {
             user = (CustomUserDetails) session.getAttribute("UserDetails");
         }
+        if (result.hasErrors()) {
+            setUserModel(model,request);
+            return "myAccount";
+        }
 
-
+        assert user != null;
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority authority : authorities) {
             if ("ROLE_ADMIN".equals(authority.getAuthority())) {
@@ -120,4 +126,33 @@ public class MyAccountController {
 
         return "redirect:/myAccount"; // redirect to a confirmation page or the updated user profile
     }
-}
+
+    private void setUserModel(Model model, HttpServletRequest request) {
+        CustomUserDetails user = null;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
+        }
+        if (user != null) {
+            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+            for (GrantedAuthority authority : authorities) {
+                if ("ROLE_ADMIN".equals(authority.getAuthority())) {
+                    model.addAttribute("permission", authority.getAuthority().substring(5));
+                   // model.addAttribute("user", administartorService.getAdminById(user.getUserId()));
+                    break;
+                }
+                if ("ROLE_EXAMINER".equals(authority.getAuthority())) {
+                    model.addAttribute("permission", authority.getAuthority().substring(5));
+                    //model.addAttribute("user", examinerService.Get(user.getUserId()));
+                    break;
+                }
+                if ("ROLE_STUDENT".equals(authority.getAuthority())) {
+                    model.addAttribute("permission", authority.getAuthority().substring(5));
+                   // model.addAttribute("user", studentsService.getStudentById(user.getUserId()));
+                    break;
+                }
+            }
+        }
+        }
+
+    }

@@ -154,7 +154,6 @@ public class ExamController {
     public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid) {
         exam.setQuestionPoolStrategy(false);
         exam.setQuestionPool(0);
-        //Testy
         egzaminator_egzaminator_id = 1;
 
         Examiner examiner = examinerService.Get(egzaminator_egzaminator_id);
