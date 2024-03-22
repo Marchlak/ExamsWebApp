@@ -212,3 +212,17 @@ a:hover {
 .correct-answer {
 	color: green;
 }
+
+p {
+	position: relative;
+	top: 1vh;
+	left: 50%;
+	color: #171a1f;
+	font-size: 22px;
+	letter-spacing: 0;
+}
+
+ul{
+	list-style-type: none;
+	margin-left: 25px;
+}

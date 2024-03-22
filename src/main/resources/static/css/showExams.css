@@ -214,34 +214,34 @@ select:focus {
 }
 
 
-table {
+.table {
     position: absolute;
     top: 30vh;
     left: 50%;
     transform: translateX(-50%);
 }
 
-table thead {
+.table thead {
     cursor: pointer;
     background: #c9dff0;
 }
 
-table thead tr th {
+.table thead tr th {
     font-weight: bold;
     padding: 12px 10px;
     border: 1px solid #F3F4F6;
     background: #FAFAFB;
 }
 
-table thead tr th span {
+.table thead tr th span {
     text-align: center;
 }
 
-table tbody tr {
+.table tbody tr {
     color: #555;
 }
 
-table tbody tr td {
+.table tbody tr td {
     font-size: 14px;
     text-align: center;
     padding: 6px 10px;
