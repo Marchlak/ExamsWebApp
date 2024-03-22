@@ -222,7 +222,17 @@ p {
 	letter-spacing: 0;
 }
 
-ul{
+ul {
 	list-style-type: none;
 	margin-left: 25px;
+	counter-reset: listCounter;
+}
+
+ul li {
+	counter-increment: listCounter;
+}
+
+ul li::before {
+	content: counter(listCounter, lower-alpha) ". ";
+	margin-right: 10px;
 }
