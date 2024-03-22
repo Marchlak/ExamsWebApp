@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	font-family: "Manrope", Helvetica;
 }
 
 body {
@@ -218,4 +219,11 @@ button:hover::after {
 
 .hidden {
 	display: none;
+}
+
+#subjectidcreate {
+	text-align: center;
+	font-weight: normal;
+	border-radius: 5px;
+	background-color: #efe4ff;
 }
