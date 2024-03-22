@@ -174,8 +174,10 @@ select {
     border: none;
     background: transparent;
     padding: 7px 8px;
-    font-size: 14px;
+    font-size: 16px;
     appearance: none;
+    font-weight: bold;
+    height: 5vh !important;
 }
 
 select:focus {
@@ -317,7 +319,7 @@ button:hover {
 .question-inputs {
     overflow-y: auto;
     overflow-x: clip;
-    height: 200px;
+    height: 150px;
 }
 
 .sortType-filter-form {
