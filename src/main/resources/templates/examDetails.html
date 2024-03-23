@@ -36,8 +36,8 @@
 						</td>
 					</tr>
 					<tr th:each="closedQuestion : ${listClosedQuestions}">
-						<td>
-							<h4 th:text="${'Title of question ' + closedQuestion.getId()}"></h4>
+						<td th:with="calculatedId=${closedQuestion.getId()} + ${countOpenQuestions}">
+							<h4 th:text="${'Title of question ' + calculatedId}"></h4>
 							<p th:text="${closedQuestion.content}"></p>
 
 							<ul th:if="${closedQuestionAnswersMap[closedQuestion.id] != null}">

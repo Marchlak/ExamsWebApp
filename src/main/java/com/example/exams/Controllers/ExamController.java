@@ -333,6 +333,7 @@ public class ExamController {
         }
         modelAndView.addObject("exam", examService.GetExam(Integer.parseInt(examId)));
         modelAndView.addObject("listOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)));
+        modelAndView.addObject("countOpenQuestions", openQuestionService.getAllByExamId(Integer.parseInt(examId)).size());
         modelAndView.addObject("listClosedQuestions", closedquestions);
         modelAndView.addObject("closedQuestionAnswersMap", closedQuestionAnswersMap);
 
