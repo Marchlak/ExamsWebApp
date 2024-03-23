@@ -246,4 +246,12 @@ public class ExamService {
         examRepository.save(exam);
         return exam.getQuestionPool();
     }
+
+    public void changeExamVisibility(int Id){
+        Exam exam = GetExam(Id);
+        if(exam != null){
+            exam.setVisibility(!exam.getVisibility());
+            examRepository.save(exam);
+        }
+    }
 }

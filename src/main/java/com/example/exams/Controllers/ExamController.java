@@ -717,12 +717,7 @@ public class ExamController {
 
     @GetMapping("/toggleVisibility/{examId}")
     public String toggleExamVisibility(@PathVariable Integer examId) {
-        Exam exam = examService.GetExam(examId);
-        if (exam != null) {
-            boolean currentVisibility = exam.getVisibility();
-            exam.setVisibility(!currentVisibility);
-            examService.updateExam(exam);
-        }
+        examService.changeExamVisibility(examId);
         return "redirect:/exams";
     }
 }
