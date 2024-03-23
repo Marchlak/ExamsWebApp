@@ -165,7 +165,9 @@ public class ExamService {
             } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_STUDENT"))) {
                 Student student = studentsRepository.findById(loggedUser.getUserId()).orElse(null);
                 if (student != null) {
-                    return student.getExams();
+                    return student.getExams().stream()
+                            .filter(Exam::getVisibility)
+                            .collect(Collectors.toList());
                 }
             }
         }

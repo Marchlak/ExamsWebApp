@@ -39,6 +39,9 @@ public class Exam {
     @Column(name = "end_time")
     private LocalTime endTime;
 
+    @Column(name="visibility")
+    private Boolean visibility;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exams_subject_id", nullable = false)
     private Subject examsSubject;
@@ -67,6 +70,7 @@ public class Exam {
         this.startTime = starttime;
         this.endDate = enddate;
         this.endTime = endtime;
+        this.visibility = false;
         this.examsSubject = subject;
         this.students = students;
     }

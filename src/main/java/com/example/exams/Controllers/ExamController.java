@@ -709,7 +709,20 @@ public class ExamController {
             return "redirect:/addQuestion/" + examId;
         } else if (action.startsWith("addStudents:")) {
             return "redirect:/addStudents/" + examId;
+        } else if (action.startsWith("toggleVisibility:")) {
+            return "redirect:/toggleVisibility/" + examId;
         }
         return "error";
+    }
+
+    @GetMapping("/toggleVisibility/{examId}")
+    public String toggleExamVisibility(@PathVariable Integer examId) {
+        Exam exam = examService.GetExam(examId);
+        if (exam != null) {
+            boolean currentVisibility = exam.getVisibility();
+            exam.setVisibility(!currentVisibility);
+            examService.updateExam(exam);
+        }
+        return "redirect:/exams";
     }
 }
