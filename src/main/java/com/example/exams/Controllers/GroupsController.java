@@ -75,6 +75,17 @@ public class GroupsController {
         return modelAndView;
     }
 
+    @GetMapping("/addStudentToGroup")
+    public ModelAndView addStudent(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addStudentToGroup");
+
+        List<Student> students = studentsService.getAllStudents();
+        modelAndView.addObject("students", students);
+
+        return modelAndView;
+    }
+
     @PostMapping("/addStudent")
     public String addStudent(@RequestParam("groupId") String groupId, @RequestParam("studentId") Integer studentId) {
         try{
