@@ -248,5 +248,30 @@
         document.getElementById('sortType').value = sortType;
     }
 </script>
+
+<!-- przycisk "Powrot na gore" -->
+<!--<button id="back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px;">↑ Powrót na górę</button>-->
+<button id="back-to-top">↑ Powrót na górę</button>
+
+</body>
+
+<script>
+    window.onscroll = function() {
+        if (window.scrollY > 10) {
+            document.getElementById('back-to-top').style.display = 'block';
+        } else {
+            document.getElementById('back-to-top').style.display = 'none';
+        }
+    };
+
+    document.getElementById('back-to-top').onclick = function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+</script>
+</html>
+
+
+
+
 </body>
 </html>

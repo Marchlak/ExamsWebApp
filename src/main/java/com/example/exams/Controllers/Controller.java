@@ -11,6 +11,7 @@ import com.example.exams.Model.Data.ProperDataModels.Login;
 import com.example.exams.Model.Data.ProperDataModels.User;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.ui.Model;
@@ -97,13 +98,12 @@ public class Controller {
 
 
     @GetMapping("/login")
-    public ModelAndView login(Model model) {
+    public ModelAndView login(Model model, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         model.addAttribute("login", new Login());
         return modelAndView;
     }
-
     @GetMapping("/logged")
     public ModelAndView logged(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
