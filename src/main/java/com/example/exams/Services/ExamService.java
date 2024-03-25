@@ -254,4 +254,19 @@ public class ExamService {
             examRepository.save(exam);
         }
     }
+    public int getQuestionsQuantity(int id){
+        try {
+            Exam exam = GetExam(id);
+            if (exam != null) {
+                int count = openQuestionService.getAllByExamId(id).size();
+                count += closedQuestionService.getAllByExamId(id).size();
+                return count;
+            } else {
+                throw new Exception("No exam with that id");
+            }
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return -1;
+        }
+    }
 }

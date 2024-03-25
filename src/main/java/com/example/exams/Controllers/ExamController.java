@@ -163,6 +163,8 @@ public class ExamController {
         exam.setExamsSubject(subject);
 
         Exam addedExam = examService.AddExam(exam);
+
+
         return "redirect:/exams";
     }
 
@@ -196,6 +198,9 @@ public class ExamController {
         modelAndView.addObject("subjects", subjects);
         modelAndView.addObject("exam", exam);
         model.addAttribute("examId", examId);
+        model.addAttribute("questionQuantity", examService.getQuestionsQuantity(examId));
+        model.addAttribute("questionPool", exam.getQuestionPool());
+        model.addAttribute("questionPoolStrategy", exam.getQuestionPoolStrategy() ? 1 : 0);
         return modelAndView;
     }
 
