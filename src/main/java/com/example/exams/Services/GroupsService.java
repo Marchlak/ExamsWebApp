@@ -35,6 +35,25 @@ public class GroupsService {
             }
         }
     }
+    public void addStudentsToGroup(Integer groupId, List<Integer> studentIds) {
+        Group group = groupsRepository.findGroupById(groupId);
+
+        if (group != null) {
+            List<Student> students = studentsService.getStudentsByIds(studentIds);
+
+            if (!students.isEmpty()) {
+                for (Student student : students) {
+                    if (!group.getStudents().contains(student)) {
+                        group.getStudents().add(student);
+                    }
+                }
+
+                groupsRepository.save(group);
+            }
+        }
+    }
+
+
     public void addStudent(Integer groupId, Integer studentId) {
         Group group = groupsRepository.findGroupById(groupId);
         Student student = studentsService.getStudentById(studentId);
