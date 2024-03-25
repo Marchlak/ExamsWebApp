@@ -19,22 +19,14 @@ form {
     flex-direction: column;
 }
 
-.selectCategory {
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
 .description textarea {
-    width: 90%;
+    width: calc(100% - 20px); /* Adjust width to account for padding */
     height: 100px;
     padding: 10px;
     margin-bottom: 20px;
     resize: vertical;
 }
 
-select{
-    width: 90%;
-}
 
 .image input {
     margin-bottom: 20px;
@@ -51,9 +43,20 @@ button {
 }
 
 button:hover {
-    background-color: #6D31ED;
+    background-color: #5a27cb; /* Slightly darker shade for hover effect */
 }
 
 .hidden {
     display: none;
+}
+
+.selectCategory {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
 }
