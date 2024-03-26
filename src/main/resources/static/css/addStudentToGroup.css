@@ -38,6 +38,10 @@ input, select {
     box-sizing: border-box;
 }
 
+#studentsSelect{
+    height: 150px;
+}
+
 
 #studentsList{
     height: 150px;
