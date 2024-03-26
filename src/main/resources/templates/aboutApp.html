@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
     <title>O Aplikacji | Aplikacja do Egzaminów</title>
     <meta name="description"
           content="Aplikacja do Egzaminów - nowoczesne narzędzie edukacyjne do przeprowadzania i rozwiązywania egzaminów online.">
-    <link rel="stylesheet" href="../static/css/aboutApp.css"/>
-    <link rel="stylesheet" th:href="@{/css/aboutApp.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/aboutApp.css">
+    <link rel="stylesheet" th:href="@{/css/aboutApp.css}" />
 </head>
 <body>
 <header>
@@ -16,11 +16,11 @@
 </header>
 <main>
     <section class="about-app">
-        <h2>Co to jest Aplikacja do Egzaminów?</h2>
+        <br><br><br>
+        <h2>Czym jest Aplikacja do Egzaminów?</h2>
         <div class="about-content">
             <p>Aplikacja do Egzaminów to nowoczesne narzędzie edukacyjne przeznaczone do przeprowadzania i rozwiązywania
-                egzaminów online. Nasza aplikacja umożliwia tworzenie niestandardowych egzaminów, automatyczne ocenianie
-                odpowiedzi, analizę wyników i oferuje wsparcie dla wielu typów pytań, co czyni ją idealnym rozwiązaniem
+                egzaminów online. Nasza aplikacja umożliwia tworzenie niestandardowych egzaminów, automatyczne ocenianie odpowiedzi, analizę wyników i oferuje wsparcie dla wielu typów pytań, co czyni ją idealnym rozwiązaniem
                 dla edukatorów i uczniów.</p>
         </div>
     </section>
@@ -91,6 +91,7 @@
         window.scrollTo({top: 0, behavior: 'smooth'});
     };
 </script>
+</body>
 </html>
 
 
