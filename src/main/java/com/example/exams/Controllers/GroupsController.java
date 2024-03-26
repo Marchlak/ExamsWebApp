@@ -75,10 +75,11 @@ public class GroupsController {
         return modelAndView;
     }
 
-    @GetMapping("/addStudentToGroup")
-    public ModelAndView addStudent(){
+    @GetMapping("/addStudentToGroup/{groupId}")
+    public ModelAndView addStudent(@PathVariable Integer groupId){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addStudentToGroup");
+        modelAndView.addObject("groupId", groupId);
 
         List<Student> students = studentsService.getAllStudents();
         modelAndView.addObject("students", students);
@@ -86,8 +87,17 @@ public class GroupsController {
         return modelAndView;
     }
 
+    @GetMapping("/addStudentsToGroup")
+    public String addStudentsToGroup(@RequestParam("groupId") int groupId, @RequestParam("studentsList") List<Integer> studentIds) {
+        groupsService.addStudentsToGroup(groupId,studentIds);
+        return "redirect:/groups";
+    }
+
+
     @PostMapping("/addStudent")
     public String addStudent(@RequestParam("groupId") String groupId, @RequestParam("studentId") Integer studentId) {
+        System.out.println(groupId);
+        System.out.println(studentId);
         try{
             int parsedGroupId = Integer.parseInt(groupId);
             this.groupsService.addStudent(parsedGroupId, studentId);
