@@ -88,7 +88,7 @@ public class GroupsController {
     }
 
     @GetMapping("/addStudentsToGroup")
-    public String addStudentsToGroup(@RequestParam("groupId") int groupId, @RequestParam("studentsList") List<Integer> studentIds) {
+    public String addStudentsToGroup(@RequestParam("groupId") int groupId, @RequestParam("StudentsToAdd") List<Integer> studentIds) {
         groupsService.addStudentsToGroup(groupId,studentIds);
         return "redirect:/groups";
     }

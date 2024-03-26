@@ -27,12 +27,12 @@
         <form id="classGroupForm" action="/addStudentsToGroup" method="get">
 
             <label for="studentsList">Add students:</label>
-            <select id="studentsSelect" multiple="multiple">
+            <select id="studentsList" multiple="multiple">
                 <option th:each="student : ${students}" th:value="${student.studentId}" th:text="${student.firstname + ' ' + student.lastname}"></option>
             </select>
 
             <input type="hidden" id="groupId" name="groupId" th:value="${groupId}">
-            <input type="hidden" id="studentsList" name="studentsList" th:value="${selectedStudents}">
+            <input type="hidden" id="StudentsToAdd" name="StudentsToAdd" th:value="${selectedStudents}">
 
             <p>Selected students</p>
             <div id="selectedStudents"></div>
@@ -48,34 +48,39 @@
     let studentNames = {};
 
     function updateGroupStudents() {
-        const hiddenInput = document.getElementById('studentsList');
-        hiddenInput.value = selectedStudents.join(',');
+        const hiddenInput = document.getElementById('StudentsToAdd');
+        if (hiddenInput) {
+            hiddenInput.value = selectedStudents.join(',');
+        }
     }
 
     function addStudent() {
-        const select = document.getElementById('studentsSelect');
-        const selectedOption = select.options[select.selectedIndex];
+        const select = document.getElementById('studentsList');
+        const selectedStudent = select.options[select.selectedIndex];
 
-        if (selectedOption && !selectedStudents.includes(selectedOption.value)) {
-            selectedStudents.push(selectedOption.value);
+        if (selectedStudent && !selectedStudents.includes(selectedStudent.value)) {
+            selectedStudents.push(selectedStudent.value);
+            studentNames[selectedStudent.value] = selectedStudent.text;
 
             const selectedStudentsDiv = document.getElementById('selectedStudents');
             const studentContainer = document.createElement('div');
             studentContainer.className = 'student-container';
 
             const newStudentDiv = document.createElement('div');
-            newStudentDiv.textContent = selectedOption.text;
+            newStudentDiv.textContent = selectedStudent.text;
 
             const removeButton = document.createElement('button');
             removeButton.textContent = 'Remove';
             removeButton.className = 'remove-button';
             removeButton.onclick = function () {
-                removeStudent(studentContainer, selectedOption.value);
+                removeStudent(studentContainer, selectedStudent.value);
             };
 
             studentContainer.appendChild(newStudentDiv);
             studentContainer.appendChild(removeButton);
             selectedStudentsDiv.appendChild(studentContainer);
+
+            select.remove(select.selectedIndex);
 
             updateGroupStudents();
         }
@@ -85,17 +90,17 @@
         const selectedStudentsDiv = document.getElementById('selectedStudents');
         selectedStudentsDiv.removeChild(studentContainer);
 
-        const index = selectedStudents.indexOf(studentValue);
-        if (index !== -1) {
-            selectedStudents.splice(index, 1);
-            updateGroupStudents();
-        }
-
-        const select = document.getElementById('studentsSelect');
+        const select = document.getElementById('studentsList');
         const newOption = document.createElement('option');
         newOption.value = studentValue;
         newOption.text = studentNames[studentValue];
         select.add(newOption);
+
+        selectedStudents = selectedStudents.filter(value => value !== studentValue);
+
+        delete studentNames[studentValue];
+
+        updateGroupStudents();
     }
 </script>
 
