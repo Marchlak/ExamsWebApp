@@ -305,7 +305,7 @@
 
 
             <div class="settings-container">
-                <form th:action="@{/exams}" method="post">
+                <form th:action="@{/logged}" method="get" id="settings-form">
                     <div class="settings">
                         <div class="flex">
                             Motyw
@@ -357,7 +357,7 @@
                             </select>
                         </div>
                     </div>
-                    <button class="submit-button">Zapisz ustawienia</button>
+                    <button type="submit" class="submit-button">Zapisz ustawienia</button>
                 </form>
             </div>
         </div>
@@ -370,6 +370,7 @@
             const settingsLink = document.querySelector('a[href="/settings"]');
             const constructionModal = document.getElementById('settings-under-construction');
             const closeModal = document.querySelector('.close');
+            const settingsForm = document.getElementById('settings-form');
 
             userIcon.addEventListener('click', function() {
                 dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
@@ -378,6 +379,12 @@
             settingsLink.addEventListener('click', function(event) {
                 event.preventDefault();
                 constructionModal.style.display = "flex";
+            });
+
+            settingsForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                constructionModal.style.display = "none";
+                this.submit();
             });
 
             closeModal.addEventListener('click', function() {
