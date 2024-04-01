@@ -1,8 +1,6 @@
 package com.example.exams.Services;
 
-import com.example.exams.Model.Data.db.Exam;
-import com.example.exams.Model.Data.db.Logstudentexam;
-import com.example.exams.Model.Data.db.Student;
+import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.LogstudentexamRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,15 @@ import java.util.List;
 @Service
 public class LogstudentexamService {
     private final LogstudentexamRepository logstudentexamRepository;
+    private final ClosedQuestionService closedQuestionService;
+    private final OpenQuestionService openQuestionService;
+    private final ExamService examService;
 
-    public LogstudentexamService(LogstudentexamRepository logstudentexamRepository) {
+    public LogstudentexamService(LogstudentexamRepository logstudentexamRepository, ClosedQuestionService closedQuestionService, OpenQuestionService openQuestionService, ExamService examService) {
         this.logstudentexamRepository = logstudentexamRepository;
+        this.closedQuestionService = closedQuestionService;
+        this.openQuestionService = openQuestionService;
+        this.examService = examService;
     }
 
     public List<Logstudentexam> getStudentExamHistory(Integer id) {
@@ -77,6 +81,71 @@ public class LogstudentexamService {
 
     public boolean existsByExamIdAndStudentId(Integer examId, Integer studentId) {
         return logstudentexamRepository.existsByExamExamid_IdAndStudentStudent_Id(examId, studentId);
+    }
+
+    public int getExamMaximumScore(int exam){
+        List<Closedquestion> closedQuestions = closedQuestionService.getAllByExamId(exam);
+        List<OpenQuestion> openQuestions = openQuestionService.getAllByExamId(exam);
+        int maximumScore = 0;
+        for(int i = 0; i < closedQuestions.size(); ++i){
+            maximumScore += closedQuestions.get(i).getScore();
+        }
+        for(int i = 0; i < openQuestions.size(); ++i){
+            maximumScore += openQuestions.get(i).getScore();
+        }
+        return maximumScore;
+    }
+
+    private int getXGrades(int examId, float multiplier){
+        int maximumScore = getExamMaximumScore(examId);
+        Exam exam = examService.GetExam(examId);
+        List<Logstudentexam> logstudentexams = logstudentexamRepository.findLogstudentexamsByExamExamid(exam);
+        int xGrades = 0;
+        float lowerLimit = multiplier;
+        float upperLimit = multiplier + 0.1f;
+        //System.out.println("-----------------");
+        //System.out.println("Lower limit: " + lowerLimit + " Upper limit: " + upperLimit + " Maximum Score: " + maximumScore);
+        float receivedScore;
+        for (Logstudentexam logstudentexam : logstudentexams) {
+            receivedScore = (float) logstudentexam.getScoreresult() / maximumScore;
+            //System.out.println("Received score: " + receivedScore);
+            if (receivedScore >= lowerLimit && receivedScore < upperLimit) {
+                xGrades++;
+            }
+        }
+        //System.out.println("-----------------");
+        return xGrades;
+    }
+
+    public int getAGrades(int examId){
+        return getXGrades(examId, 0.9f);
+    }
+    public int getBPlusGrades(int examId){
+        return getXGrades(examId, 0.8f);
+    }
+    public int getBGrades(int examId){
+        return getXGrades(examId, 0.7f);
+    }
+    public int getCPlusGrades(int examId){
+        return getXGrades(examId, 0.6f);
+    }
+    public int getCGrades(int examId){
+        return getXGrades(examId, 0.5f);
+    }
+    public int getDGrades(int examId){
+        int maximumScore = getExamMaximumScore(examId);
+        Exam exam = examService.GetExam(examId);
+        List<Logstudentexam> logstudentexams = logstudentexamRepository.findLogstudentexamsByExamExamid(exam);
+        int DGrades = 0;
+        float upperLimit = 0.5f;
+        float receivedScore;
+        for (Logstudentexam logstudentexam : logstudentexams) {
+            receivedScore = (float) logstudentexam.getScoreresult() / maximumScore;
+            if (receivedScore < upperLimit) {
+                DGrades++;
+            }
+        }
+        return DGrades;
     }
 }
 

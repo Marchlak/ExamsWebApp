@@ -3,6 +3,7 @@ package com.example.exams.utils;
 import com.example.exams.Model.Data.db.*;
 import com.example.exams.Repositories.Db.*;
 import com.example.exams.Services.GroupsService;
+import com.example.exams.Services.LogstudentexamService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,10 @@ public class DatabaseSeeder implements CommandLineRunner {
     private final ProblemRepository problemRepository;
     private final GroupEntityRepository groupRepository;
     private final ServicestatisticRepository servicestatisticRepository;
+    private final LogstudentexamRepository logstudentexamRepository;
+    private final LogstudentexamService logstudentexamService;
 
-    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository, GroupEntityRepository groupRepository, ServicestatisticRepository servicestatisticRepository) {
+    public DatabaseSeeder(AdministratorsEntityRepository administratorRepository, ExamRepository examRepository, SubjectRepository subjectRepository, ExaminerRepository examinersRepository, OpenQuestionRepository openQuestionRepository, ClosedQuestionRepository closedQuestionRepository, AnswerClosedRepository answerClosedRepository, StudentsEntityRepository studentsEntityRepository, ProblemRepository problemRepository, GroupEntityRepository groupRepository, ServicestatisticRepository servicestatisticRepository, LogstudentexamRepository logstudentexamRepository, LogstudentexamService logstudentexamService) {
         this.administratorRepository = administratorRepository;
         this.examinerRepository = examinersRepository;
         this.examRepository = examRepository;
@@ -45,6 +48,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.problemRepository = problemRepository;
         this.groupRepository = groupRepository;
         this.servicestatisticRepository = servicestatisticRepository;
+        this.logstudentexamRepository = logstudentexamRepository;
+        this.logstudentexamService = logstudentexamService;
     }
 
     @Override
@@ -120,9 +125,17 @@ public class DatabaseSeeder implements CommandLineRunner {
         openQuestionRepository.save(new OpenQuestion(2, "Ile to 30*3", 10, examRepository.getReferenceById(1)));
         openQuestionRepository.save(new OpenQuestion(3, "Ile to 19+3?", 10, examRepository.getReferenceById(1)));
 
+        openQuestionRepository.save(new OpenQuestion(4, "Ile to 1+1?", 5, examRepository.getReferenceById(2)));
+        openQuestionRepository.save(new OpenQuestion(5, "Ile to 2*2", 5, examRepository.getReferenceById(2)));
+        openQuestionRepository.save(new OpenQuestion(6, "Ile to 3+3?", 5, examRepository.getReferenceById(2)));
+
         closedQuestionRepository.save(new Closedquestion(1, "ile to jest 10*10", 1, examRepository.getReferenceById(1)));
         closedQuestionRepository.save(new Closedquestion(2, "ile to jest 11*11", 1, examRepository.getReferenceById(1)));
         closedQuestionRepository.save(new Closedquestion(3, "ile to jest 12*12", 1, examRepository.getReferenceById(1)));
+
+        closedQuestionRepository.save(new Closedquestion(4, "ile to 4*4", 2, examRepository.getReferenceById(2)));
+        closedQuestionRepository.save(new Closedquestion(5, "ile to 5*5", 2, examRepository.getReferenceById(2)));
+        closedQuestionRepository.save(new Closedquestion(6, "ile to 6*6", 2, examRepository.getReferenceById(2)));
 
         answerClosedRepository.save(new Answerclosed(1, "to jest moze 101?", false, closedQuestionRepository.findById(1).get()));
         answerClosedRepository.save(new Answerclosed(2, "to jest moze 102?", true, closedQuestionRepository.findById(1).get()));
@@ -161,6 +174,20 @@ public class DatabaseSeeder implements CommandLineRunner {
         problemRepository.save(new Problem(18, convertImage("/static/images/editExam.jpg"), "Optymalizacja formatu egzaminów dla różnych stylów uczenia się", student5, examiner1, "Psychologia", examiner1.getFirstname(),"Nowy"));
         problemRepository.save(new Problem(19, convertImage("/static/images/createExam.jpg"), "Projektowanie egzaminów praktycznych w edukacji medycznej", student1, examiner2, "Medycyna", examiner2.getFirstname(),"Nowy"));
         problemRepository.save(new Problem(20, convertImage("/static/images/questionsView.jpg"), "Ewaluacja skuteczności egzaminów multimedialnych w nauczaniu języków", student2, examiner1, "Edukacja", examiner1.getFirstname(),"Nowy"));
+
+        Exam exam1 = examRepository.findById(1).orElse(null);
+        Exam exam2 = examRepository.findById(2).orElse(null);
+        int maximumScoreExam1 = logstudentexamService.getExamMaximumScore(1);
+        int maximumScoreExam2 = logstudentexamService.getExamMaximumScore(2);
+        int scoreResult1 = (int)(Math.random() * maximumScoreExam1 + 1);
+        int scoreResult2 = (int)(Math.random() * maximumScoreExam1 + 1);
+        int scoreResult3 = (int)(Math.random() * maximumScoreExam2 + 1);
+        int scoreResult4 = (int)(Math.random() * maximumScoreExam2 + 1);
+
+        logstudentexamRepository.save(new Logstudentexam(1, "Description 1", LocalDate.now(), LocalTime.now(), scoreResult1, exam1,  student1));
+        logstudentexamRepository.save(new Logstudentexam(2, "Description 2", LocalDate.now(), LocalTime.now(), scoreResult2, exam1,  student2));
+        logstudentexamRepository.save(new Logstudentexam(3, "Description 3", LocalDate.now(), LocalTime.now(), scoreResult3, exam2,  student3));
+        logstudentexamRepository.save(new Logstudentexam(4, "Description 4", LocalDate.now(), LocalTime.now(), scoreResult4, exam2,  student4));
     }
 
     public static byte[] convertImage(String resourcePath) throws Exception {
