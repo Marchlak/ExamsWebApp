@@ -13,31 +13,29 @@
     <h2>Filtrowanie po:</h2>
 </div>
 <div class="filter-form-container">
-    <form action="/showProblems" method="get">
-        <p>Kategorii</p>
-        <select name="category">
+    <form class="form" action="/showProblems" method="get">
+        <p class="title">Kategorii</p>
+        <select class="category" name="category">
             <option value="">All</option>
             <th:block th:each="category : ${categories}">
                 <option th:value="${category}" th:text="${category}"></option>
             </th:block>
         </select>
-        <input type="submit" value="Filtruj">
+        <input type="submit" value="Filtruj" class="filter-button">
     </form>
-</div>
-<div class="filter-form-container">
-    <form action="/showProblems" method="get">
-        <p>Statusie</p>
-        <select name="status">
+    <form class="form" action="/showProblems" method="get">
+        <p class="title">Statusie</p>
+        <select class="status" name="status">
             <option value="">All</option>
             <th:block th:each="status : ${statuses}">
                 <option th:value="${status}" th:text="${status}"></option>
             </th:block>
         </select>
-        <input type="submit" value="Filtruj">
+        <input type="submit" value="Filtruj" class="filter-button">
     </form>
 </div>
 <div class="container">
-    <div th:each="entry : ${problemsByCategory}" class="category">
+    <div th:each="entry : ${problemsByCategory}" class="box category">
         <h2 th:text="${entry.key}"></h2>
         <div class="problems">
             <div th:each="problem : ${entry.value}" class="problem">
@@ -52,6 +50,20 @@
         </div>
     </div>
 </div>
-
+<button id="back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px;">↑ Powrót na górę</button>
 </body>
+
+<script>
+    window.onscroll = function() {
+        if (window.scrollY > 100) {
+            document.getElementById('back-to-top').style.display = 'block';
+        } else {
+            document.getElementById('back-to-top').style.display = 'none';
+        }
+    };
+
+    document.getElementById('back-to-top').onclick = function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+</script>
 </html>
