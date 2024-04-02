@@ -102,18 +102,19 @@ public class LogstudentexamService {
         List<Logstudentexam> logstudentexams = logstudentexamRepository.findLogstudentexamsByExamExamid(exam);
         int xGrades = 0;
         float lowerLimit = multiplier;
-        float upperLimit = multiplier + 0.1f;
-        //System.out.println("-----------------");
-        //System.out.println("Lower limit: " + lowerLimit + " Upper limit: " + upperLimit + " Maximum Score: " + maximumScore);
+        float upperLimit = Math.round((multiplier + 0.1f) * 10) / 10.0f;
+        System.out.println("-------------------");
+        System.out.println("Maximum score: " + maximumScore);
+        System.out.println("Lower limit: " + lowerLimit + " Upper limit: " + upperLimit);
         float receivedScore;
         for (Logstudentexam logstudentexam : logstudentexams) {
             receivedScore = (float) logstudentexam.getScoreresult() / maximumScore;
-            //System.out.println("Received score: " + receivedScore);
+            System.out.println("Received score: " + receivedScore);
+            System.out.println("-------------------");
             if (receivedScore >= lowerLimit && receivedScore < upperLimit) {
                 xGrades++;
             }
         }
-        //System.out.println("-----------------");
         return xGrades;
     }
 

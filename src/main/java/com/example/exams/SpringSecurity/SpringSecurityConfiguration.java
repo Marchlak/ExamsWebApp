@@ -67,6 +67,7 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/administrator/activate/{id}")).hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/administrator/deactivate/{id}")).hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/delete/**")).hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/exam/**")).hasAnyRole("ADMIN", "EXAMINER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
