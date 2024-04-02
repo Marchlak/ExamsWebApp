@@ -2,11 +2,12 @@
     margin: 0;
     padding: 0;
     font-family: "Manrope", Helvetica;
-     /*border: 1px solid red;*/
+    /*border: 1px solid red;*/
 }
 
 body {
     background-color: #f8fafc;
+    padding-top: 5vh;
 }
 
 .container-nav {
@@ -17,7 +18,7 @@ body {
 }
 
 .logo-container {
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +26,20 @@ body {
     height: 9vh;
     top: 0;
     left: 0;
+    z-index: 1001;
+    font-size: 22px;
+}
+
+.icon-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 9vh;
+    top: 0;
+    right: 0;
+    color: black;
 }
 
 .logo {
@@ -33,18 +48,48 @@ body {
     font-size: 22px;
 }
 
-#nav{
+#nav {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     background-color: #f8f9fa;
     box-shadow: 0px 2px 5px 0px rgba(23, 26, 31, 0.09), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
-    position: absolute;
+    position: fixed;
     margin: auto;
-    height: 9vh;
+    height: 11vh;
     top: 0;
     left: 0;
+    z-index: 1000;
+}
+
+.time-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#progressBarContainer {
+    width: 100%;
+    background-color: #eee;
+    height: 20px;
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background-color: green;
+}
+
+#duration {
+    position: fixed;
+    z-index: 1001;
+    padding-top: 35px;
+}
+
+#nav ul {
+    padding: 15px;
 }
 
 #nav ul li {
@@ -62,18 +107,6 @@ body {
     font-size: 12px;
 }
 
-.icon-container {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 170px;
-    height: 9vh;
-    font-size: 22px;
-    top: 0;
-    right: 0;
-    color: black;
-}
 
 .fa-regular.fa-bell {
     margin-right: 20px;
@@ -109,7 +142,7 @@ form li {
     padding: 0;
 }
 
-.points{
+.points {
     border-radius: 8px;
     background: #e6f5ff;
     padding-left: 8px;
@@ -136,7 +169,7 @@ form li p {
     padding: 1vh 0;
 }
 
-.your-answer{
+.your-answer {
     width: 95%;
     color: #2c2c2e;
     padding: 1.5vh 0;
@@ -153,21 +186,21 @@ textarea {
     padding: 1% 1%;
 }
 
-textarea:focus{
+textarea:focus {
     border: 1px solid #6D31ED;
 }
 
-.checkbox-list{
+.checkbox-list {
     margin: 0 auto;
     width: 95%;
 }
 
-.button-container{
+.button-container {
     margin: 0 auto;
     width: 90%;
 }
 
-button{
+button {
     border-radius: 32px;
     background: #6D31ED;
     color: #fff;
@@ -177,7 +210,7 @@ button{
     margin-bottom: 4vh;
 }
 
-button:hover{
+button:hover {
     cursor: pointer;
     background: #5b1fda;
 }

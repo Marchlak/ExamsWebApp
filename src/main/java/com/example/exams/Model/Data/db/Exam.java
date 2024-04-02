@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class Exam {
 
     @Column(name = "end_time")
     private LocalTime endTime;
+
+    @Column(name = "duration")
+    private Long duration;
 
     @Column(name="visibility")
     private Boolean visibility;
@@ -73,5 +78,6 @@ public class Exam {
         this.visibility = false;
         this.examsSubject = subject;
         this.students = students;
+        this.duration = Duration.between(LocalDateTime.of(startDate, startTime), LocalDateTime.of(endDate, endTime)).toMinutes();
     }
 }

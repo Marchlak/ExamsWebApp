@@ -16,17 +16,20 @@
 <body>
 
 <div class="container-nav">
-    <div id="nav">
-        <ul>
-            <li class="menu"><p th:text="'Description: ' + ${exam.getDescription()}">description</p></li>
-            <li class="menu"><p th:text="'Exam starts at: ' + ${exam.getStartTime()}">start date</p></li>
-            <li class="menu"><p th:text="'Exam ends at: ' + ${exam.getEndTime()}">end date</p></li>
-            <div class="icon-container">
-                <i class="fa-regular fa-bell"></i>
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-        </ul>
+    <div class="time-box">
+        <div id="nav">
+            <ul>
+                <li class="menu"><p th:text="'Description: ' + ${exam.getDescription()}">description</p></li>
+                <li class="menu"><p th:text="'Exam starts at: ' + ${exam.getStartDate()} + ' ' + ${exam.getStartTime()}">start date</p></li>
+                <li class="menu"><p>Exam ends at: <span id="endDate" th:text="${exam.getEndDate()}"></span> <span id="endTime" th:text="${exam.getEndTime()}"></span></p></li>
+                <div class="icon-container">
+                    <i class="fa-regular fa-bell"></i>
+                    <i class="fa-regular fa-user"></i>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </ul>
+        </div>
+        <p id="duration" th:text="${exam.getDuration()}"></p>
     </div>
     <div class="logo-container">
         <div class="logo">Examify365</div>
@@ -62,7 +65,7 @@
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
 
     <div class="button-container">
-        <button type="submit">Save Exam</button>
+        <button type="submit" id="submitExam">Save Exam</button>
     </div>
 </form>
 
@@ -78,4 +81,29 @@
 </div>
 
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const endDate = document.getElementById('endDate').textContent;
+        const endTime = document.getElementById('endTime').textContent;
+        const examEndsAt = new Date(`${endDate} ${endTime}`);
+        const durationElement = document.getElementById('duration');
+
+        const updateDuration = () => {
+            const now = new Date();
+            let difference = examEndsAt - now;
+
+            if (difference > 0) {
+                const minutes = Math.floor(difference / 60000);
+                const seconds = Math.floor((difference % 60000) / 1000);
+                durationElement.textContent = `${minutes} minut ${seconds} sekund`;
+            } else {
+                document.querySelector('button[type="submit"]').click();
+            }
+        };
+
+        setInterval(updateDuration, 1000);
+        updateDuration();
+    });
+</script>
 </html>

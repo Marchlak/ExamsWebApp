@@ -14,7 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -43,7 +45,7 @@ public class ExamService {
     }
 
     public Exam AddExam(Exam exam) {
-        return examRepository.save(exam);
+        return null;
     }
 
     public List<Exam> getAllExams() {
@@ -76,6 +78,10 @@ public class ExamService {
         exam.setStartTime(examDTO.getStartTime());
         exam.setEndDate(examDTO.getEndDate());
         exam.setEndTime(examDTO.getEndTime());
+        exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
+        exam.setQuestionPoolStrategy(false);
+        exam.setQuestionPool(0);
+        exam.setVisibility(true);
         Exam addedExam = examRepository.save(exam);
         for(OpenQuestionDTO openQuestionDTO : examDTO.getQuestions()){
             OpenQuestion openquestion = new OpenQuestion();

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,9 @@ import org.thymeleaf.standard.expression.Each;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -93,7 +96,7 @@ public class ExamController {
     // }
 
     @PostMapping("/addExamQuestions")
-    public String addExamQuestions(@RequestBody String body) {
+    public String addExamQuestions(@RequestBody String body, Authentication authentication) {
 
         String string = body.toString();
         try {
@@ -114,7 +117,7 @@ public class ExamController {
                         .registerModule(new Jdk8Module())
                         .registerModule(new JavaTimeModule());
                 ExamDTO exam = objectMapper.readValue(decodedString, ExamDTO.class);
-                exam.setEgzamiantor(1);
+                exam.setEgzamiantor(examinerService.findByLogin(authentication.getName()).getExaminer_id());
 
                 UserDetails user = null;
                 HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -150,23 +153,16 @@ public class ExamController {
         }
     }
 
-    @PostMapping("/addExam/{egzaminator_egzaminator_id}")
-    public String UpdateOpenQuestion(@ModelAttribute Exam exam, @PathVariable Integer egzaminator_egzaminator_id, @RequestParam Integer subjectid) {
-        exam.setQuestionPoolStrategy(false);
-        exam.setQuestionPool(0);
-        egzaminator_egzaminator_id = 1;
-
-        Examiner examiner = examinerService.Get(egzaminator_egzaminator_id);
-        exam.setConductingExaminer(examiner);
-
-        Subject subject = subjectService.Get(subjectid);
-        exam.setExamsSubject(subject);
-
-        Exam addedExam = examService.AddExam(exam);
-
-
-        return "redirect:/exams";
-    }
+//    @PostMapping("/addExam/{egzaminator_egzaminator_id}")
+//    public String UpdateOpenQuestion(@ModelAttribute Exam exam, @RequestParam Integer subjectid, Authentication authentication) {
+//        exam.setQuestionPoolStrategy(false);
+//        exam.setQuestionPool(0);
+//        Examiner examiner = examinerService.findByLogin(authentication.getName());
+//        exam.setConductingExaminer(examiner);
+//        exam.setExamsSubject(subjectService.Get(subjectid));
+//        Exam addedExam = examService.AddExam(exam);
+//        return "redirect:/exams";
+//    }
 
     @PostMapping("/editExamDetails/{examId}")
     public String editExamDetails(@PathVariable Integer examId, @RequestParam("exampoolstrategy") Boolean exampoolstrategy, @RequestParam("count") Integer exampool, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam(value = "startdate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam(value = "starttime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam(value = "enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam(value = "endtime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
@@ -179,6 +175,7 @@ public class ExamController {
         exam.setId(examId.intValue());
         exam.setExamsSubject(subject);
         String s = examService.getExamChange(examService.GetExam(examId.intValue()), exam);
+        exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
 
         if (s != null) {
             logsService.updateExam(exam, s);

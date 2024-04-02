@@ -80,6 +80,11 @@
 					<div class="time content" th:text="${exam.endTime}"></div>
 				</div>
 			</div>
+
+			<div class="details-box">
+				<label>Duration</label>
+				<div class="content" th:text="${exam.duration + ' minutes'}"></div>
+			</div>
 		</div>
 	</div>
 
