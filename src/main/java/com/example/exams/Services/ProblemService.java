@@ -71,6 +71,36 @@ public class ProblemService {
 
         return filteredProblemsByCategory;
     }
+    public Map<String, List<ShowProblem>> getProblemsByCategoryAndStatus(Map<String, List<ShowProblem>> problemsByCategory, String selectedCategory, String selectedStatus) {
+        Map<String, List<ShowProblem>> filteredProblemsByCategory = new HashMap<>();
+
+        if (selectedCategory == null || selectedCategory.isEmpty()) {
+            return getProblemsBySelectedStatus(problemsByCategory,selectedStatus);
+        }
+
+        if (selectedStatus == null || selectedStatus.isEmpty()) {
+            return getProblemsBySelectedCategory(problemsByCategory, selectedCategory);
+        }
+
+        for (Map.Entry<String, List<ShowProblem>> entry : problemsByCategory.entrySet()) {
+            String category = entry.getKey();
+            List<ShowProblem> categoryProblems = entry.getValue();
+            List<ShowProblem> filteredProblems = new ArrayList<>();
+
+            for (ShowProblem problem : categoryProblems) {
+                if (problem.getCategory().equals(selectedCategory) && problem.getStatus().equals(selectedStatus)) {
+                    filteredProblems.add(problem);
+                }
+            }
+
+            if (!filteredProblems.isEmpty()) {
+                filteredProblemsByCategory.put(category, filteredProblems);
+            }
+        }
+
+        return filteredProblemsByCategory;
+    }
+
     public List<String> getUniqueCategories() {
         List<Problem> allProblems = GetAll();
         return allProblems.stream()

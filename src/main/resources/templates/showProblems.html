@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Show problems</title>
     <link rel="stylesheet" th:href="@{/css/showProblems.css}"/>
+    <link rel="stylesheet" href="../static/css/showProblems.css"/>
 </head>
 <body>
 <div th:insert="navigation :: navigation"></div>
@@ -13,19 +14,16 @@
     <h2>Filtrowanie po:</h2>
 </div>
 <div class="filter-form-container">
-    <form class="form" action="/showProblems" method="get">
+    <form class="form" th:action="@{/showProblems}" method="get">
         <p class="title">Kategorii</p>
-        <select class="category" name="category">
+        <select id="category" class="category" name="category" th:value="${param.category}">
             <option value="">All</option>
             <th:block th:each="category : ${categories}">
-                <option th:value="${category}" th:text="${category}"></option>
+                <option th:value="${category}" th:text="${category}" ></option>
             </th:block>
         </select>
-        <input type="submit" value="Filtruj" class="filter-button">
-    </form>
-    <form class="form" action="/showProblems" method="get">
         <p class="title">Statusie</p>
-        <select class="status" name="status">
+        <select id="status" class="status" name="status" th:value="${param.status}">
             <option value="">All</option>
             <th:block th:each="status : ${statuses}">
                 <option th:value="${status}" th:text="${status}"></option>
@@ -65,5 +63,16 @@
     document.getElementById('back-to-top').onclick = function() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     };
+</script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('category')) {
+        const category = urlParams.get('category');
+        document.getElementById('category').value = category;
+    }
+    if (urlParams.has('status')) {
+        const status = urlParams.get('status');
+        document.getElementById('status').value = status;
+    }
 </script>
 </html>

@@ -114,18 +114,13 @@ public class ProblemController {
 
 
         Map<String, List<ShowProblem>> selectedProblemsByCategory = null;
-        if(category != null){
-            selectedProblemsByCategory = problemService.getProblemsBySelectedCategory(problemsByCategory, category);
-
-        }
-        if(status != null){
-            selectedProblemsByCategory = problemService.getProblemsBySelectedStatus(problemsByCategory, status);
-        }
-        if (status == null && category == null)  {
-            modelAndView.addObject("problemsByCategory", problemsByCategory);
+        if(status!=null && category!=null)
+        {
+            selectedProblemsByCategory = problemService.getProblemsByCategoryAndStatus(problemsByCategory,category,status);
+            modelAndView.addObject("problemsByCategory", selectedProblemsByCategory);
         }
         else {
-            modelAndView.addObject("problemsByCategory", selectedProblemsByCategory);
+            modelAndView.addObject("problemsByCategory", problemsByCategory);
         }
 
         List<String> categories = problemService.getUniqueCategories();
@@ -152,7 +147,7 @@ public class ProblemController {
     public String changeProblemStatus(@RequestParam("id") Integer id,
                                       @RequestParam("status") String status) {
         problemService.changeStatus(id,status);
-        return "redirect:/showProblems/" + id;
+        return "redirect:/showProblems";
     }
 
 }
