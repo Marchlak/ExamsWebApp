@@ -4,6 +4,9 @@
     <title>Activity</title>
 </head>
 <body>
+<header>
+    <div th:insert="navigation :: navigation"></div>
+</header>
 <h1>Administrators</h1>
 <div th:each="admin : ${administrators}">
     <p th:text="${admin.firstname} + ' ' + ${admin.lastname}"></p>

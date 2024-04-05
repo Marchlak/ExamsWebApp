@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="../static/css/createQuestion.css" />
 </head>
 <body>
+<header>
+  <div th:insert="navigation :: navigation"></div>
+</header>
 <input type="hidden" id="csrfToken" value="${_csrf.token}"/>
 <input type="hidden" id="csrfHeader" value="${_csrf.headerName}"/>
 <form th:action="@{/updateOpenQuestion/__${openQuestion.getOpenQuestionId}__}" th:method="post" role="form">

@@ -10,33 +10,9 @@
 
 </head>
 <body>
-<div class="container-nav">
-    <div id="nav">
-        <ul>
-            <li class="menu"><a th:href="@{/exams}">Exams</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/logs}">Show Logs</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/showProblems}">Show Problems</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_STUDENT')" th:href="@{/results}">Results</a></li>
-            <li class="menu"><a th:href="@{/reportProblem}">Contact us</a></li>
-            <li class="menu"><a>About App</a></li>
-            <li class="menu"><a th:href="@{/tipOfTheDay}">Tip of the day</a></li>
-           <!-- <li class="menu"><a th:href="@{/quiz}">Quiz</a></li>-->
-            <div class="icon-container">
-                <i class="fa-regular fa-bell"></i>
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-            <li class="logout-button">
-                <form th:action="@{/logout}" th:object="${logout}" method="post" role="form">
-                    <button class="logout" type="submit">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </div>
-    <div class="logo-container">
-        <div class="logo">Examify365</div>
-    </div>
-</div>
+<header>
+    <div th:insert="navigation :: navigation"></div>
+</header>
 
 <div class="container-groups">
     <div class="group" th:each="group, groupIndex : ${groups}">

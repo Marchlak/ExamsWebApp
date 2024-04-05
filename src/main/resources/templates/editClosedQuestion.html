@@ -12,6 +12,9 @@
     <script th:href="@{/javascript/script.js}"></script>
     <script src="/javascript/editcloseanswer.js"></script>
 </head>
+<header>
+    <div th:insert="navigation :: navigation"></div>
+</header>
 <body>
 <div class="question-box">
 <input type="hidden" id="csrfToken" value="${_csrf.token}"/>

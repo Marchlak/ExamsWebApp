@@ -221,7 +221,8 @@ public class ExamController {
     }
 
     @GetMapping("/showDoneExamUser/{examId}")
-    public ModelAndView showDoneExamUser(@PathVariable Integer examId, Model model) {
+    public ModelAndView
+    showDoneExamUser(@PathVariable Integer examId, Model model) {
         Exam exam = examService.GetExam(examId.intValue());
         List<Student> studentopenAnswers = answerOpenService.getAllDistinctStudentsForOpenQuestions(examId.intValue());
         List<Logstudentexam> list = logstudentexamService.getStudentsLogstudentExamById(exam);

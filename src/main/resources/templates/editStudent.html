@@ -8,29 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"/>
 </head>
 <body>
+<header>
+    <div th:insert="navigation :: navigation"></div>
+</header>
 
-<h1>Edit Student</h1>
+<div class="edit-box" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <h1>Edit Student</h1>
 
-<form th:action="@{/editStudent}" th:object="${student}" method="post">
-    <input type="hidden" th:field="*{studentId}" />
+    <form th:action="@{/editStudent}" th:object="${student}" method="post">
+        <input type="hidden" th:field="*{studentId}" />
 
-    <label for="firstName">First Name:</label>
-    <input id="firstName" type="text" th:field="*{firstname}" required/>
+        <label for="firstName">First Name:</label>
+        <input id="firstName" type="text" th:field="*{firstname}" required/>
 
-    <label for="lastName">Last Name:</label>
-    <input id="lastName" type="text" th:field="*{lastname}" required/>
+        <label for="lastName">Last Name:</label>
+        <input id="lastName" type="text" th:field="*{lastname}" required/>
 
-    <label for="login">Login:</label>
-    <input id="login" type="text" th:field="*{login}" required/>
+        <label for="login">Login:</label>
+        <input id="login" type="text" th:field="*{login}" required/>
 
-    <label for="password">Password:</label>
-    <input id="password" type="text" th:field="*{password}" required/>
+        <label for="password">Password:</label>
+        <input id="password" type="text" th:field="*{password}" required/>
 
-    <label for="email">Email:</label>
-    <input id="email" type="email" th:field="*{email}" required/>
+        <label for="email">Email:</label>
+        <input id="email" type="email" th:field="*{email}" required/>
 
-    <button type="submit">Save Changes</button>
-</form>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
 
 </body>
 </html>

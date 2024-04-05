@@ -16,6 +16,10 @@ h2 {
     text-align: center;
 }
 
+.header{
+    margin-top: 80px;
+}
+
 .container {
     max-width: 800px;
     margin: 20px auto;
