@@ -243,7 +243,7 @@
             margin-top: 2vh;
         }
 
-        select{
+        .select-box{
             height: 3vh;
         }
 
@@ -265,7 +265,9 @@
             align-items: center;
         }
     </style>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <div id="nav">
         <ul>
             <li class="menu"><a th:href="@{/exams}">Exams</a></li>
@@ -331,7 +333,7 @@
                         </div>
                         <div class="flex">
                             Język interfejsu
-                            <select id="language-select">
+                            <select class="select-box" id="language-select">
                                 <option value="pl">Polski</option>
                                 <option value="en">English</option>
                                 <option value="de">Deutsch</option>
@@ -339,7 +341,7 @@
                         </div>
                         <div class="flex">
                             Czcionka
-                            <select id="font-select">
+                            <select class="select-box" id="font-select">
                                 <option value="Arial">Arial</option>
                                 <option value="Times New Roman">Times New Roman</option>
                                 <option value="Verdana">Verdana</option>
@@ -351,7 +353,7 @@
                         </div>
                         <div class="flex">
                             Przejscie do nastepnego pytania - jednokrotnego wyboru
-                            <select id="question-navigation">
+                            <select class="select-box" id="question-navigation">
                                 <option value="buttons">Przycisk</option>
                                 <option value="answer_selection">Wybranie odpowiedzi</option>
                             </select>

@@ -9,6 +9,10 @@
 </head>
 <body>
 
+<header>
+    <div th:insert="navigation :: navigation"></div>
+</header>
+
 <div class="container">
     <h1>Utwórz nową grupę</h1>
     <form th:action="@{/addGroup}" th:object="${group}" method="post" id="classGroupForm">
