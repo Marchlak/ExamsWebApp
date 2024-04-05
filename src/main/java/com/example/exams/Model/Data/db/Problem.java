@@ -1,5 +1,7 @@
 package com.example.exams.Model.Data.db;
 
+import com.example.exams.Model.Data.ProperDataModels.ProblemCategories;
+import com.example.exams.Model.Data.ProperDataModels.ProblemStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,12 +34,12 @@ public class Problem {
     @JoinColumn(name = "problems_examiner_id")
     private Examiner problemsExaminer;
 
-    @Column(name = "category", length = 20)
-    private String category;
+    @Column(name = "category")
+    private ProblemCategories category;
 
     @Column(name = "username", length = 20)
     private String username;
 
-    @Column(name = "status", length = 20)
-    private String status = "Nowy";
+    @Column(name = "status")
+    private ProblemStatus status = ProblemStatus.New;
 }

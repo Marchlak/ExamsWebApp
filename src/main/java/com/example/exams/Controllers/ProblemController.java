@@ -1,5 +1,7 @@
 package com.example.exams.Controllers;
 
+import com.example.exams.Model.Data.ProperDataModels.ProblemCategories;
+import com.example.exams.Model.Data.ProperDataModels.ProblemStatus;
 import com.example.exams.Model.Data.ProperDataModels.ShowProblem;
 import com.example.exams.Model.Data.db.Problem;
 import com.example.exams.Services.ExaminerService;
@@ -44,15 +46,13 @@ public class ProblemController {
     public ModelAndView reportProblem() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("problemReporting");
-        List<String> categories = new ArrayList<>();
-        categories.add("Category 1");
-        categories.add("Category 2");
+        List<String> categories = problemService.getUniqueCategories();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
     @PostMapping("/addProblem")
-    public String addProblem(@RequestParam("category") String category,
+    public String addProblem(@RequestParam("category") ProblemCategories category,
                              @RequestParam("description") String description,
                              @RequestParam("image") MultipartFile imageFile) throws IOException {
         if (imageFile.isEmpty()) {
@@ -102,13 +102,13 @@ public class ProblemController {
             ShowProblem showProblem = new ShowProblem();
             showProblem.setDescription(problem.getDescription());
             showProblem.setPhoto(base64Encoded);
-            showProblem.setCategory(problem.getCategory());
+            showProblem.setCategory(problem.getCategory().toString());
             showProblem.setUsername(problem.getUsername());
             showProblem.setExaminer(problem.getProblemsExaminer());
             showProblem.setId(problem.getId());
-            showProblem.setStatus(problem.getStatus());
+            showProblem.setStatus(problem.getStatus().toString());
 
-            problemsByCategory.computeIfAbsent(problem.getCategory(), k -> new ArrayList<>()).add(showProblem);
+            problemsByCategory.computeIfAbsent(problem.getCategory().toString(), k -> new ArrayList<>()).add(showProblem);
         }
 
 
@@ -139,13 +139,14 @@ public class ProblemController {
         byte[] photoBytes = problem.getPhoto();
         String photo = Base64.getEncoder().encodeToString(photoBytes);
         modelAndView.addObject("problem", problem);
+        modelAndView.addObject("problemStatuses", problemService.getUniqueStatuses());
         modelAndView.addObject("photo", photo);
         return modelAndView;
     }
 
     @PostMapping("/changeProblemStatus")
     public String changeProblemStatus(@RequestParam("id") Integer id,
-                                      @RequestParam("status") String status) {
+                                      @RequestParam("status") ProblemStatus status) {
         problemService.changeStatus(id,status);
         return "redirect:/showProblems";
     }

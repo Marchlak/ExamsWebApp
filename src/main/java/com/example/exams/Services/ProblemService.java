@@ -2,6 +2,8 @@ package com.example.exams.Services;
 
 //import com.example.exams.Model.Data.ProperDataModels.ProblemDTO;
 
+import com.example.exams.Model.Data.ProperDataModels.ProblemCategories;
+import com.example.exams.Model.Data.ProperDataModels.ProblemStatus;
 import com.example.exams.Model.Data.ProperDataModels.ShowProblem;
 import com.example.exams.Model.Data.db.Problem;
 import com.example.exams.Repositories.Db.ProblemRepository;
@@ -32,9 +34,9 @@ public class ProblemService {
         return problemRepository.getReferenceById(id);
     }
 
-    public Problem changeStatus(int id, String newStatus) {
+    public Problem changeStatus(int id, ProblemStatus problemStatus) {
         Problem problem = findById(id);
-        problem.setStatus(newStatus);
+        problem.setStatus(problemStatus);
         return problemRepository.save(problem);
     }
 
@@ -102,18 +104,13 @@ public class ProblemService {
     }
 
     public List<String> getUniqueCategories() {
-        List<Problem> allProblems = GetAll();
-        return allProblems.stream()
-                .map(Problem::getCategory)
-                .distinct()
+        return  Arrays.stream(ProblemCategories.values())
+                .map(Enum::name)
                 .collect(Collectors.toList());
     }
     public List<String> getUniqueStatuses() {
-        List<Problem> allProblems = GetAll();
-        return allProblems.stream()
-                .map(Problem::getStatus)
-                .distinct()
+        return Arrays.stream(ProblemStatus.values())
+                .map(Enum::name)
                 .collect(Collectors.toList());
     }
-
 }
