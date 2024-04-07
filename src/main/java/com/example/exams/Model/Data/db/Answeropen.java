@@ -20,4 +20,13 @@ public class Answeropen {
     @JoinColumn(name = "openquestion_questionid", nullable = false)
     private OpenQuestion openquestionQuestionid;
 
+
+    @Override
+    public String toString() {
+        return "Answeropen{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", openquestionQuestionid=" + openquestionQuestionid +
+                '}';
+    }
 }

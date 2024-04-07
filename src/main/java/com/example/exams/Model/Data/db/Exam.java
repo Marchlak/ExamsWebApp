@@ -29,6 +29,25 @@ public class Exam {
     @Column(name = "description", length = 100)
     private String description;
 
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "id=" + id +
+                ", questionPool=" + questionPool +
+                ", questionPoolStrategy=" + questionPoolStrategy +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", startTime=" + startTime +
+                ", endDate=" + endDate +
+                ", endTime=" + endTime +
+                ", duration=" + duration +
+                ", visibility=" + visibility +
+                ", examsSubject=" + examsSubject +
+                ", conductingExaminer=" + conductingExaminer +
+                ", students=" + students +
+                '}';
+    }
+
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -47,15 +66,15 @@ public class Exam {
     @Column(name="visibility")
     private Boolean visibility;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "exams_subject_id", nullable = false)
     private Subject examsSubject;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "conducting_examiner_id")
     private Examiner conductingExaminer;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "student_exam",
             joinColumns = @JoinColumn(name = "exam_id"),

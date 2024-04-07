@@ -38,4 +38,16 @@ public class Studentopenanswer {
     @JoinColumn(name = "student_student_id")
     private Student studentStudent;
 
+    @Override
+    public String toString() {
+        return "Studentopenanswer{" +
+                "id=" + id +
+                ", score=" + score +
+                ", date=" + date +
+                ", time=" + time +
+                ", description='" + description + '\'' +
+                ", openquestionQuestionid=" + openquestionQuestionid +
+                ", studentStudent=" + studentStudent +
+                '}';
+    }
 }

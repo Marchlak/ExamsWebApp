@@ -34,4 +34,15 @@ public class Studentclosedanswer {
     @JoinColumn(name = "student_student_id")
     private Student studentStudent;
 
+    @Override
+    public String toString() {
+        return "Studentclosedanswer{" +
+                "id=" + id +
+                ", correctness=" + correctness +
+                ", date=" + date +
+                ", answerclosedAnswerid=" + answerclosedAnswerid +
+                ", closedquestionQuestionid=" + closedquestionQuestionid +
+                ", studentStudent=" + studentStudent +
+                '}';
+    }
 }

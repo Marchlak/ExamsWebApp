@@ -29,7 +29,7 @@ public class Closedquestion {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @ManyToOne(fetch = FetchType.EAGER,optional = true)
     @JoinColumn(name = "exam_id", nullable = true)
     private Exam exam;
 
@@ -38,5 +38,15 @@ public class Closedquestion {
         this.content = content;
         this.score = score;
         this.exam = exam;
+    }
+
+    @Override
+    public String toString() {
+        return "Closedquestion{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", score=" + score +
+                ", exam=" + exam +
+                '}';
     }
 }

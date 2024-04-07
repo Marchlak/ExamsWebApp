@@ -33,4 +33,13 @@ public class Answerclosed {
         this.closedquestionQuestionid = question;
     }
 
+    @Override
+    public String toString() {
+        return "Answerclosed{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", isCorrect=" + isCorrect +
+                ", closedquestionQuestionid=" + closedquestionQuestionid +
+                '}';
+    }
 }

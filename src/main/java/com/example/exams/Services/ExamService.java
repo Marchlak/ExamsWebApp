@@ -14,6 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -275,4 +278,20 @@ public class ExamService {
             return -1;
         }
     }
+
+    public void createBackup() {
+        List<Exam> exams = examRepository.findByEndDateAfter(LocalDate.now().minusDays(4));
+        File file = new File("backup_" + LocalDate.now() + ".txt");
+        try (FileWriter writer = new FileWriter(file)) {
+            for (Exam exam : exams) {
+                writer.write(exam.toString() + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

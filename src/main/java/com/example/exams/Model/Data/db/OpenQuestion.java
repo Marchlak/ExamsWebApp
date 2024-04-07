@@ -38,7 +38,17 @@ public class OpenQuestion {
     @Column(name = "score", nullable = false)
     private Integer score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Override
+    public String toString() {
+        return "OpenQuestion{" +
+                "openQuestionId=" + openQuestionId +
+                ", content='" + content + '\'' +
+                ", score=" + score +
+                ", exam=" + exam +
+                '}';
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
