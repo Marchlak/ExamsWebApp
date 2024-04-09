@@ -228,14 +228,18 @@ public class ExamService {
 
     public List<Exam> getSortedExams(String sortType, List<Exam> exams){
 
-        if ("Przedmiot A-Z".equals(sortType)) {
+        if ("Subject A-Z".equals(sortType)) {
             exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName()));
-        } else if ("Przedmiot Z-A".equals(sortType)) {
+        } else if ("Subject Z-A".equals(sortType)) {
             exams.sort(Comparator.comparing(exam -> exam.getExamsSubject().getName(), Comparator.reverseOrder()));
-        } else if ("Data rosnąco".equals(sortType)) {
+        } else if ("Date ascending".equals(sortType)) {
             exams.sort(Comparator.comparing(Exam::getStartDate).thenComparing(Exam::getStartTime));
-        } else if ("Data malejąco".equals(sortType)) {
+        } else if ("Date descending".equals(sortType)) {
             exams.sort(Comparator.comparing(Exam::getStartDate, Comparator.reverseOrder()).thenComparing(Exam::getStartTime));
+        } else if ("Description A-Z".equals(sortType)) {
+            exams.sort(Comparator.comparing(Exam::getDescription));
+        } else if ("Description Z-A".equals(sortType)) {
+            exams.sort(Comparator.comparing(Exam::getDescription, Comparator.reverseOrder()));
         }
         return exams;
     }
