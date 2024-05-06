@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class BackUpJob {
     @Autowired
     private ExamService examService;
-    @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "* * * * * ?")
     public void performBackup() {
         System.out.println("Kopiazapasowazostałautworzona");
         examService.createBackup();

@@ -22,15 +22,15 @@ public class Studentclosedanswer {
     @Column(name = "Date", nullable = false)
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "answerclosed_answerid", nullable = false)
     private Answerclosed answerclosedAnswerid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "closedquestion_questionid")
     private Closedquestion closedquestionQuestionid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_student_id")
     private Student studentStudent;
 

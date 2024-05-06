@@ -8,6 +8,8 @@ import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.ExamRepository;
 import com.example.exams.Repositories.Db.StudentsEntityRepository;
 import com.example.exams.SpringSecurity.CustomUserDetails;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -284,15 +286,7 @@ public class ExamService {
     }
 
     public void createBackup() {
-        List<Exam> exams = examRepository.findByEndDateAfter(LocalDate.now().minusDays(4));
-        File file = new File("backup_" + LocalDate.now() + ".txt");
-        try (FileWriter writer = new FileWriter(file)) {
-            for (Exam exam : exams) {
-                writer.write(exam.toString() + System.lineSeparator());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 

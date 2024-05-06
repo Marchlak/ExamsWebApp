@@ -16,7 +16,7 @@ public class Answeropen {
     @Column(name = "description", length = 100)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "openquestion_questionid", nullable = false)
     private OpenQuestion openquestionQuestionid;
 

@@ -13,12 +13,12 @@ public class Relation25 {
     private Relation25Id id;
 
     @MapsId("subjectSubjectid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "subject_subjectid", nullable = false)
     private Subject subjectSubjectid;
 
     @MapsId("groupClassid")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "group_classid", nullable = false)
     private Group groupClassid;
 

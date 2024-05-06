@@ -33,11 +33,11 @@ public class Logstudentexam {
     @Column(name = "score_result")
     private Integer scoreresult;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_examid")
     private Exam examExamid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_studentid")
     private Student studentStudent;
 

@@ -22,7 +22,7 @@ public class Answerclosed {
     @Column(name = "isCorrect")
     private boolean isCorrect;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "closedquestion_questionid", nullable = false)
     private Closedquestion closedquestionQuestionid;
 

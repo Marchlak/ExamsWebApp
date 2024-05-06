@@ -1,5 +1,7 @@
 package com.example.exams.Model.Data.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,10 +20,12 @@ public class Student {
     @Column(name = "student_id", nullable = false)
     private Integer studentId;
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Group> groups;
 
-    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Exam> exams;
 
     @Column(name = "firstname", nullable = false, length = 20)
@@ -39,16 +43,16 @@ public class Student {
     @Column(name = "email", length = 40)
     private String email;
 
-    @OneToMany(mappedBy = "problemsStudent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "problemsStudent",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Problem> problems;
 
-    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "studentStudent",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Studentopenanswer> studentopenanswers;
 
-    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "studentStudent",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Studentclosedanswer> studentclosedanswer;
 
-    @OneToMany(mappedBy = "studentStudent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "studentStudent",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Logstudentexam> logstudentexam;
 
     public Student() {}

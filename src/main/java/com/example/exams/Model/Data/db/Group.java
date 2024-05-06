@@ -1,5 +1,7 @@
 package com.example.exams.Model.Data.db;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,7 +25,8 @@ public class Group {
     @Column(name = "code", length = 10)
     private String code;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "student_group",
             joinColumns = @JoinColumn(name = "group_classid"),

@@ -30,11 +30,11 @@ public class Studentopenanswer {
     @Column(name = "description", length = 100)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "openquestion_questionid")
     private OpenQuestion openquestionQuestionid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_student_id")
     private Student studentStudent;
 
