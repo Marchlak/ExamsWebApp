@@ -74,7 +74,7 @@ public class ExamService {
         }
         return false;
     }
-    public Exam AddExam(ExamDTO examDTO){
+    public void AddExam(ExamDTO examDTO){
         Exam exam = new Exam();
         exam.setExamsSubject(subjectService.GetOne(examDTO.getSubjectId()));
         exam.setConductingExaminer(egzaminatorService.Get(examDTO.getEgzamiantor()));
@@ -83,7 +83,9 @@ public class ExamService {
         exam.setStartTime(examDTO.getStartTime());
         exam.setEndDate(examDTO.getEndDate());
         exam.setEndTime(examDTO.getEndTime());
-        exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
+        if(exam.getStartDate()!=null && exam.getEndDate()!=null && exam.getStartTime()!=null && exam.getEndTime()!=null) {
+            exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
+        }
         exam.setQuestionPoolStrategy(false);
         exam.setQuestionPool(0);
         exam.setVisibility(true);
@@ -95,7 +97,6 @@ public class ExamService {
             openquestion.setContent(openQuestionDTO.getContent());
             openQuestionService.AddOpenQuestion(openquestion);
         }
-        return addedExam;
     }
 
     public int getNextExamId(){
