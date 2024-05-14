@@ -66,14 +66,16 @@ public class ExamService {
         examRepository.save(updatedExam);
     }
 
-    @Transactional
     public boolean deleteExam(Integer examId) {
-        if (examRepository.existsById(examId)) {
-            examRepository.deleteById(examId);
+        Optional<Exam> examOptional = examRepository.findById(examId);
+        if (examOptional.isPresent()) {
+            examRepository.delete(examOptional.get());
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
+
     public void AddExam(ExamDTO examDTO){
         Exam exam = new Exam();
         exam.setExamsSubject(subjectService.GetOne(examDTO.getSubjectId()));

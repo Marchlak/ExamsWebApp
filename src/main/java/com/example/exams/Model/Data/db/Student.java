@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -25,7 +27,8 @@ public class Student {
     private List<Group> groups;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
     private List<Exam> exams;
 
     @Column(name = "firstname", nullable = false, length = 20)

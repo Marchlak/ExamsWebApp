@@ -3,6 +3,8 @@ package com.example.exams.Model.Data.db;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -74,11 +76,14 @@ public class Exam {
     @JoinColumn(name = "conducting_examiner_id")
     private Examiner conductingExaminer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(
             name = "student_exam",
             joinColumns = @JoinColumn(name = "exam_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
+            inverseJoinColumns = @JoinColumn(name = "student_id"),
+            foreignKey = @ForeignKey(name ="student_id"),
+            inverseForeignKey = @ForeignKey(name = "FK_student_exam_exam")
     )
     private List<Student> students;
 
