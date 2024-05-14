@@ -715,6 +715,8 @@ public class ExamController {
             return "redirect:/addStudents/" + examId;
         } else if (action.startsWith("toggleVisibility:")) {
             return "redirect:/toggleVisibility/" + examId;
+        } else if (action.startsWith("results:")) {
+            return "redirect:/exam/" + examId + "/grades";
         }
         return "error";
     }

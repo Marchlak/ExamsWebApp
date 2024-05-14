@@ -83,6 +83,10 @@
                                 name="action" th:value="'show:'+ ${exam.id}" class="edit-delete">
                             <i class="fa-solid fa-pen"></i>Details
                         </button>
+                        <button sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER') or hasRole('ROLE_STUDENT')" type="submit"
+                                name="action" th:value="'results:'+ ${exam.id}" class="edit-delete">
+                            <i class="fa-solid fa-square-poll-vertical"></i>Results
+                        </button>
                         <button sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER')" type="submit"
                                 name="action" th:value="'addStudents:' + ${exam.id}" class="edit-delete">
                             <i class="fa-solid fa-plus"></i> Students
