@@ -301,46 +301,45 @@
     <div id="settings-under-construction" class="construction-modal" style="display: none;">
         <div class="construction-content">
             <div class="f">
-                <div class="wrapper">Ustawienia</div>
+                <div class="wrapper">Settings</div>
                 <div class="close">&times;</div>
             </div>
-
 
             <div class="settings-container">
                 <form th:action="@{/logged}" method="get" id="settings-form">
                     <div class="settings">
                         <div class="flex">
-                            Motyw
+                            Theme
                             <label class="switch">
                                 <input type="checkbox" id="theme-switch">
                                 <span class="slider"></span>
                             </label>
                         </div>
                         <div class="flex">
-                            Tryb niesłyszących
+                            Deaf Mode
                             <label class="switch">
                                 <input type="checkbox" id="deaf-mode-switch">
                                 <span class="slider"></span>
                             </label>
                         </div>
                         <div class="flex">
-                            Powiększenie tekstu
+                            Text Size
                             <input type="range" id="text-size-slider" min="1" max="3" value="2" step="0.1">
                         </div>
                         <div class="flex">
-                            Kontrast
+                            Contrast
                             <input type="range" id="contrast-slider" min="1" max="3" value="2" step="0.1">
                         </div>
                         <div class="flex">
-                            Język interfejsu
+                            Interface Language
                             <select class="select-box" id="language-select">
-                                <option value="pl">Polski</option>
+                                <option value="pl">Polish</option>
                                 <option value="en">English</option>
-                                <option value="de">Deutsch</option>
+                                <option value="de">German</option>
                             </select>
                         </div>
                         <div class="flex">
-                            Czcionka
+                            Font
                             <select class="select-box" id="font-select">
                                 <option value="Arial">Arial</option>
                                 <option value="Times New Roman">Times New Roman</option>
@@ -348,22 +347,23 @@
                             </select>
                         </div>
                         <div class="flex">
-                            Tryb pojedynczego pytania
+                            Single Question Mode
                             <input type="checkbox" id="single-question-mode">
                         </div>
                         <div class="flex">
-                            Przejscie do nastepnego pytania - jednokrotnego wyboru
+                            Navigation to Next Question - Single Choice
                             <select class="select-box" id="question-navigation">
-                                <option value="buttons">Przycisk</option>
-                                <option value="answer_selection">Wybranie odpowiedzi</option>
+                                <option value="buttons">Button</option>
+                                <option value="answer_selection">Answer Selection</option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="submit-button">Zapisz ustawienia</button>
+                    <button type="submit" class="submit-button">Save Settings</button>
                 </form>
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

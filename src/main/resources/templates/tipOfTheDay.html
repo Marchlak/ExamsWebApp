@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Wskazówka dnia</title>
+    <title>Tip of the Day</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -72,25 +72,25 @@
 
 <img th:src="@{/images/tip.svg}" alt="My Happy SVG"/>
 <div id="tipOfTheDay">
-    <h2>Wskazówka dnia</h2>
-    <p id="tip-text">[wskazówka]</p>
-    <button id="random-tip-button">Losuj wskazówkę</button>
+    <h2>Tip of the Day</h2>
+    <p id="tip-text">[tip]</p>
+    <button id="random-tip-button">Get a Random Tip</button>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var tips = [
-            "Przerwa na naukę co 45 minut poprawia koncentrację.",
-            "Wizualizacja materiału pomoże Ci lepiej zapamiętać.",
-            "Powtarzaj trudne informacje tuż przed snem, by lepiej je zapamiętać.",
-            "Nauka w grupie może pomóc w zrozumieniu trudnych koncepcji.",
-            "Stosuj technikę Pomodoro, aby zwiększyć efektywność nauki.",
-            "Ucz się aktywnie, zadając pytania i tworząc notatki.",
-            "Utrzymuj czyste i uporządkowane miejsce do nauki, wolne od zakłóceń.",
-            "Stawiaj sobie konkretne, mierzalne, osiągalne, realistyczne i czasowo określone cele (metoda SMART).",
-            "Twórz fiszki do zapamiętywania faktów i pojęć.",
-            "Zaczynaj naukę z wyprzedzeniem, aby uniknąć ogromnego stresu",
-            "Regularne ćwiczenia fizyczne poprawiają zdolność koncentracji."
+            "Taking a study break every 45 minutes improves concentration.",
+            "Visualizing material can help you remember it better.",
+            "Review difficult information just before sleeping to remember it better.",
+            "Studying in a group can help understand difficult concepts.",
+            "Use the Pomodoro technique to increase study efficiency.",
+            "Study actively by asking questions and making notes.",
+            "Keep a clean and organized study space, free from distractions.",
+            "Set specific, measurable, achievable, realistic, and time-bound goals (SMART method).",
+            "Create flashcards to memorize facts and concepts.",
+            "Start studying in advance to avoid last-minute stress.",
+            "Regular physical exercise improves concentration."
         ];
 
         document.getElementById("random-tip-button").addEventListener("click", function() {

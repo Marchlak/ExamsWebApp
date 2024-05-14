@@ -16,26 +16,29 @@
             var password = document.getElementById('password').value;
             var confirmPassword = document.getElementById('confirmPassword').value;
 
-
             if (username === '' || firstName === '' || lastName === '' || email === '' || password === '' || confirmPassword === '') {
-                alert('Wszystkie pola muszą być wypełnione');
+                alert('All fields must be filled');
                 return false;
             }
 
             if (!isAlphabetic(firstName) || !isAlphabetic(lastName)) {
-                alert('Imię i Nazwisko muszą składać się z samych liter');
+                alert('First Name and Last Name must consist of letters only');
                 return false;
             }
 
             if (password !== confirmPassword) {
-                alert('Hasło i powtórz hasło nie są takie same');
+                alert('Password and Confirm Password do not match');
                 return false;
             }
 
-
-
             return true;
         }
+
+        function isAlphabetic(str) {
+            return /^[A-Za-z]+$/.test(str);
+        }
+    </script>
+
     </script>
 </head>
 <body>

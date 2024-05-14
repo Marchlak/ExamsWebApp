@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Show problems</title>
+    <title>Show Problems</title>
     <link rel="stylesheet" th:href="@{/css/showProblems.css}"/>
     <link rel="stylesheet" href="../static/css/showProblems.css"/>
 </head>
@@ -11,25 +11,25 @@
 <div class="header">
     <h1>Problems</h1>
     <br>
-    <h2>Filtrowanie po:</h2>
+    <h2>Filter by:</h2>
 </div>
 <div class="filter-form-container">
     <form class="form" th:action="@{/showProblems}" method="get">
-        <p class="title">Kategorii</p>
+        <p class="title">Category</p>
         <select id="category" class="category" name="category" th:value="${param.category}">
             <option value="">All</option>
             <th:block th:each="category : ${categories}">
                 <option th:value="${category}" th:text="${category}" ></option>
             </th:block>
         </select>
-        <p class="title">Statusie</p>
+        <p class="title">Status</p>
         <select id="status" class="status" name="status" th:value="${param.status}">
             <option value="">All</option>
             <th:block th:each="status : ${statuses}">
                 <option th:value="${status}" th:text="${status}"></option>
             </th:block>
         </select>
-        <input type="submit" value="Filtruj" class="filter-button">
+        <input type="submit" value="Filter" class="filter-button">
     </form>
 </div>
 <div class="container">
@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-<button id="back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px;">↑ Powrót na górę</button>
+<button id="back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px;">↑ Back to Top</button>
 </body>
 
 <script>

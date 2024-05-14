@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/addGroup.css" />
     <link rel="stylesheet" th:href="@{/css/addGroup.css}" />
-    <title>Dodaj Grupę</title>
+    <title>Add Group</title>
 </head>
 <body>
 
@@ -14,24 +14,24 @@
 </header>
 
 <div class="container">
-    <h1>Utwórz nową grupę</h1>
+    <h1>Create a New Group</h1>
     <form th:action="@{/addGroup}" th:object="${group}" method="post" id="classGroupForm">
 
-        <label for="classCode">Kod grupy:</label>
+        <label for="classCode">Group Code:</label>
         <input type="text" id="classCode" name="classCode" th:field="*{code}" required>
 
-        <label for="studentsList">Dodaj studentów:</label>
+        <label for="studentsList">Add Students:</label>
         <select id="studentsList" multiple="multiple">
             <option th:each="student : ${students}" th:value="${student.studentId}" th:text="${student.firstname + ' ' + student.lastname}"></option>
         </select>
 
         <input type="hidden" id="group_students" name="group.students" th:field="*{students}">
 
-        <p>Wybrani studenci</p>
+        <p>Selected Students</p>
         <div id="selectedStudents"></div>
 
-        <button type="button" onclick="addStudent()">Dodaj studenta</button>
-        <button type="submit">Utwórz grupę</button>
+        <button type="button" onclick="addStudent()">Add Student</button>
+        <button type="submit">Create Group</button>
     </form>
 </div>
 

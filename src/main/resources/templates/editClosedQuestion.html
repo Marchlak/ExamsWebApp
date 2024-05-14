@@ -24,7 +24,7 @@
     <input type="hidden" th:value="${answerForm.question.id}" name="question.id" />
     <input type="hidden" th:value="${examId}" name="examId" />
         <div class="input-box">
-    <label for="content">Treść pytania:</label>
+    <label for="content">Question Content:</label>
     <input type="textarea" th:value="${answerForm.question.content}" name="question.content" id="content" />
         </div>
     <div th:each="answer, iterStat : *{answers}" id="answer-box" class="input-box">

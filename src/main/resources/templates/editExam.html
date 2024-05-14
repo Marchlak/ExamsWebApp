@@ -78,14 +78,14 @@
             </div>
             <div class="input-box">
                 <div class="question-box">
-                    <label>Pula pytan</label>
+                    <label>Question Pool</label>
                     <select name="exampoolstrategy" class="form-control" id="exampoolstrategy">
-                        <option th:value="0" th:selected="${questionPoolStrategy == 0}">Nie</option>
-                        <option th:value="1" th:selected="${questionPoolStrategy == 1}">Tak</option>
+                        <option th:value="0" th:selected="${questionPoolStrategy == 0}">No</option>
+                        <option th:value="1" th:selected="${questionPoolStrategy == 1}">Yes</option>
                     </select>
                 </div>
                 <div class="question-box" id="question_pool_set">
-                    <label>Liczba pytan</label>
+                    <label>Number of Questions</label>
                     <input type="number" name="count" class="form-control countQuestions" th:max="${questionQuantity}" min="0" th:value="${questionPool}"/>
                 </div>
             </div>

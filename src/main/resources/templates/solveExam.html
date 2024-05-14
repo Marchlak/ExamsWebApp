@@ -19,8 +19,8 @@
     <div class="time-box">
         <div id="nav">
             <ul>
-                <li class="menu"><p th:text="'Description: ' + ${exam.getDescription()}">description</p></li>
-                <li class="menu"><p th:text="'Exam starts at: ' + ${exam.getStartDate()} + ' ' + ${exam.getStartTime()}">start date</p></li>
+                <li class="menu"><p th:text="'Description: ' + ${exam.getDescription()}"></p></li>
+                <li class="menu"><p th:text="'Exam starts at: ' + ${exam.getStartDate()} + ' ' + ${exam.getStartTime()}"></p></li>
                 <li class="menu"><p>Exam ends at: <span id="endDate" th:text="${exam.getEndDate()}"></span> <span id="endTime" th:text="${exam.getEndTime()}"></span></p></li>
                 <div class="icon-container">
                     <i class="fa-regular fa-bell"></i>

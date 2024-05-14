@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/editUser.css" />
     <link rel="stylesheet" th:href="@{/css/editUser.css}" />
-    <title>Edycja Użytkownika</title>
-
+    <title>Edit User</title>
 </head>
 <body>
 <header>
     <div th:insert="navigation :: navigation"></div>
 </header>
 <div class="user-form">
-    <h2>Edycja Użytkownika</h2>
+    <h2>Edit User</h2>
     <form action="/submit-your-form-action" method="post">
         <div class="form-group">
-            <label for="firstname">Imię:</label>
+            <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" required>
         </div>
         <div class="form-group">
-            <label for="lastname">Nazwisko:</label>
+            <label for="lastname">Last Name:</label>
             <input type="text" id="lastname" name="lastname" required>
         </div>
         <div class="form-group">
-            <label for="email">E-mail:</label>
+            <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
         </div>
         <div class="form-group">
-            <label for="username">Login:</label>
+            <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
         </div>
         <div class="form-group">
-            <label for="password">Hasło:</label>
+            <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
-            <input type="submit" value="Zapisz zmiany">
+            <input type="submit" value="Save Changes">
         </div>
     </form>
 </div>
