@@ -421,12 +421,12 @@ public class ExamController {
         modelAndView.addObject("listOpenQuestions", randomOpenQuestions);
 
 
-        List<Closedquestion> listClosedQuestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
+       // List<Closedquestion> listClosedQuestions = closedQuestionService.getAllByExamId(Integer.parseInt(examId));
         List<List<Answerclosed>> closedAnswers = new ArrayList<>();
 
 
-        for (int i = 0; i < listClosedQuestions.size(); i++)
-            closedAnswers.add(answerClosedService.getAllByQuestionId(listClosedQuestions.get(i).getId()));
+        for (int i = 0; i < randomClosedQuestions.size(); i++)
+            closedAnswers.add(answerClosedService.getAllByQuestionId(randomClosedQuestions.get(i).getId()));
 
         //modelAndView.addObject("listClosedQuestions", closedQuestionService.getAllByExamId(Integer.parseInt(examId)));
         modelAndView.addObject("listClosedQuestions", randomClosedQuestions);
