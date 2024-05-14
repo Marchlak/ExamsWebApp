@@ -27,8 +27,12 @@ public class ExaminerService {
         return examiner.orElse(null);
     }
 
-    public Examiner getExaminerByLoginAndEmail(String login, String email){
-        return examinersRepository.findExaminerByLoginAndEmail(login, email);
+    public Examiner getExaminerByLogin(String login){
+        return examinersRepository.findExaminerByLogin(login);
+    }
+
+    public Examiner getExaminerByEmail(String email){
+        return examinersRepository.findExaminerByEmail(email);
     }
 
     public Examiner findByLogin(String name){
