@@ -30,6 +30,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.example.exams.Model.Data.ProperDataModels.ExamResponseDTO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.standard.expression.Each;
 
 import java.io.UnsupportedEncodingException;
@@ -363,14 +364,14 @@ public class ExamController {
         }
 
         if (user == null) {
-            modelAndView.setViewName("errorPage");
+            modelAndView.setViewName("error/404");
             modelAndView.addObject("message", "You must be logged in to access this page.");
             return modelAndView;
         }
 
         Student student = studentsService.getStudentByLogin(user.getUsername());
         if (logstudentexamService.existsByExamIdAndStudentId(Integer.parseInt(examId), student.getStudentId())) {
-            modelAndView.setViewName("errorPage");
+            modelAndView.setViewName("error/404");
             modelAndView.addObject("message", "You have already taken this exam.");
             return modelAndView;
         }
@@ -696,17 +697,31 @@ public class ExamController {
 
 
     @PostMapping("/processForm")
-    public String processForm(@RequestParam("action") String action) {
+    public String processForm(@RequestParam("action") String action, RedirectAttributes redirectAttributes) {
+
+        CustomUserDetails user = null;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            user = (CustomUserDetails) session.getAttribute("UserDetails");
+        }
 
         Integer examId = Integer.parseInt(action.substring(action.indexOf(':') + 1));
+
+        if (action.startsWith("solveExam:")) {
+            if (examService.hasUserAlreadySolvedExam(user.getUserId(), examId)) {
+                return "redirect:/solveExam/" + examId;
+            } else {
+                return "redirect:/exams";
+            }
+        }
+
         if (action.startsWith("show:")) {
             return "redirect:/showExamDetails/" + examId;
         } else if (action.startsWith("edit:")) {
             return "redirect:/editExam/" + examId;
         } else if (action.startsWith("delete:")) {
             return "redirect:/confirmExamDeletion/" + examId;
-        } else if (action.startsWith("solveExam:")) {
-            return "redirect:/solveExam/" + examId;
         } else if (action.startsWith("showDoneExamUser:")) {
             return "redirect:/showDoneExamUser/" + examId;
         } else if (action.startsWith("addQuestion:")) {
@@ -718,7 +733,7 @@ public class ExamController {
         } else if (action.startsWith("results:")) {
             return "redirect:/exam/" + examId + "/grades";
         }
-        return "error";
+        return "error/404";
     }
 
     @GetMapping("/toggleVisibility/{examId}")

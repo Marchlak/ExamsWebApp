@@ -5,7 +5,9 @@ import com.example.exams.Model.Data.ProperDataModels.OpenQuestionDTO;
 import com.example.exams.Model.Data.db.Exam;
 import com.example.exams.Model.Data.db.OpenQuestion;
 import com.example.exams.Model.Data.db.Student;
+import com.example.exams.Model.Data.db.Studentclosedanswer;
 import com.example.exams.Repositories.Db.ExamRepository;
+import com.example.exams.Repositories.Db.StudentclosedanswerRepository;
 import com.example.exams.Repositories.Db.StudentsEntityRepository;
 import com.example.exams.SpringSecurity.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,9 +39,11 @@ public class ExamService {
     private final OpenQuestionService openQuestionService;
     private final ClosedQuestionService closedQuestionService;
     private final HttpSession httpSession;
+    private final StudentclosedanswerRepository studentclosedanswerRepository;
 
     @Autowired
-    public ExamService(ExamRepository examRepository, StudentsEntityRepository studentsRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService, HttpSession httpSession, ClosedQuestionService closedQuestionService) {
+    public ExamService(ExamRepository examRepository, StudentsEntityRepository studentsRepository, SubjectService subjectService, ExaminerService examinerService, OpenQuestionService openQuestionService, HttpSession httpSession, ClosedQuestionService closedQuestionService,
+                       StudentclosedanswerRepository studentclosedanswerRepository) {
         this.examRepository = examRepository;
         this.studentsRepository = studentsRepository;
         this.subjectService = subjectService;
@@ -47,6 +51,7 @@ public class ExamService {
         this.openQuestionService = openQuestionService;
         this.httpSession = httpSession;
         this.closedQuestionService = closedQuestionService;
+        this.studentclosedanswerRepository = studentclosedanswerRepository;
     }
 
     public Exam AddExam(Exam exam) {
@@ -290,6 +295,14 @@ public class ExamService {
 
     public void createBackup() {
 
+    }
+
+    public boolean hasUserAlreadySolvedExam(Integer userId, Integer examId) {
+
+        List<Studentclosedanswer> studentclosedanswers = studentclosedanswerRepository
+                                  .findAllByAnswerclosedAnswerid_ClosedquestionQuestionid_Exam_Id_AndStudentStudent_StudentId(examId, userId);
+
+        return studentclosedanswers.isEmpty();
     }
 
 
