@@ -22,8 +22,7 @@ public class Student {
     @Column(name = "student_id", nullable = false)
     private Integer studentId;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Group> groups;
 
     @JsonIgnore
