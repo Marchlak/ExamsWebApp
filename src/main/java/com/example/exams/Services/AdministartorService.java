@@ -33,7 +33,7 @@ public class AdministartorService {
     }
 
     public Administrator getAdministratorByEmail(String email) {
-        return administratorsEntityRepository.findAdministratorByLogin(email);
+        return administratorsEntityRepository.findAdministratorByEmail(email);
     }
     public void editAdministator(Integer administratorId, String firstName, String lastName, String login, String password, String email){
         Administrator administrator = administratorsEntityRepository.findAdministratorById(administratorId);
