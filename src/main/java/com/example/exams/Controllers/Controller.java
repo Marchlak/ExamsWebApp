@@ -191,8 +191,13 @@ public class Controller {
                     session.setAttribute("studentregistration", true);
                 }
                 Student newStudent = usersService.mapToStudentEntity(user);
-                usersService.addAStudentToDB(newStudent);
-                return new ModelAndView("redirect:/login");
+                Student foundStudent = studentsService.getStudentByLoginAndEmail(newStudent.getLogin(), newStudent.getEmail());
+                if(foundStudent == null){
+                    System.out.println("Student not found");
+                    usersService.addAStudentToDB(newStudent);
+                    return new ModelAndView("redirect:/login");
+                }
+                return new ModelAndView("register");
             case "Examiner":
                 if (session.getAttribute("examinerregistration") == null) {
                     Servicestatistic servicestatistic = logsService.getServiceStatistic();
@@ -202,12 +207,22 @@ public class Controller {
                     session.setAttribute("examinerregistration", true);
                 }
                 Examiner newExaminer = usersService.mapToExaminerEntity(user);
-                usersService.addAExaminerToDB(newExaminer);
-                return new ModelAndView("redirect:/login");
+                Examiner foundExaminer = examinerService.getExaminerByLoginAndEmail(newExaminer.getLogin(), newExaminer.getEmail());
+                if(foundExaminer == null){
+                    System.out.println("Examiner not found");
+                    usersService.addAExaminerToDB(newExaminer);
+                    return new ModelAndView("redirect:/login");
+                }
+                return new ModelAndView("register");
             case "Administrator":
                 Administrator newAdministrator = usersService.mapToAdministratorEntity(user);
-                usersService.addAdministratorToDB(newAdministrator);
-                return new ModelAndView("redirect:/login");
+                Administrator foundAdministrator = administartorService.getAdministratorByLoginAndEmail(newAdministrator.getLogin(), newAdministrator.getEmail());
+                if(foundAdministrator == null){
+                    System.out.println("Administrator not found");
+                    usersService.addAdministratorToDB(newAdministrator);
+                    return new ModelAndView("redirect:/login");
+                }
+                return new ModelAndView("register");
             default:
                 return new ModelAndView("register");
         }

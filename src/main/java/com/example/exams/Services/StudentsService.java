@@ -21,6 +21,10 @@ public class StudentsService {
         return studentsRepository.findStudentByStudentId(studentId);
     }
 
+    public Student getStudentByLoginAndEmail(String login, String email){
+        return studentsRepository.findStudentByLoginAndEmail(login, email);
+    }
+
     public List<Student> getStudentsByIds(List<Integer> studentIds) {
         List<Student> students = new ArrayList<>();
 

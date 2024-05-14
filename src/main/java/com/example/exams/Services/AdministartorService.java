@@ -2,6 +2,7 @@ package com.example.exams.Services;
 
 import com.example.exams.Model.Data.db.Administrator;
 import com.example.exams.Model.Data.db.Examiner;
+import com.example.exams.Model.Data.db.Student;
 import com.example.exams.Repositories.Db.AdministratorsEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class AdministartorService {
     public Administrator getAdminById(Integer adminId){
         Optional <Administrator> admin = administratorsEntityRepository.findById(adminId);
         return admin.orElse(null);
+    }
+
+    public Administrator getAdministratorByLoginAndEmail(String login, String email){
+        return administratorsEntityRepository.findAdministratorByLoginAndEmail(login, email);
     }
 
     public Administrator getAdminByLogin(String login) {
