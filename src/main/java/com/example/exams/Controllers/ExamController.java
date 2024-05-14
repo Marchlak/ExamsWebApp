@@ -167,14 +167,16 @@ public class ExamController {
 
     @PostMapping("/editExamDetails/{examId}")
     public String editExamDetails(@PathVariable Integer examId, @RequestParam("exampoolstrategy") Boolean exampoolstrategy, @RequestParam("count") Integer exampool, @ModelAttribute Exam exam, @RequestParam("subject") Integer subjectId, @RequestParam(value = "startdate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, @RequestParam(value = "starttime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime startTime, @RequestParam(value = "enddate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate, @RequestParam(value = "endtime", required = false) @DateTimeFormat(pattern = "HH:mm") LocalTime endTime) {
+        String desc = exam.getDescription();
         exam = examService.GetExam(examId.intValue());
         exam.setStartDate(startDate);
         exam.setStartTime(startTime);
         exam.setEndDate(endDate);
         exam.setEndTime(endTime);
         Subject subject = subjectService.getSubjectById(subjectId.intValue());
-        exam.setId(examId.intValue());
+        exam.setId(examId);
         exam.setExamsSubject(subject);
+        exam.setDescription(desc);
         String s = examService.getExamChange(examService.GetExam(examId.intValue()), exam);
         exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
 
