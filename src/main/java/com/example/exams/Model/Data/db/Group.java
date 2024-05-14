@@ -25,8 +25,8 @@ public class Group {
     @Column(name = "code", length = 10)
     private String code;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany
     @JoinTable(
             name = "student_group",
             joinColumns = @JoinColumn(name = "group_classid"),

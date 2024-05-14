@@ -17,6 +17,7 @@
 
     <form th:action="@{/editStudent}" th:object="${student}" method="post">
         <input type="hidden" th:field="*{studentId}" />
+        <input type="hidden" name="groupId" th:value="${groupId}" />
 
         <label for="firstName">First Name:</label>
         <input id="firstName" type="text" th:field="*{firstname}" required/>

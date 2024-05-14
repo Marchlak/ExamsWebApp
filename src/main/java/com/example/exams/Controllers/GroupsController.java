@@ -90,7 +90,7 @@ public class GroupsController {
     @GetMapping("/addStudentsToGroup")
     public String addStudentsToGroup(@RequestParam("groupId") int groupId, @RequestParam("StudentsToAdd") List<Integer> studentIds) {
         groupsService.addStudentsToGroup(groupId,studentIds);
-        return "redirect:/groups";
+        return "redirect:/manageGroup/" + groupId;
     }
 
 
@@ -140,6 +140,6 @@ public class GroupsController {
         String email = editedStudent.getEmail();
 
         studentsService.editStudent(studentId, firstName, lastName, login, password, email);
-        return "redirect:/manageGroup" + groupId;
+        return "redirect:/manageGroup/" + groupId;
     }
 }

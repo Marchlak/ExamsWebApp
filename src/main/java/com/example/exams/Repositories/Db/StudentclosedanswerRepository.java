@@ -15,6 +15,10 @@ import java.util.List;
 public interface StudentclosedanswerRepository extends JpaRepository<Studentclosedanswer, Integer> {
     List<Studentclosedanswer> findAllByAnswerclosedAnswerid_ClosedquestionQuestionid_Exam_Id(int examId);
 
+    List<Studentclosedanswer> findAllByAnswerclosedAnswerid_ClosedquestionQuestionid_Exam_Id_AndStudentStudent_StudentId(int examId, int studentId);
+
+
+
     @Modifying
     @Transactional
     @Query("delete from Studentclosedanswer s where s.answerclosedAnswerid.closedquestionQuestionid.id = :questionId")

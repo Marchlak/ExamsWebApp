@@ -271,7 +271,7 @@
     <div id="nav">
         <ul>
             <li class="menu"><a th:href="@{/exams}">Exams</a></li>
-            <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/groups}">Groups</a></li>
+            <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_EXAMINER')" th:href="@{/groups}">Groups</a></li>
             <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/logs}">Show Logs</a></li>
             <li class="menu"><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/showProblems}">Show Problems</a></li>
             <li class="menu"><a sec:authorize="hasRole('ROLE_STUDENT')" th:href="@{/results}">Results</a></li>

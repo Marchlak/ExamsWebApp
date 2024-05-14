@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -33,8 +33,7 @@
         <td th:text="${student.firstname}"></td>
         <td th:text="${student.lastname}"></td>
         <td>
-            <a th:href="@{/editStudent/{groupId}/{studentId}(groupId=${groupId}, studentId=${student.studentId})}">Edit</a>
-            |
+            <a  sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/editStudent/{groupId}/{studentId}(groupId=${groupId}, studentId=${student.studentId})}">Edit</a>
             <form th:action="@{/deleteStudent}" method="post">
                 <input type="hidden" name="groupId" th:value="${groupId}" />
                 <input type="hidden" name="studentId" th:value="${student.studentId}" />
