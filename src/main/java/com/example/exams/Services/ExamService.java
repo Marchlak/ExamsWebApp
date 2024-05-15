@@ -253,6 +253,7 @@ public class ExamService {
         }
         return exams;
     }
+
     public void changeExamPoolStrategy(boolean poolStrategy, Exam exam){
         if(exam.getQuestionPoolStrategy() != poolStrategy) {
             exam.setQuestionPoolStrategy(poolStrategy);

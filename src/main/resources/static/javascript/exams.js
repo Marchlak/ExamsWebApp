@@ -20,6 +20,28 @@ document.addEventListener('DOMContentLoaded', function () {
         questionInputs.appendChild(newQuestion);
     });
 
+    //OD tu ja
+        var dropdownButtons = document.querySelectorAll('.dropdown-btn');
+
+        dropdownButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var dropdownContent = this.nextElementSibling;
+                dropdownContent.classList.toggle('show');
+            });
+        });
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                var dropdowns = document.querySelectorAll('.dropdown-content');
+                dropdowns.forEach(function (dropdown) {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+            }
+        }
+   //DO tu ja
+
     const createExam = document.querySelector('.createExam');
     createExam.addEventListener('click', function (){
         const examForm = document.getElementById('formularz');
