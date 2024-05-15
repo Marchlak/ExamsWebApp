@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -86,10 +87,22 @@ public class ExamService {
         exam.setExamsSubject(subjectService.GetOne(examDTO.getSubjectId()));
         exam.setConductingExaminer(egzaminatorService.Get(examDTO.getEgzamiantor()));
         exam.setDescription(examDTO.getDescription());
-        exam.setStartDate(examDTO.getStartDate());
-        exam.setStartTime(examDTO.getStartTime());
-        exam.setEndDate(examDTO.getEndDate());
-        exam.setEndTime(examDTO.getEndTime());
+        if(examDTO.getStartDate()==null){
+            exam.setStartDate(LocalDate.now());
+        }
+        else exam.setStartDate(examDTO.getStartDate());
+        if(examDTO.getStartTime()==null){
+            exam.setStartTime(LocalTime.now());
+        }
+        else exam.setStartTime(examDTO.getStartTime());
+        if(examDTO.getEndDate()==null){
+            exam.setEndDate(LocalDate.now());
+        }
+        else exam.setEndDate(examDTO.getEndDate());
+        if(examDTO.getEndTime()==null){
+            exam.setEndTime(LocalTime.now().plusHours(2));
+        }
+        else exam.setEndTime(examDTO.getEndTime());
         if(exam.getStartDate()!=null && exam.getEndDate()!=null && exam.getStartTime()!=null && exam.getEndTime()!=null) {
             exam.setDuration(Duration.between(LocalDateTime.of(exam.getStartDate(), exam.getStartTime()), LocalDateTime.of(exam.getEndDate(), exam.getEndTime())).toMinutes());
         }

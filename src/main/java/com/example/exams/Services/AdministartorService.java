@@ -28,12 +28,12 @@ public class AdministartorService {
         return admin.orElse(null);
     }
 
-    public Administrator getAdministratorByLoginAndEmail(String login, String email){
-        return administratorsEntityRepository.findAdministratorByLoginAndEmail(login, email);
-    }
-
     public Administrator getAdminByLogin(String login) {
         return administratorsEntityRepository.findAdministratorByLogin(login);
+    }
+
+    public Administrator getAdministratorByEmail(String email) {
+        return administratorsEntityRepository.findAdministratorByEmail(email);
     }
     public void editAdministator(Integer administratorId, String firstName, String lastName, String login, String password, String email){
         Administrator administrator = administratorsEntityRepository.findAdministratorById(administratorId);
